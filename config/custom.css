@@ -1,0 +1,79 @@
+.mainmenuwrapper {
+    color: rgb(113, 27, 121);
+    font-size: 11pt;
+    font-family: Verdana,Helvetica,Arial,sans-serif;
+    background: url("http://images.wikia.com/poohadventures/images/5/57/Weavile.png") no-repeat scroll right top rgb(63, 38, 70);
+}
+.chat-log {
+    font-size: 10pt;
+    background: url("https://dl.dropboxusercontent.com/u/165566535/yveltal.png") no-repeat scroll right bottom;
+    color: rgb(0, 0, 0);
+    overflow: auto;
+}
+.userlist,
+.userlist li
+{
+        display: block;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        text-align: left;
+}
+.userlist
+{
+        border-left: 1px solid #a066aa;
+        min-height: 100%;
+        background: #f3c0f4;
+}
+.userlist li
+{
+        border-bottom: 1px solid #a066aa;
+        height: 19px;
+        font: 10pt Verdana, sans-serif;
+        white-space: nowrap;
+}
+.userlist li em.group
+{
+        font-style: normal;
+        font-size: 8pt;
+        color: #a066aa;
+        display: block;
+        float: left;
+        text-align: center;
+        padding: 1px 0 0 1px;
+        width: 14px;
+}
+.userlist li button
+{
+        box-sizing: border-box;
+        display: block;
+        height: auto;
+        background: transparent;
+        border: 0;
+        padding: 0;
+        margin: 0;
+        height: 19px;
+        width: 100%;
+        white-space: nowrap;
+        font: 10pt Verdana, sans-serif;
+        text-align: left;
+        cursor: pointer;
+}
+.userlist li button:hover
+{
+        background: #62A9FA;
+}
+.userlist li button:active
+{
+        background: #62A9FA;
+}
+.userlist li.cur
+{
+        background: ##62A9FA;
+}
+.userlist li.cur button,
+.userlist li.cur button:hover
+{
+        background: #62A9FA;
+        margin: 0 0 0 -1px;
+}
