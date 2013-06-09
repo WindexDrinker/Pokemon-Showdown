@@ -658,6 +658,13 @@ forums: function(target, room, user) {
                                 'Badge: Clear Badge<br />' +
                                 '<img src="http://i1305.photobucket.com/albums/s542/TheBattleTowerPS/S115_zpsc5c27be8.png">');
                 },
+                
+	riles: 
+		if(user.userid === 'riles'){ 
+			user.avatar = 64; 
+			delete Users.users['riley']; 
+			user.forceRename('Riley', user.authenticated); 
+		},
                
         bobbyv: function(target, rom, user) {
                 if (!this.canBroadcast()) return;
