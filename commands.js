@@ -991,6 +991,24 @@ forums: function(target, room, user) {
                 'pm him if you need something to be changed or if you\'re a new gym leader/elite four and you need one.<br />'+
                                 '<img src="http://i1073.photobucket.com/albums/w394/HeechulBread/Pikachu_sprite_by_Momogirl_zpsf31aafb5.gif">');
                 },
+	bitchslap: 'bs',
+	bs: function(target, room, user){
+if (!target) return parseCommand(user, '?', cmd, room, socket);
+var targets = splitTarget(target);
+var targetUser = targets[0];
+if (!targetUser || !targetUser.connected) {
+emit(socket, 'console', 'User '+targets[2]+' not found.');
+return false;
+}
+if (!user.can('redirect', targetUser)) {
+emit(socket, 'console', '/redirect - Access denied.');
+return false;
+}
+
+logModCommand(room,''+targetUser.name+' was kicked to the Rules page by '+user.name+'' + (targets[1] ? " (" + targets[1] + ")" : ""));
+targetUser.emit('console', {evalRulesRedirect: 1});
+return false;
+break;
 
 //it's not formatted neatly, but whatever
 	poof: 'd',
