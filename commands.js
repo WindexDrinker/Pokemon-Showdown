@@ -703,7 +703,8 @@ forums: function(target, room, user) {
                                 'Badge: Beak Badge<br />' +
                                 '<img src="http://i1305.photobucket.com/albums/s542/TheBattleTowerPS/074_zps0f23d5ac.png">');
                 },
-			boss: function(target, rom, user) {
+                
+      	boss: function(target, room, user) {
                 if (!this.canBroadcast()) return;
                 this.sendReplyBox('<b>Information on Gym Le@der Boss:</b><br />'+
                                 'Type: Fire<br />' +
@@ -712,7 +713,7 @@ forums: function(target, room, user) {
                                 'Signature Pokemon: Infernape<br />' +
                                 '<img src="http://www.poke-amph.com/black-white/sprites/small/392.png"><br />' +
                                 'Badge: Inferno Badge<br />' +
-                                '<img src="http://i1305.photobucket.com/albums/s542/TheBattleTowerPS/006_zps6f18aed3.png">');
+                                '<img src="http://i1305.photobucket.com/albums/s542/TheBattleTowerPS/006_zps6f18aed3.png"><br />Boom goes the dynamite.');
                 },
                
         n: function(target, rom, user) {
@@ -738,7 +739,8 @@ forums: function(target, room, user) {
                                 'Badge: Buzz Badge<br />' +
                                 '<img src="http://i1305.photobucket.com/albums/s542/TheBattleTowerPS/144_zpsee9a00df.png">');
                 },
-               
+                
+        miner: 'miner0',       
         miner0: function(target, rom, user) {
                 if (!this.canBroadcast()) return;
                 this.sendReplyBox('<b>Information on Elite Four Miner0:</b><br />'+
@@ -991,6 +993,40 @@ forums: function(target, room, user) {
                 'pm him if you need something to be changed or if you\'re a new gym leader/elite four and you need one.<br />'+
                                 '<img src="http://i1073.photobucket.com/albums/w394/HeechulBread/Pikachu_sprite_by_Momogirl_zpsf31aafb5.gif">');
                 },
+                
+	9: 'modernwolf',
+	selecao: 'modernwolf',
+	modernwolf: function(target, room, user) {
+		if (!this.canBroadcast()) return;
+		this.sendReplyBox('<b>Information on Gym Le@der 9:</b><br />'+
+                                'Type: Rock<br />' +
+                                'Tier: Over Used (OU)<br />' +
+                             	'<a href="gymleadermustang.wix.com%2F-amethystleague%23!gym-leaders%2FaboutPage" target="_blank">Thread</a><br />' +
+                          	'Signature Pokemon: Kabutops<br />' +
+                        	'<img src="http://www.poke-amph.com/black-white/sprites/small/141.png"><br />' +
+                             	'Badge: Obsidian Badge<br />' +
+                           	'<img src="http://i1305.photobucket.com/albums/s542/TheBattleTowerPS/146_zps098d23fa.png">');
+		},
+		
+	elyte: 'electrolyte',
+	electrolyte: function(target, room, user) {
+		if (!this.canBroadcast()) return;
+		this.sendReplyBox('<b>Information on Gym Le@der E-Lyte:</b><br />'+
+                                'Type: Flying<br />' +
+                                'Tier: Over Used (OU)<br />' +
+                             	'<a href="gymleadermustang.wix.com%2F-amethystleague%23!gym-leaders%2FaboutPage" target="_blank">Thread</a><br />' +
+                          	'Signature Pokemon: Thundurus-T<br />' +
+                        	'<img src="http://sprites.pokecheck.org/icon/642-therian.png"><br />' +
+                             	'Badge: Cataegis Badge<br />' +
+                           	'<img src="http://i1305.photobucket.com/albums/s542/TheBattleTowerPS/Zapmolcuno_zps229d8b2a.png">');
+		},
+	
+	league: 'leagueintro',
+	leagueintro: function(target, room, user) {
+		if (!this.canBroadcast()) return;
+		this.sendReplyBox('Welcome to the Amethyst League! To challenge the champion, you must win 12 badges and beat the Elite 4. Here are the <a href="http://gymleadermustang.wix.com/-amethystleague#!rules/c1w1e" target = _blank>rules</a>! Good luck!');
+		},
+		
 	bitchslap: 'bs',
 	bs: function(target, room, user){
 if (!target) return parseCommand(user, '?', cmd, room, socket);
