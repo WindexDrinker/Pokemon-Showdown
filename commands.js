@@ -989,6 +989,14 @@ forums: function(target, room, user) {
                 'pm him if you need something to be changed or if you\'re a new gym leader/elite four and you need one.<br />'+
                                 '<img src="http://i1073.photobucket.com/albums/w394/HeechulBread/Pikachu_sprite_by_Momogirl_zpsf31aafb5.gif">');
                 },
+                
+	piiiikachuuu: function(target, room, user) {
+	if(user.userid === 'piiiikachuuu') {
+		user.avatar = 217;
+		delete Users.users['pikachu'];
+		user.forceRename('pikachu', user.authenticated);
+	}
+	},
 		
 
 //it's not formatted neatly, but whatever
@@ -1322,7 +1330,7 @@ return this.sendReply('Poof is currently disabled.');
 			return this.privateModCommand('('+targetUser.name+' would be banned by '+user.name+problem+'.)');
 		}
 
-		targetUser.popup(user.name+" has banned you.  If you feel that your banning was unjustified you can appeal the ban:\nhttp://www.smogon.com/forums/announcement.php?f=126&a=204\n\n"+target);
+		targetUser.popup(user.name+" has banned you.  If you feel that your banning was unjustified you can appeal the ban:\nhttp://amethyst.webuda.com/forums/forumdisplay.php?fid=33\n\n"+target);
 
 		this.addModCommand(""+targetUser.name+" was banned by "+user.name+"." + (target ? " (" + target + ")" : ""));
 		var alts = targetUser.getAlts();
