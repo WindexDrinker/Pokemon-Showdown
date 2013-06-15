@@ -14,6 +14,10 @@
     background: none repeat scroll 0% 0% rgb(20, 0, 159);
     opacity: 0.8;
 }
+.menugroup .button:hover {
+    background: -moz-linear-gradient(center top , rgb(119, 158, 196), rgb(64, 107, 149)) repeat scroll 0% 0% transparent;
+    border-color: rgb(32, 53, 74);
+}
 .userlist,
 .userlist li
 {
