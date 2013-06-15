@@ -113,6 +113,9 @@ var parse = exports.parse = function(message, room, user, connection, levelsDeep
 			sendReplyBox: function(html) {
 				this.sendReply('|raw|<div class="infobox">'+html+'</div>');
 			},
+			sendReplyNobox: function(html) {
+				this.sendReply('|raw|'+html);
+			},
 			popupReply: function(message) {
 				connection.popup(message);
 			},
