@@ -136,6 +136,38 @@ exports.BattleFormats = {
 		defaultLevel: 100,
 		// no restrictions, for serious (other than team preview)
 		ruleset: ['Team Preview']
+			slowmons: {
+effectType: 'Format',
+name: 'Slowmons',
+section: "Other Metas",
+rated: true,
+challengeShow: true,
+searchShow: true,
+isTeambuilderFormat: true,
+ruleset: ['Pokemon', 'Standard', 'Evasion Abilities Clause', 'Team Preview', 'Slowmons Pokemon'],
+banlist: [],
+onModifySpe: function(spe) {
+return -spe;
+},
+onModifyMove: function(move) {
+if (move.id === 'trickroom') {
+move.effect = {
+duration: 5,
+onStart: function(target, source) {
+this.add('-fieldstart', 'move: Trick Room', '[of] '+source);
+},
+onModifySpePriority: -100,
+onModifySpe: function(spe) {
+return spe;
+},
+onResidualOrder: 23,
+onEnd: function() {
+this.add('-fieldend', 'move: Trick Room');
+}
+};
+}
+}
+},
 	},
 	customgamenoteampreview: {
 		name: "Custom Game (no Team Preview)",
