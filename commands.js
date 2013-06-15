@@ -713,17 +713,18 @@ forums: function(target, room, user) {
                                 '<img src="http://i1305.photobucket.com/albums/s542/TheBattleTowerPS/006_zps6f18aed3.png"><br />');
                 },
                
-        n: function(target, rom, user) {
-                if (!this.canBroadcast()) return;
-                this.sendReplyBox('<b>Information on Gym Le@der N:</b><br />'+
+	n: function(target, rom, user) {
+		if (!this.canBroadcast()) return;
+		this.sendReplyBox('<b>Information on Gym Le@der N:</b><br />'+
                                 'Type: Dragon<br />' +
                                 'Tier: Over Used (OU)<br />' +
-                                '<a href="gymleadermustang.wix.com%2F-amethystleague%23!gym-leaders%2FaboutPage" target="_blank">Thread</a><br />' +
-                                'Signature Pokemon: Kyurem-Black<br />' +
-                                '<img src="http://media.pldh.net/pokecons/646-black.png"><br />' +
-                                'Badge: Draco Badge<br />' +
-                                '<img src="http://i1305.photobucket.com/albums/s542/TheBattleTowerPS/555Reshiram_zps4cfa3ecc.png">');
-                },
+                             	'<a href="gymleadermustang.wix.com%2F-amethystleague%23!gym-leaders%2FaboutPage" target="_blank">Thread</a><br />' +
+                          	'Signature Pokemon: Dragonite<br />' +
+                        	'<img src="http://www.poke-amph.com/black-white/sprites/small/149.png"><br />' +
+                             	'Badge: Draco Badge<br />' +
+                           	'<img src="http://i1305.photobucket.com/albums/s542/TheBattleTowerPS/555Reshiram_zps4cfa3ecc.png">');
+		},
+		
                
         ross: function(target, rom, user) {
                 if (!this.canBroadcast()) return;
@@ -961,6 +962,50 @@ forums: function(target, room, user) {
                                 'Badge: Growth Badge<br />' +
                                 '<img src="http://i1305.photobucket.com/albums/s542/TheBattleTowerPS/K003_zps16041652.png">');
                 },
+	gomewex: function(target, room, user) {
+		if(!this.canBroadcast()) return;
+		this.sendReplyBox('<b>Information on Gym Le@der Gomewex:</b><br />' +
+							'Type: Steel<br />' +
+							'Tier: Over Used (OU)<br />' +
+							'<a href="gymleadermustang.wix.com%2F-amethystleague%23!gym-leaders%2FaboutPage" target="_blank">Thread</a><br />' +
+                          	'Signature Pokemon: Registeel<br />' +
+                        	'<img src="http://www.poke-amph.com/black-white/sprites/small/379.png"><br />' +
+							'Badge: Titanium Badge<br />' +
+                           	'<img src="http://i1305.photobucket.com/albums/s542/TheBattleTowerPS/106_zps1cf253b1.png"><br />');
+		},
+		
+	selecao: 'modernwolf',
+	modernwolf: function(target, room, user) {
+		if (!this.canBroadcast()) return;
+		this.sendReplyBox('<b>Information on Gym Le@der 9:</b><br />'+
+                                'Type: Rock<br />' +
+                                'Tier: Over Used (OU)<br />' +
+                             	'<a href="gymleadermustang.wix.com%2F-amethystleague%23!gym-leaders%2FaboutPage" target="_blank">Thread</a><br />' +
+                          	'Signature Pokemon: Kabutops<br />' +
+                        	'<img src="http://www.poke-amph.com/black-white/sprites/small/141.png"><br />' +
+                             	'Badge: Obsidian Badge<br />' +
+                           	'<img src="http://i1305.photobucket.com/albums/s542/TheBattleTowerPS/146_zps098d23fa.png">');
+		},
+		
+	elyte: 'electrolyte',
+	electrolyte: function(target, room, user) {
+		if (!this.canBroadcast()) return;
+		this.sendReplyBox('<b>Information on Gym Le@der E-Lyte:</b><br />'+
+                                'Type: Flying<br />' +
+                                'Tier: Over Used (OU)<br />' +
+                             	'<a href="gymleadermustang.wix.com%2F-amethystleague%23!gym-leaders%2FaboutPage" target="_blank">Thread</a><br />' +
+                          	'Signature Pokemon: Thundurus-T<br />' +
+                        	'<img src="http://sprites.pokecheck.org/icon/642-therian.png"><br />' +
+                             	'Badge: Cataegis Badge<br />' +
+                           	'<img src="http://i1305.photobucket.com/albums/s542/TheBattleTowerPS/Zapmolcuno_zps229d8b2a.png">');
+		},
+	
+	league: 'leagueintro',
+	leagueintro: function(target, room, user) {
+		if (!this.canBroadcast()) return;
+		this.sendReplyBox('Welcome to the Amethyst League! To challenge the champion, you must win 12 badges and beat the Elite 4. Here are the <a href="http://gymleadermustang.wix.com/-amethystleague#!rules/c1w1e" target = _blank>rules</a>! Good luck!');
+		},
+		
 		
 		pet: function(target, room, user) {
         if (!target) {
@@ -989,6 +1034,7 @@ forums: function(target, room, user) {
         }
         this.add(user.name + ' bitchslaps ' + targetUser.name + '.');
         },
+        
 		gymleaders: 'leaders',
         leaders: function(target, room, user) {
                 if(!this.canBroadcast()) return;
