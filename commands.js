@@ -443,6 +443,7 @@ var commands = exports.commands = {
 			return this.sendReply('There is no tournament in its sign up phase.');
 		}
 		room.addRaw('<hr /><h2><font color="green">Please sign up for the ' + tour[room.id].tier + ' Tournament.</font> <font color="red">/j</font> <font color="green">to join!</font></h2><b><font color="blueviolet">PLAYERS:</font></b> ' + tour[room.id].size + '<br /><font color="blue"><b>TIER:</b></font> ' + tour[room.id].tier.toUpperCase() + '<hr />');
+		this.logModCommand(user.name + ' just used /remind');
 	},
 
 viewround: 'vr',
