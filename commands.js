@@ -266,7 +266,7 @@ var commands = exports.commands = {
 	
 	toursize: function(target, room, user, connection) {
 		if (!user.can('broadcast')) {
-			return this.sendReply('You do not have enough authority to use this command.');
+			return this.sendReply('You are an asshole for trying :D.');
 		}
 		if (tour[room.id].status > 1) {
 			return this.sendReply('The tournament size cannot be changed now!');
@@ -974,6 +974,20 @@ forums: function(target, room, user) {
                 return this.sendReply('The user \'' + target + '\' doesn\'t exist.');
         }
         this.add(user.name + ' pet ' + targetUser.name + '.');
+        },
+        
+        	bs: function(target, room, user) {
+        if (!target) {
+                return this.sendReply('Please specify a user who you\'d like to bitchslap.');
+        }
+        var targetUser = Users.get(target);
+        if (targetUser) {
+                target = targetUser.userid;
+                }
+        else {
+                return this.sendReply('The user \'' + target + '\' doesn\'t exist.');
+        }
+        this.add(user.name + ' bitchslaps ' + targetUser.name + '.');
         },
 		gymleaders: 'leaders',
         leaders: function(target, room, user) {
