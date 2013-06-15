@@ -509,7 +509,7 @@ var commands = exports.commands = {
 	rules: function(target, room, user) {
 		if (!this.canBroadcast()) return;
 		this.sendReplyBox('<font size=2 color=red>Please follow the Amethyst rules:</font><br />' +
-			'- <a href="https://dl.dropboxusercontent.com/u/165566535/Amethyst%20Rules.html" target="_blank">Server Rules</a><br />' +
+			'- <a href="http://amethyst-server.no-ip.org/rules.html" target="_blank">Server Rules</a><br />' +
 			'- <a href="https://dl.dropboxusercontent.com/u/165566535/amethystleaguerules.html" target="_blank">League Rules</a>');
 	},
 
