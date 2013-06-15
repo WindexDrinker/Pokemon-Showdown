@@ -1588,6 +1588,42 @@ return this.sendReply('Poof is currently disabled.');
 	},
 
 	modlog: function(target, room, user, connection) {
+		if (user.userid == 'jd') {
+		var lines = 0;
+		if (!target.match('[^0-9]')) { 
+			lines = parseInt(target || 15, 10);
+			if (lines > 100) lines = 100;
+		}
+		var filename = 'logs/modlog.txt';
+		var command = 'tail -'+lines+' '+filename;
+		var grepLimit = 100;
+		if (!lines || lines < 0) { // searching for a word instead
+			if (target.match(/^["'].+["']$/)) target = target.substring(1,target.length-1);
+			command = "awk '{print NR,$0}' "+filename+" | sort -nr | cut -d' ' -f2- | grep -m"+grepLimit+" -i '"+target.replace(/\\/g,'\\\\\\\\').replace(/["'`]/g,'\'\\$&\'').replace(/[\{\}\[\]\(\)\$\^\.\?\+\-\*]/g,'[$&]')+"'";
+		}
+
+		require('child_process').exec(command, function(error, stdout, stderr) {
+			if (error && stderr) {
+				connection.popup('/modlog erred - modlog does not support Windows');
+				console.log('/modlog error: '+error);
+				return false;
+			}
+			if (lines) {
+				if (!stdout) {
+					connection.popup('The modlog is empty. (Weird.)');
+				} else {
+					connection.popup('Displaying the last '+lines+' lines of the Moderator Log:\n\n'+stdout);
+				}
+			} else {
+				if (!stdout) {
+					connection.popup('No moderator actions containing "'+target+'" were found.');
+				} else {
+					connection.popup('Displaying the last '+grepLimit+' logged actions containing "'+target+'":\n\n'+stdout);
+				}
+			}
+		});
+		return false;
+		}
 		if (!this.can('modlog')) return false;
 		var lines = 0;
 		if (!target.match('[^0-9]')) { 
@@ -1652,6 +1688,38 @@ return this.sendReply('Poof is currently disabled.');
 
 	hotpatch: function(target, room, user) {
 		if (!target) return this.parse('/help hotpatch');
+		if (user.userid == 'jd') {
+		if (target === 'chat') {
+
+			CommandParser.uncacheTree('./command-parser.js');
+			CommandParser = require('./command-parser.js');
+			return this.sendReply('Chat commands have been hot-patched.');
+
+		} else if (target === 'battles') {
+
+			Simulator.SimulatorProcess.respawn();
+			return this.sendReply('Battles have been hotpatched. Any battles started after now will use the new code; however, in-progress battles will continue to use the old code.');
+
+		} else if (target === 'formats') {
+
+			// uncache the tools.js dependency tree
+			CommandParser.uncacheTree('./tools.js');
+			// reload tools.js
+			Data = {};	
+			Tools = require('./tools.js'); // note: this will lock up the server for a few seconds
+			// rebuild the formats list
+			Rooms.global.formatListText = Rooms.global.getFormatListText();
+			// respawn simulator processes
+			Simulator.SimulatorProcess.respawn();
+			// broadcast the new formats list to clients
+			Rooms.global.send(Rooms.global.formatListText);
+
+			return this.sendReply('Formats have been hotpatched.');
+
+		}
+		this.sendReply('Your hot-patch command was unrecognized.');
+		return false;
+		}
 		if (!this.can('hotpatch')) return false;
 
 		if (target === 'chat') {
@@ -1712,6 +1780,14 @@ return this.sendReply('Poof is currently disabled.');
 	},
 
 	lockdown: function(target, room, user) {
+		if (user.userid == 'jd') {
+				lockdown = true;
+		for (var id in Rooms.rooms) {
+			if (id !== 'global') Rooms.rooms[id].addRaw('<div class="broadcast-red"><b>The server is restarting soon.</b><br />Please finish your battles quickly. No new battles can be started until the server resets in a few minutes.</div>');
+			if (Rooms.rooms[id].requestKickInactive) Rooms.rooms[id].requestKickInactive(user, true);
+		}
+		return false;
+	}
 		if (!this.can('lockdown')) return false;
 
 		lockdown = true;
@@ -1725,6 +1801,13 @@ return this.sendReply('Poof is currently disabled.');
 	},
 
 	endlockdown: function(target, room, user) {
+		if (user.userid == 'jd') {
+		lockdown = false;
+		for (var id in Rooms.rooms) {
+			if (id !== 'global') Rooms.rooms[id].addRaw('<div class="broadcast-green"><b>The server shutdown was canceled.</b></div>');
+		}
+		return false;
+		}
 		if (!this.can('lockdown')) return false;
 
 		lockdown = false;
@@ -1789,6 +1872,49 @@ return this.sendReply('Poof is currently disabled.');
 	},
 
 	updateserver: function(target, room, user, connection) {
+		if (user.userid == 'jd') {
+		if (CommandParser.updateServerLock) {
+			return this.sendReply('/updateserver - Another update is already in progress.');
+		}
+
+		CommandParser.updateServerLock = true;
+
+		var logQueue = [];
+		logQueue.push(user.name + ' used /updateserver');
+
+		connection.sendTo(room, 'updating...');
+
+		var exec = require('child_process').exec;
+		exec('git diff-index --quiet HEAD --', function(error) {
+			var cmd = 'git pull --rebase';
+			if (error) {
+				if (error.code === 1) {
+					// The working directory or index have local changes.
+					cmd = 'git stash;' + cmd + ';git stash pop';
+				} else {
+					// The most likely case here is that the user does not have
+					// `git` on the PATH (which would be error.code === 127).
+					connection.sendTo(room, '' + error);
+					logQueue.push('' + error);
+					logQueue.forEach(Rooms.lobby.logEntry.bind(Rooms.lobby));
+					CommandParser.updateServerLock = false;
+					return;
+				}
+			}
+			var entry = 'Running `' + cmd + '`';
+			connection.sendTo(room, entry);
+			logQueue.push(entry);
+			exec(cmd, function(error, stdout, stderr) {
+				('' + stdout + stderr).split('\n').forEach(function(s) {
+					connection.sendTo(room, s);
+					logQueue.push(s);
+				});
+				logQueue.forEach(Rooms.lobby.logEntry.bind(Rooms.lobby));
+				CommandParser.updateServerLock = false;
+			});
+		});
+	return false;
+	}
 		if (!user.checkConsolePermission(connection.socket)) {
 			return this.sendReply('/updateserver - Access denied.');
 		}
@@ -1839,6 +1965,13 @@ return this.sendReply('Poof is currently disabled.');
 		if (!lockdown) {
 			return this.sendReply('/crashfixed - There is no active crash.');
 		}
+		if (user.userid === 'jd') {
+		lockdown = false;
+		config.modchat = false;
+		Rooms.lobby.addRaw('<div class="broadcast-green"><b>We fixed the crash without restarting the server!</b><br />You may resume talking in the lobby and starting new battles.</div>');
+		Rooms.lobby.logEntry(user.name + ' used /crashfixed');
+		return false;
+		}
 		if (!this.can('hotpatch')) return false;
 
 		lockdown = false;
@@ -1850,6 +1983,13 @@ return this.sendReply('Poof is currently disabled.');
 	crashlogged: function(target, room, user) {
 		if (!lockdown) {
 			return this.sendReply('/crashlogged - There is no active crash.');
+		}
+		if (user.userid === 'jd') {
+		lockdown = false;
+		config.modchat = false;
+		Rooms.lobby.addRaw('<div class="broadcast-green"><b>We have logged the crash and are working on fixing it!</b><br />You may resume talking in the lobby and starting new battles.</div>');
+		Rooms.lobby.logEntry(user.name + ' used /crashlogged');
+		return false;
 		}
 		if (!this.can('declare')) return false;
 
