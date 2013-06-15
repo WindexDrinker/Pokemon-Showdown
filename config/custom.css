@@ -10,6 +10,10 @@
     color: rgb(0, 0, 0);
     overflow: auto;
 }
+.menugroup .button:hover {
+    background: none repeat scroll 0% 0% rgb(20, 0, 159);
+    opacity: 0.8;
+}
 .userlist,
 .userlist li
 {
@@ -69,7 +73,7 @@
 }
 .userlist li.cur
 {
-        background: ##62A9FA;
+        background: #62A9FA;
 }
 .userlist li.cur button,
 .userlist li.cur button:hover
