@@ -508,9 +508,9 @@ var commands = exports.commands = {
 	rule: 'rules',
 	rules: function(target, room, user) {
 		if (!this.canBroadcast()) return;
-		this.sendReplyBox('Please follow the rules:<br />' +
-			'- <a href="http://pokemonshowdown.com/rules" target="_blank">Rules</a><br />' +
-			'</div>');
+		this.sendReplyBox('<font size=2 color=red>Please follow the Amethyst rules:</font><br />' +
+			'- <a href="https://dl.dropboxusercontent.com/u/165566535/Amethyst%20Rules.html" target="_blank">Server Rules</a><br />' +
+			'- <a href="https://dl.dropboxusercontent.com/u/165566535/amethystleaguerules.html" target="_blank">League Rules</a>');
 	},
 
 	faq: function(target, room, user) {
