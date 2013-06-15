@@ -18,6 +18,29 @@
     background: -moz-linear-gradient(center top , rgb(119, 158, 196), rgb(64, 107, 149)) repeat scroll 0% 0% transparent;
     border-color: rgb(32, 53, 74);
 }
+
+.mainmenufooter small:after {
+
+      content: "Amethyst server by Mustang";
+
+      text-shadow: 0 1px black;
+
+      position: absolute;
+
+      left: 0px;
+
+      top: -40px;
+
+      width: 200px;
+
+}
+
+.message-pm {
+
+color: #5c3566;
+
+}
+
 .userlist,
 .userlist li
 {
