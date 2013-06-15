@@ -480,7 +480,7 @@ viewround: 'vr',
 				}
 			}
 		}
-		this.sendReplyBox(html + "</center>");
+		this.sendReplyBox(html + "</center><br />");
 	},
 	
 	disqualify: 'dq',
