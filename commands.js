@@ -452,7 +452,7 @@ viewround: 'vr',
 		if (tour[room.id].status < 2) {
 				return this.sendReply('There is no tournament out of its signup phase.');
 		}
-		var html = '<h3><font color="green">Round '+ tour[room.id].roundNum + '!</font></h3><font color="blue"><b>TIER:</b></font> ' + tour[room.id].tier.toUpperCase() + "<hr /><center><small>Red = lost, Green = won, Bold = battling</small><center>";
+		var html = '<hr /><h3><font color="green">Round '+ tour[room.id].roundNum + '!</font></h3><font color="blue"><b>TIER:</b></font> ' + tour[room.id].tier.toUpperCase() + "<hr /><center><small>Red = lost, Green = won, Bold = battling</small><center>";
 		var r = tour[room.id].round;
 		for (var i in r) {
 			if (!r[i][1]) {
@@ -480,7 +480,7 @@ viewround: 'vr',
 				}
 			}
 		}
-		this.sendReplyBox(html + "</center><br />");
+		this.sendReplyNobox(html + "</center>");
 	},
 	
 	disqualify: 'dq',
