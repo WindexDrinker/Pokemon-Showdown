@@ -444,16 +444,14 @@ var commands = exports.commands = {
 		}
 		room.addRaw('<hr /><h2><font color="green">Please sign up for the ' + tour[room.id].tier + ' Tournament.</font> <font color="red">/j</font> <font color="green">to join!</font></h2><b><font color="blueviolet">PLAYERS:</font></b> ' + tour[room.id].size + '<br /><font color="blue"><b>TIER:</b></font> ' + tour[room.id].tier.toUpperCase() + '<hr />');
 	},
-	
-	viewround: 'vr',
+
+viewround: 'vr',
 	vr: function(target, room, user, connection) {
-		if (!user.can('broadcast')) {
-				return this.sendReply('You do not have enough authority to use this command.');
-		}
+		if (!this.canBroadcast()) return;
 		if (tour[room.id].status < 2) {
 				return this.sendReply('There is no tournament out of its signup phase.');
 		}
-		var html = '<hr /><h3><font color="green">Round '+ tour[room.id].roundNum + '!</font></h3><font color="blue"><b>TIER:</b></font> ' + tour[room.id].tier.toUpperCase() + "<hr /><center><small>Red = lost, Green = won, Bold = battling</small><center>";
+		var html = '<h3><font color="green">Round '+ tour[room.id].roundNum + '!</font></h3><font color="blue"><b>TIER:</b></font> ' + tour[room.id].tier.toUpperCase() + "<hr /><center><small>Red = lost, Green = won, Bold = battling</small><center>";
 		var r = tour[room.id].round;
 		for (var i in r) {
 			if (!r[i][1]) {
@@ -481,7 +479,7 @@ var commands = exports.commands = {
 				}
 			}
 		}
-		room.addRaw(html + "</center>");
+		this.sendReplyBox(html + "</center>");
 	},
 	
 	disqualify: 'dq',
