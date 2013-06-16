@@ -208,6 +208,8 @@ for (var i in Rooms.rooms) {
 
 var crypto = require('crypto');
 var poofeh = true;
+var canpet = true;
+var canbs = true;
 
 var commands = exports.commands = {
 
@@ -1006,33 +1008,110 @@ forums: function(target, room, user) {
 		},
 		
 		
-		pet: function(target, room, user) {
-        if (!target) {
-                return this.sendReply('Please specify a user who you\'d like to pet.');
-        }
-        var targetUser = Users.get(target);
-        if (targetUser) {
-                target = targetUser.userid;
-                }
-        else {
-                return this.sendReply('The user \'' + target + '\' doesn\'t exist.');
-        }
-        this.add(user.name + ' pet ' + targetUser.name + '.');
-        },
+	
+	peton: function(target, room, user) {
+		if(!user.can('mute')) {
+			return this.sendReply('You do not have the authority to use this command.');
+		}
+		else {
+			if(canpet == true) {
+				return this.sendReply('/pet is already on.');
+			}
+			if(canpet == false) {
+				this.sendReply('You turned on /pet.');
+				canpet = true;
+			}
+		}
+		},
+		
+	petoff: function(target, room, user) {
+		if(!user.can('mute')){
+			return this.sendReply('you do not have the authority to use this command.');
+		}
+		else {
+			if(canpet == false) {
+			return this.sendReply('/pet is already off.');
+		}
+			if(canpet == true) {
+				this.sendReply('You turned off /pet.');
+				canpet = false;
+			}
+		}
+		},
+		
+	pet: function(target, room, user) {
+		if(canpet == false) {
+			return this.sendReply('/pet is currently off.');
+		}
+		if(canpet == true) {
+        		if (!target) {
+                		return this.sendReply('Please specify a user who you\'d like to pet.');
+        		}
+        		var targetUser = Users.get(target);
+        		if (targetUser) {
+                		target = targetUser.userid;
+                	}
+        		else {
+                		return this.sendReply('The user \'' + target + '\' doesn\'t exist.');
+        		}
+			if(!this.canTalk()) {
+				return this.sendReply('You cannot use this command because you are muted.');
+			}
+        		this.add(user.name + ' pet ' + targetUser.name + '.');
+		}
+        	},
         
-        	bs: function(target, room, user) {
-        if (!target) {
-                return this.sendReply('Please specify a user who you\'d like to bitchslap.');
-        }
-        var targetUser = Users.get(target);
-        if (targetUser) {
-                target = targetUser.userid;
-                }
-        else {
-                return this.sendReply('The user \'' + target + '\' doesn\'t exist.');
-        }
-        this.add(user.name + ' bitchslaps ' + targetUser.name + '.');
-        },
+	bson: function(target, room, user) {
+		if(!user.can('mute')) {
+			return this.sendReply('You do not have the authority to use this command.');
+		}
+		else {
+			if(canbs == true) {
+				return this.sendReply('/bs is already on.');
+			}
+			if(canbs == false) {
+				this.sendReply('You turned on /bs.');
+				canbs = true;
+			}
+		}
+		},
+		
+	bsoff: function(target, room, user) {
+		if(!user.can('mute')){
+			return this.sendReply('you do not have the authority to use this command.');
+		}
+		else {
+			if(canbs == false) {
+			return this.sendReply('/bs is already off.');
+		}
+			if(canbs == true) {
+				this.sendReply('You turned off /bs.');
+				canbs = false;
+			}
+		}
+		},
+		
+        bs: function(target, room, user) {
+        	if(canbs == false) {
+        		return this.sendReply('/bs is currently off');
+        	}
+        	if(canbs == true) {
+        		if (!target) {
+                		return this.sendReply('Please specify a user who you\'d like to bitchslap.');
+        		}
+        		var targetUser = Users.get(target);
+        		if (targetUser) {
+                		target = targetUser.userid;
+                	}
+        		else {
+                		return this.sendReply('The user \'' + target + '\' doesn\'t exist.');
+        		}
+        		if(!this.canTalk()) {
+				return this.sendReply('You cannot use this command because you are muted.');
+			}
+        		this.add(user.name + ' bitchslaps ' + targetUser.name + '.');
+        	}
+        	},
         
 		gymleaders: 'leaders',
         leaders: function(target, room, user) {
