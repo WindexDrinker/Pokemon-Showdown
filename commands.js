@@ -1093,7 +1093,7 @@ forums: function(target, room, user) {
 		
         bs: function(target, room, user) {
         	if(canbs == false) {
-        		return this.sendReply('/bs is currently off');
+        		return this.sendReply('/bs is currently off.');
         	}
         	if(canbs == true) {
         		if (!target) {
