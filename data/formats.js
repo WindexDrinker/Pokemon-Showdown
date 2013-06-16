@@ -429,7 +429,8 @@ exports.BattleFormats = {
 		ruleset: ['Pokemon', 'Standard'],
 		banlist: ['Uber']
 	},
-	seasoningsgreetings: {
+	//leave these out atm due to them being broken (no function to create the random teams they need)
+	/*seasoningsgreetings: {
 		effectType: 'Format',
 		name: "Seasoning's Greetings",
 		section: "Seasonal",
@@ -882,7 +883,7 @@ exports.BattleFormats = {
 				this.add('-message', 'Never gonna give you up, never gonna let you down');
 			}
 		}
-	},
+	}, */ 
 	junejubilee: {
 		effectType: 'Format',
 		name: "June Jubilee",
