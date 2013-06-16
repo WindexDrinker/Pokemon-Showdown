@@ -19,6 +19,16 @@
     border-color: rgb(32, 53, 74);
 }
 
+.chat-log-add {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    min-height: 36px;
+    padding: 3px 4px 0px;
+    border-top: 1px solid rgb(72, 61, 139);
+}
+
 .mainmenufooter small:after {
 
       content: "Amethyst server by Mustang";
