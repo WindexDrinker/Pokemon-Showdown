@@ -1005,10 +1005,10 @@ forums: function(target, room, user) {
 		if(!this.canBroadcast()) return;
 		this.sendReplyBox('<b>Information on Gym Le@der Magma:</b><br />' +
 				'Type: Fire<br />' +
-				'Tier: Over Userd (OU)<br />' + 
+				'Tier: Over Used (OU)<br />' + 
 				'<a href="gymleadermustang.wix.com%2F-amethystleague%23!gym-leaders%2FaboutPage" target="_blank">Thread</a><br />' +
-                          	'Signature Pokemon: Darmanitan<br />' +
-                        	'<img src="http://www.poke-amph.com/black-white/sprites/small/555.png"><br />' +
+                          	'Signature Pokemon: Heatran<br />' +
+                        	'<img src="http://www.poke-amph.com/black-white/sprites/small/485.png"><br />' +
 				'Badge: Magma Flare Badge<br />' +
                            	'<img src="http://i.imgur.com/V0gp7hJ.png"><br />');
 		},
@@ -1129,7 +1129,7 @@ forums: function(target, room, user) {
         ouleaders: function(target, room, user) {
                 if(!this.canBroadcast()) return;
                 this.sendReplyBox('<b>List of Active OU Gym Leaders:</b>' +
-                '<ul><li>Gym Le@der Smash (SmashBrosBrawl): Steel</li><li>Gym Le@der Ewok: Fire</li><li>Gym Le@der Boss: Fire</li><li>Gym Le@der Talon: Dark</li><li>Gym Le@der Sam: Grass</li><li>Gym Le@der Love (OnlyLove): Grass</li><li>Gym Le@der Nord: Ice</li><li>Gym Le@der Massman: Ice</li><li>Gym Le@der 9 (ModernWolf, SeleÃ§Ã£o #9): Rock</li><li>Gym Le@der Volkner: Electric</li><li>Gym Le@der Pyro (Scizornician): Ghost</li><li>Gym Le@der Cuddly: Ghost</li><li>Gym Le@der Delibird: Flying</li><li>Gym Le@der Sweet: Poison</li><li>Gym Le@der Mustang: Ground</li><li>Gym Le@der Topazio: Ground</li><li>Gym Le@der BlueJob: Psychic</li><li>Gym Le@der Marlon: Water</li><li>Gym Le@der Brawl: Fighting</li><li>Gym Le@der EnerG218: Bug</li><li>Gym Le@der Hope: Normal</li><li>Gym Le@der N: Dragon</li><li>Gym Le@der Eon: Dragon</li><li>Gym Le@der Doyle: Dark</li><li>Gym Le@der Magma: Fire</li></ul>We currently have no need for any more gym leaders.');
+                '<ul><li>Gym Le@der Smash (SmashBrosBrawl): Steel</li><li>Gym Le@der Ewok: Fire</li><li>Gym Le@der Talon: Dark</li><li>Gym Le@der Sam: Grass</li><li>Gym Le@der Love (OnlyLove): Grass</li><li>Gym Le@der Nord: Ice</li><li>Gym Le@der Massman: Ice</li><li>Gym Le@der 9 (ModernWolf, SeleÃ§Ã£o #9): Rock</li><li>Gym Le@der Volkner: Electric</li><li>Gym Le@der Pyro (Scizornician): Ghost</li><li>Gym Le@der Cuddly: Ghost</li><li>Gym Le@der Delibird: Flying</li><li>Gym Le@der Sweet: Poison</li><li>Gym Le@der Mustang: Ground</li><li>Gym Le@der Topazio: Ground</li><li>Gym Le@der BlueJob: Psychic</li><li>Gym Le@der Marlon: Water</li><li>Gym Le@der Brawl: Fighting</li><li>Gym Le@der EnerG218: Bug</li><li>Gym Le@der Hope: Normal</li><li>Gym Le@der N: Dragon</li><li>Gym Le@der Eon: Dragon</li><li>Gym Le@der Doyle: Dark</li><li>Gym Le@der Magma: Fire</li></ul>We currently have no need for any more gym leaders.');
         },
         
         uugymleaders: 'uuleaders',
@@ -1149,11 +1149,17 @@ forums: function(target, room, user) {
                 
 	piiiikachuuu: function(target, room, user) {
 	if(user.userid === 'piiiikachuuu') {
-		user.avatar = 217;
+		user.avatar = 1005;
 		delete Users.users['pikachu'];
 		user.forceRename('pikachu', user.authenticated);
 	}
 	},
+	
+	//a small command to make users feel like they are being listened to
+	complaint: 'complain',
+	complain: function(target, room, user) {
+		this.sendReplyBox('Thanks for your input. We\'ll review your feedback soon. The complaint you submitted was: ' + target);
+		},
 		
 
 //it's not formatted neatly, but whatever
