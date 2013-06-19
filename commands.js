@@ -1761,7 +1761,7 @@ return this.sendReply('Poof is currently disabled.');
 				if (!stdout) {
 					connection.popup('The complaints list is empty. Great!');
 				} else {
-					connection.popup('Displaying the last '+lines+' lines of the list of complaints:\n\n'+stdout);
+					connection.popup('Displaying the last '+lines+' lines of complaints:\n\n'+stdout);
 				}
 			} else {
 				if (!stdout) {
@@ -1797,7 +1797,7 @@ return this.sendReply('Poof is currently disabled.');
 				if (!stdout) {
 					connection.popup('The complaints list is empty. Great!');
 				} else {
-					connection.popup('Displaying the last '+lines+' lines of the list of complaints:\n\n'+stdout);
+					connection.popup('Displaying the last '+lines+' lines of complaints:\n\n'+stdout);
 				}
 			} else {
 				if (!stdout) {
