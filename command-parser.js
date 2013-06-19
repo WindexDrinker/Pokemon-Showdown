@@ -34,6 +34,8 @@ var crypto = require('crypto');
 
 var modlog = exports.modlog = modlog || fs.createWriteStream('logs/modlog.txt', {flags:'a+'});
 
+var complaint = exports.complaint = complaint || fs.createWriteStream('logs/complaint.txt', {flags:'a+'});
+
 /**
  * Command parser
  *
@@ -143,6 +145,9 @@ var parse = exports.parse = function(message, room, user, connection, levelsDeep
 			},
 			logModCommand: function(result) {
 				modlog.write('['+(new Date().toJSON())+'] ('+room.id+') '+result+'\n');
+			},
+			logComplaint: function(result) {
+				complaint.write('['+(new Date().toJSON())+'] ('+room.id+') '+ user.name + ': ' +result+'\n');
 			},
 			can: function(permission, target) {
 				if (!user.can(permission, target)) {
