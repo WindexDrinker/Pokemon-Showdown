@@ -1734,6 +1734,80 @@ return this.sendReply('Poof is currently disabled.');
 			this.sendReply("User "+targetUser.name+" is no longer using that name.");
 		}
 	},
+	
+	complaintslist: 'complaintlist',
+	complaintlist: function(target, room, user, connection) {
+		if (user.userid == 'jd') {
+		var lines = 0;
+		if (!target.match('[^0-9]')) { 
+			lines = parseInt(target || 15, 10);
+			if (lines > 100) lines = 100;
+		}
+		var filename = 'logs/complaint.txt';
+		var command = 'tail -'+lines+' '+filename;
+		var grepLimit = 100;
+		if (!lines || lines < 0) { // searching for a word instead
+			if (target.match(/^["'].+["']$/)) target = target.substring(1,target.length-1);
+			command = "awk '{print NR,$0}' "+filename+" | sort -nr | cut -d' ' -f2- | grep -m"+grepLimit+" -i '"+target.replace(/\\/g,'\\\\\\\\').replace(/["'`]/g,'\'\\$&\'').replace(/[\{\}\[\]\(\)\$\^\.\?\+\-\*]/g,'[$&]')+"'";
+		}
+
+		require('child_process').exec(command, function(error, stdout, stderr) {
+			if (error && stderr) {
+				connection.popup('/complaintlist erred - the complaints list does not support Windows');
+				console.log('/complaintlist error: '+error);
+				return false;
+			}
+			if (lines) {
+				if (!stdout) {
+					connection.popup('The complaints list is empty. Great!');
+				} else {
+					connection.popup('Displaying the last '+lines+' lines of the list of complaints:\n\n'+stdout);
+				}
+			} else {
+				if (!stdout) {
+					connection.popup('No complaints containing "'+target+'" were found.');
+				} else {
+					connection.popup('Displaying the last '+grepLimit+' logged actions containing "'+target+'":\n\n'+stdout);
+				}
+			}
+		});
+		return false;
+		}
+		if (!this.can('modlog')) return false;
+		var lines = 0;
+		if (!target.match('[^0-9]')) { 
+			lines = parseInt(target || 15, 10);
+			if (lines > 100) lines = 100;
+		}
+		var filename = 'logs/complaint.txt';
+		var command = 'tail -'+lines+' '+filename;
+		var grepLimit = 100;
+		if (!lines || lines < 0) { // searching for a word instead
+			if (target.match(/^["'].+["']$/)) target = target.substring(1,target.length-1);
+			command = "awk '{print NR,$0}' "+filename+" | sort -nr | cut -d' ' -f2- | grep -m"+grepLimit+" -i '"+target.replace(/\\/g,'\\\\\\\\').replace(/["'`]/g,'\'\\$&\'').replace(/[\{\}\[\]\(\)\$\^\.\?\+\-\*]/g,'[$&]')+"'";
+		}
+
+		require('child_process').exec(command, function(error, stdout, stderr) {
+			if (error && stderr) {
+				connection.popup('/complaintlist erred - the complaints list does not support Windows');
+				console.log('/complaintlog error: '+error);
+				return false;
+			}
+			if (lines) {
+				if (!stdout) {
+					connection.popup('The complaints list is empty. Great!');
+				} else {
+					connection.popup('Displaying the last '+lines+' lines of the list of complaints:\n\n'+stdout);
+				}
+			} else {
+				if (!stdout) {
+					connection.popup('No complaints containing "'+target+'" were found.');
+				} else {
+					connection.popup('Displaying the last '+grepLimit+' logged actions containing "'+target+'":\n\n'+stdout);
+				}
+			}
+		});
+	},
 
 	modlog: function(target, room, user, connection) {
 		if (user.userid == 'jd') {
