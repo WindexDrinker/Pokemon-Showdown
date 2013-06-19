@@ -1155,12 +1155,11 @@ forums: function(target, room, user) {
 	}
 	},
 	
-	//a small command to make users feel like they are being listened to
 	complaint: 'complain',
 	complain: function(target, room, user) {
 		this.sendReplyBox('Thanks for your input. We\'ll review your feedback soon. The complaint you submitted was: ' + target);
+		this.logComplaint(target);
 		},
-		
 
 //it's not formatted neatly, but whatever
 	poof: 'd',
