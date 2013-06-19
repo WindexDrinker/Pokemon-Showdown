@@ -1,5 +1,103 @@
 exports.BattleFormats = {
 	// formats
+  ou: {
+		effectType: 'Format',
+		name: "OU",
+		section: "Singles",
+		challengeDefault: true,
+		rated: true,
+		challengeShow: true,
+		searchShow: true,
+		isTeambuilderFormat: true,
+		debug: true,
+		ruleset: ['Pokemon', 'Standard', 'Evasion Abilities Clause', 'Team Preview'],
+		banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
+	},
+	ubers: {
+		effectType: 'Format',
+		name: "Ubers",
+		section: "Singles",
+		rated: true,
+		challengeShow: true,
+		searchShow: true,
+		isTeambuilderFormat: true,
+		ruleset: ['Pokemon', 'Team Preview', 'Standard Ubers'],
+		banlist: []
+	},
+	uu: {
+		effectType: 'Format',
+		name: "UU",
+		section: "Singles",
+		rated: true,
+		challengeShow: true,
+		searchShow: true,
+		isTeambuilderFormat: true,
+		ruleset: ['OU'],
+		banlist: ['OU', 'BL', 'Drought', 'Sand Stream']
+	},
+	ru: {
+		effectType: 'Format',
+		name: "RU",
+		section: "Singles",
+		rated: true,
+		challengeShow: true,
+		searchShow: true,
+		isTeambuilderFormat: true,
+		ruleset: ['UU'],
+		banlist: ['UU', 'BL2', 'Shell Smash + Baton Pass']
+	},
+	nu: {
+		effectType: 'Format',
+		name: "NU",
+		section: "Singles",
+		rated: true,
+		challengeShow: true,
+		searchShow: true,
+		isTeambuilderFormat: true,
+		ruleset: ['RU'],
+		banlist: ['RU','BL3']
+	},
+	lc: {
+		effectType: 'Format',
+		name: "LC",
+		section: "Singles",
+		maxLevel: 5,
+		rated: true,
+		challengeShow: true,
+		searchShow: true,
+		isTeambuilderFormat: true,
+		ruleset: ['Pokemon', 'Standard', 'Team Preview', 'Little Cup'],
+		banlist: ['Sonicboom', 'Dragon Rage', 'Berry Juice', 'Carvanha', 'Meditite', 'Gligar', 'Scyther', 'Sneasel', 'Tangela', 'Vulpix', 'Yanma', 'Soul Dew']
+	},
+   challengecup: {
+		effectType: 'Format',
+		name: "Challenge Cup",
+		section: "Singles",
+		team: 'randomCC',
+		canUseRandomTeam: true,
+		rated: true,
+		challengeShow: true,
+		searchShow: true,
+		ruleset: ['Pokemon']
+	},
+	challengecup1v1: {
+		effectType: 'Format',
+		name: "Challenge Cup 1-V-1",
+		section: "Singles",
+		team: 'randomCC',
+		canUseRandomTeam: true,
+		rated: true,
+		challengeShow: true,
+		searchShow: true,
+		ruleset: ['Pokemon', 'Team Preview 1v1'],
+		onBegin: function() {
+			this.debug('Cutting down to 1');
+			this.p1.pokemon = this.p1.pokemon.slice(0, 1);
+			this.p1.pokemonLeft = this.p1.pokemon.length;
+			this.p2.pokemon = this.p2.pokemon.slice(0, 1);
+			this.p2.pokemonLeft = this.p2.pokemon.length;
+		}
+	},
 	randombattle: {
 		effectType: 'Format',
 		name: "Random Battle",
@@ -954,104 +1052,6 @@ exports.BattleFormats = {
 				pokemon.battle.win(winner);
 			}
 		}
-	},
-	challengecup: {
-		effectType: 'Format',
-		name: "Challenge Cup",
-		section: "Singles",
-		team: 'randomCC',
-		canUseRandomTeam: true,
-		rated: true,
-		challengeShow: true,
-		searchShow: true,
-		ruleset: ['Pokemon']
-	},
-	challengecup1v1: {
-		effectType: 'Format',
-		name: "Challenge Cup 1-V-1",
-		section: "Singles",
-		team: 'randomCC',
-		canUseRandomTeam: true,
-		rated: true,
-		challengeShow: true,
-		searchShow: true,
-		ruleset: ['Pokemon', 'Team Preview 1v1'],
-		onBegin: function() {
-			this.debug('Cutting down to 1');
-			this.p1.pokemon = this.p1.pokemon.slice(0, 1);
-			this.p1.pokemonLeft = this.p1.pokemon.length;
-			this.p2.pokemon = this.p2.pokemon.slice(0, 1);
-			this.p2.pokemonLeft = this.p2.pokemon.length;
-		}
-	},
-	ou: {
-		effectType: 'Format',
-		name: "OU",
-		section: "Singles",
-		challengeDefault: true,
-		rated: true,
-		challengeShow: true,
-		searchShow: true,
-		isTeambuilderFormat: true,
-		debug: true,
-		ruleset: ['Pokemon', 'Standard', 'Evasion Abilities Clause', 'Team Preview'],
-		banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
-	},
-	ubers: {
-		effectType: 'Format',
-		name: "Ubers",
-		section: "Singles",
-		rated: true,
-		challengeShow: true,
-		searchShow: true,
-		isTeambuilderFormat: true,
-		ruleset: ['Pokemon', 'Team Preview', 'Standard Ubers'],
-		banlist: []
-	},
-	uu: {
-		effectType: 'Format',
-		name: "UU",
-		section: "Singles",
-		rated: true,
-		challengeShow: true,
-		searchShow: true,
-		isTeambuilderFormat: true,
-		ruleset: ['OU'],
-		banlist: ['OU', 'BL', 'Drought', 'Sand Stream']
-	},
-	ru: {
-		effectType: 'Format',
-		name: "RU",
-		section: "Singles",
-		rated: true,
-		challengeShow: true,
-		searchShow: true,
-		isTeambuilderFormat: true,
-		ruleset: ['UU'],
-		banlist: ['UU', 'BL2', 'Shell Smash + Baton Pass']
-	},
-	nu: {
-		effectType: 'Format',
-		name: "NU",
-		section: "Singles",
-		rated: true,
-		challengeShow: true,
-		searchShow: true,
-		isTeambuilderFormat: true,
-		ruleset: ['RU'],
-		banlist: ['RU','BL3']
-	},
-	lc: {
-		effectType: 'Format',
-		name: "LC",
-		section: "Singles",
-		maxLevel: 5,
-		rated: true,
-		challengeShow: true,
-		searchShow: true,
-		isTeambuilderFormat: true,
-		ruleset: ['Pokemon', 'Standard', 'Team Preview', 'Little Cup'],
-		banlist: ['Sonicboom', 'Dragon Rage', 'Berry Juice', 'Carvanha', 'Meditite', 'Gligar', 'Scyther', 'Sneasel', 'Tangela', 'Vulpix', 'Yanma', 'Soul Dew']
 	},
 	customgame: {
 		effectType: 'Format',
