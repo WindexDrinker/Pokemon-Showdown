@@ -353,7 +353,7 @@ var GlobalRoom = (function() {
 			var initdata = '|updateuser|'+user.name+'|'+(user.named?'1':'0')+'|'+user.avatar+'\n';
 			this.send(initdata+this.formatListText, user);
 		}
-		user.send('|raw|<center><img src="http://i36.tinypic.com/9h5put.gif"></center><br /><center><a href = "http://amethyst-server.no-ip.org" target = _blank>Website</a></center><br /><center><font color=purple><font size="5">&nbsp;&nbsp;Welcome to <img src="http://amethyst-server.no-ip.org/images/amethyst.png"></center></font></font><br></br><center><a href = "http://amethyst-server.no-ip.org/rules.html" target = _blank>Rules</a></center></br><center><img src="http://i35.tinypic.com/nfck4.gif"></center>');
+		/*user.send('|raw|<center><img src="http://i36.tinypic.com/9h5put.gif"></center><br /><center><a href = "http://amethyst-server.no-ip.org" target = _blank>Website</a></center><br /><center><font color=purple><font size="5">&nbsp;&nbsp;Welcome to <img src="http://amethyst-server.no-ip.org/images/amethyst.png"></center></font></font><br></br><center><a href = "http://amethyst-server.no-ip.org/rules.html" target = _blank>Rules</a></center></br><center><img src="http://i35.tinypic.com/nfck4.gif"></center>');*/
 		return user;
 	};
 	GlobalRoom.prototype.onRename = function(user, oldid, joining) {
