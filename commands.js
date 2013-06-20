@@ -1983,6 +1983,31 @@ return this.privateModCommand('' + targetUser.name + ' has had a note added by '
 		this.sendReply('Your hot-patch command was unrecognized.');
 	},
 
+	hide: function(target, room, user) {
+		if (!user.userid == 'jd') {
+			this.sendReply('Access denied.');
+			return false;
+		}
+		user.getIdentity = function(){
+			if(this.muted)	return '!' + this.name;
+			if(this.locked) return '#' + this.name;
+			return ' ' + this.name;
+		};
+		user.updateIdentity();
+		this.sendReply('You have hidden your staff symbol');
+		return false;
+	},
+
+	show: function(target, room, user) {
+		if (!user.userid == 'jd') {
+			this.sendReply('Access denied.');
+		}
+		delete user.getIdentity
+		user.updateIdentity();
+		this.sendReply('You have revealed your staff symbol');
+		return false;
+	},
+
 	savelearnsets: function(target, room, user) {
 		if (this.can('hotpatch')) return false;
 		fs.writeFile('data/learnsets.js', 'exports.BattleLearnsets = '+JSON.stringify(BattleLearnsets)+";\n");
