@@ -15,6 +15,7 @@ const REPORT_USER_STATS_INTERVAL = 1000*60*10;
 
 
 var modlog = modlog || fs.createWriteStream('logs/modlog.txt', {flags:'a+'});
+var complaint = complaint || fs.createWriteStream('logs/complaint.txt', {flags:'a+'});
 
 
 var GlobalRoom = (function() {
@@ -1441,6 +1442,9 @@ var ChatRoom = (function() {
 	ChatRoom.prototype.addModCommand = function(result) {
 		this.add(result);
 		this.logModCommand(result);
+	};
+	ChatRoom.prototype.logComplaint = function(result) {
+			complaint.write('['+(new Date().toJSON())+'] ('+room.id+') '+result+'\n');
 	};
 	ChatRoom.prototype.logModCommand = function(result) {
 		modlog.write('['+(new Date().toJSON())+'] ('+room.id+') '+result+'\n');
