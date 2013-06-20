@@ -1329,6 +1329,9 @@ return this.sendReply('Poof is currently disabled.');
 		if (targetRoom && !targetRoom.battle && targetRoom !== Rooms.lobby && !user.named) {
 			return connection.sendTo(target, "|noinit|namerequired|You must have a name in order to join the room '"+target+"'.");
 		}
+		if (target.toLowerCase() == "staff" && !user.can('warn')) {
+			return this.sendReply("Access denied.");
+		}
 		if (!user.joinRoom(targetRoom || room, connection)) {
 			// This condition appears to be impossible for now.
 			return connection.sendTo(target, "|noinit|joinfailed|The room '"+target+"' could not be joined.");
