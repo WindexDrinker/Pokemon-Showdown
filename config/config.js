@@ -203,7 +203,9 @@ exports.customavatars = {
 	'gymledercuddly':'6003.png',
 	'gymlederdelibird':'6001.png',
 	'gymlederbluejob':'6008.png',
-	'jd':'jd.png'
+	'jd':'jd.png',
+	'pillowisp':'pillow.png',
+	
 };
 
 // permissions and groups:
