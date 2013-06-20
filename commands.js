@@ -1348,6 +1348,14 @@ return this.sendReply('Poof is currently disabled.');
 	/*********************************************************
 	 * Moderating: Punishments
 	 *********************************************************/
+note: function(target, room, user, connection, cmd) {
+if (!target) return this.parse('/help note');
+target = this.splitTarget(target);
+var targetUser = this.targetUser;
+if (!targetUser) return this.sendReply('User '+this.targetUsername+' not found.');
+if (!this.can('mute')) return false;
+return this.privateModCommand('' + targetUser.name + ' has had a note added by ' + user.name + '. (' + target + ')');
+},
 
 	kick: 'warn',
 	k: 'warn',
