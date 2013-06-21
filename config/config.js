@@ -251,11 +251,18 @@ exports.customavatars = {
 //     - potd: Set PotD.
 //     - forcewin: /forcewin command.
 //     - battlemessage: /a command.
-exports.groupsranking = [' ', '+', '$', '%', '@', '&', '~'];
+//	   - hide: /hide and /show commands.
+exports.groupsranking = [' ', '+', '$', '%', '@', '&', '♠', '~'];
 exports.groups = {
         '~': {
                 id: "admin",
                 name: "Administrator",
+                root: true,
+                rank: 7
+        },
+        '♠': {
+                id: "sysadmin",
+                name: "System Administrator",
                 root: true,
                 rank: 6
         },

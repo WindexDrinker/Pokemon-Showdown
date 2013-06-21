@@ -1987,28 +1987,26 @@ return this.privateModCommand('' + targetUser.name + ' has had a note added by '
 	},
 
 	hide: function(target, room, user) {
-		if (!user.userid == 'jd') {
-			this.sendReply('Access denied.');
+		if (this.can('hide')) {
+			user.getIdentity = function(){
+				if(this.muted)	return '!' + this.name;
+				if(this.locked) return '#' + this.name;
+				return ' ' + this.name;
+			};
+			user.updateIdentity();
+			this.sendReply('You have hidden your staff symbol');
 			return false;
 		}
-		user.getIdentity = function(){
-			if(this.muted)	return '!' + this.name;
-			if(this.locked) return '#' + this.name;
-			return ' ' + this.name;
-		};
-		user.updateIdentity();
-		this.sendReply('You have hidden your staff symbol');
-		return false;
+
 	},
 
 	show: function(target, room, user) {
-		if (!user.userid == 'jd') {
-			this.sendReply('Access denied.');
+		if (this.can('hide')) {
+			delete user.getIdentity
+			user.updateIdentity();
+			this.sendReply('You have revealed your staff symbol');
+			return false;
 		}
-		delete user.getIdentity
-		user.updateIdentity();
-		this.sendReply('You have revealed your staff symbol');
-		return false;
 	},
 
 	savelearnsets: function(target, room, user) {
