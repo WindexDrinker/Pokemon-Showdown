@@ -99,6 +99,15 @@ exports.BattleFormats = {
 			this.p2.pokemonLeft = this.p2.pokemon.length;
 		}
 	},
+oumonotype: { 
+name: "OU Monotype", 
+section: "Other Metagames", 
+effectType: 'Format', 
+challengeShow: true, 
+isTeambuilderFormat: true, 
+ruleset: ['Pokemon', 'Standard', 'Same Type Clause', 'Evasion Abilities Clause', 'Team Preview'], 
+banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew'] 
+},
 	randombattle: {
 		effectType: 'Format',
 		name: "Random Battle",
