@@ -252,7 +252,7 @@ exports.customavatars = {
 //     - forcewin: /forcewin command.
 //     - battlemessage: /a command.
 //	   - hide: /hide and /show commands.
-exports.groupsranking = [' ', '+', '$', '%', '@', '&', '&', '~'];
+exports.groupsranking = [' ', '+', '$', '%', '@', '&', '*', '~'];
 exports.groups = {
         '~': {
                 id: "admin",
@@ -260,7 +260,7 @@ exports.groups = {
                 root: true,
                 rank: 7
         },
-        '&': {
+        '*': {
                 id: "sysadmin",
                 name: "System Administrator",
                 root: true,
