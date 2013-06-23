@@ -600,7 +600,7 @@ viewround: 'vr',
 	},
 	version: function(target, room, user) {
 		if (!this.canBroadcast()) return;
-		this.sendReplyBox('Server version: <b>'+CommandParser.package.version+'</b> <small>(<a href="http://pokemonshowdown.com/versions#' + CommandParser.serverVersion + '" target="_blank">' + CommandParser.serverVersion.substr(0,10) + '</a>)</small>');
+		this.sendReplyBox('Server version: <b>'+CommandParser.package.version+'</b> <small>(<a href="http://pokemonshowdown.com/versions#' + CommandParser.serverVersion + '">' + CommandParser.serverVersion.substr(0,10) + '</a>)</small>');
 	},
 
 	me: function(target, room, user, connection) {
@@ -1288,9 +1288,8 @@ return this.sendReply('Poof is currently disabled.');
 			return this.popupReply('This user is locked and cannot PM.');
 		}
 
-		if (!user.named) {
-			return this.popupReply('You must choose a name before you can send private messages.');
-		}
+		target = this.canTalk(target, null);
+		if (!target) return false;
 
 		var message = '|pm|'+user.getIdentity()+'|'+targetUser.getIdentity()+'|'+target;
 		user.send(message);
@@ -1457,7 +1456,7 @@ return this.privateModCommand('' + targetUser.name + ' has had a note added by '
 			return this.sendReply('/lock - Access denied.');
 		}
 
-		if ((targetUser.locked || Users.checkBanned(Object.keys(targetUser.ips)[0])) && !target) {
+		if ((targetUser.locked || Users.checkBanned(targetUser.latestIp)) && !target) {
 			var problem = ' but was already '+(targetUser.locked ? 'locked' : 'banned');
 			return this.privateModCommand('('+targetUser.name+' would be locked by '+user.name+problem+'.)');
 		}
@@ -1498,12 +1497,12 @@ return this.privateModCommand('' + targetUser.name + ' has had a note added by '
 		}
 		if (!this.can('ban', targetUser)) return false;
 
-		if (Users.checkBanned(Object.keys(targetUser.ips)[0]) && !target) {
+		if (Users.checkBanned(targetUser.latestIp) && !target) {
 			var problem = ' but was already banned';
 			return this.privateModCommand('('+targetUser.name+' would be banned by '+user.name+problem+'.)');
 		}
 
-		targetUser.popup(user.name+" has banned you.  If you feel that your banning was unjustified you can appeal the ban:\nhttp://amethyst.webuda.com/forums/forumdisplay.php?fid=33\n\n"+target);
+		targetUser.popup(user.name+" has banned you." + (config.appealurl ? ("  If you feel that your banning was unjustified you can appeal the ban:\n" + config.appealurl) : "") + "\n\n"+target);
 
 		this.addModCommand(""+targetUser.name+" was banned by "+user.name+"." + (target ? " (" + target + ")" : ""));
 		var alts = targetUser.getAlts();
@@ -1705,7 +1704,7 @@ return this.privateModCommand('' + targetUser.name + ' has had a note added by '
 		if (targetUser.userid === toUserid(this.targetUser)) {
 			var entry = ''+targetUser.name+' was forced to choose a new name by '+user.name+'.' + (target ? " (" + target + ")" : "");
 			this.logModCommand(entry);
-			Rooms.lobby.sendAuth(entry);
+			Rooms.lobby.sendAuth('(' + entry + ')');
 			if (room.id !== 'lobby') {
 				this.add(entry);
 			} else {
@@ -1734,13 +1733,13 @@ return this.privateModCommand('' + targetUser.name + ' has had a note added by '
 		if (targetUser.userid === toUserid(this.targetUser)) {
 			var entry = ''+targetUser.name+' was forcibly renamed to '+target+' by '+user.name+'.';
 			this.logModCommand(entry);
-			Rooms.lobby.sendAuth(entry);
+			Rooms.lobby.sendAuth('(' + entry + ')');
 			if (room.id !== 'lobby') {
 				room.add(entry);
 			} else {
 				room.logEntry(entry);
 			}
-			targetUser.forceRename(target);
+			targetUser.forceRename(target, undefined, true);
 		} else {
 			this.sendReply("User "+targetUser.name+" is no longer using that name.");
 		}
@@ -1955,6 +1954,8 @@ return this.privateModCommand('' + targetUser.name + ' has had a note added by '
 		}
 		if (!this.can('hotpatch')) return false;
 
+		Rooms.lobby.logEntry(user.name + ' used /hotpatch ' + target);
+
 		if (target === 'chat') {
 
 			CommandParser.uncacheTree('./command-parser.js');
@@ -2108,6 +2109,7 @@ return this.privateModCommand('' + targetUser.name + ' has had a note added by '
 			data = (''+data).split("\n");
 			var count = 0;
 			for (var i=0; i<data.length; i++) {
+				data[i] = data[i].split('#')[0].trim();
 				if (data[i] && !Users.bannedIps[data[i]]) {
 					Users.bannedIps[data[i]] = '#ipban';
 					count++;
@@ -2289,7 +2291,7 @@ return this.privateModCommand('' + targetUser.name + ' has had a note added by '
 	},
 
 	evalbattle: function(target, room, user, connection, cmd, message) {
-		if (!user.checkConsolePermission(connection.socket)) {
+		if (!user.checkConsolePermission(connection)) {
 			return this.sendReply("/evalbattle - Access denied.");
 		}
 		if (!this.canBroadcast()) return;
@@ -2603,7 +2605,7 @@ return this.privateModCommand('' + targetUser.name + ' has had a note added by '
 				targetToken = target.substr(commaIndex+1);
 			}
 		}
-		user.rename(targetName, targetToken, targetAuth, connection.socket);
+		user.rename(targetName, targetToken, targetAuth, connection);
 	},
 
 };

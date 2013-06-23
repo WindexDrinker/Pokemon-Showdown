@@ -269,7 +269,7 @@ exports.BattleMovedex = {
 			&& this.getMove(pokemon.lastAttackedBy.move).id !== 'seismictoss') {
 				return 2 * pokemon.lastAttackedBy.damage;
 			}
-			this.add('-fail',pokemon.id);
+			this.add('-fail', pokemon);
 			return false;
 		}
 	},
@@ -370,7 +370,7 @@ exports.BattleMovedex = {
 		desc: "Deals damage to one adjacent target, if it is asleep and does not have a Substitute. The user recovers half of the HP lost by the target, rounded up. If Big Root is held by the user, the HP recovered is 1.3x normal, rounded half down.",
 		onTryHit: function(target) {
 			if (target.status !== 'slp' || target.volatiles['substitute']) {
-				this.add('-immune', target.id, '[msg]');
+				this.add('-immune', target, '[msg]');
 				return null;
 			}
 		}
@@ -885,10 +885,12 @@ exports.BattleMovedex = {
 	rest: {
 		inherit: true,
 		onHit: function(target) {
-			if (target.hp >= target.maxhp) return false;
+			// Fails if the difference between
+			// max HP and current HP is 0, 255, or 511
+			if (target.hp >= target.maxhp ||
+			target.hp === (target.maxhp - 255) ||
+			target.hp === (target.maxhp - 511)) return false;
 			if (!target.setStatus('slp')) return false;
-			// Fail glitch when hp is 255/511 less than max
-			if (target.hp === (target.maxhp - 255) || target.hp === (target.maxhp - 511)) return false;
 			target.statusData.time = 2;
 			target.statusData.startTime = 2;
 			this.heal(target.maxhp); // Aeshetic only as the healing happens after you fall asleep in-game
@@ -1143,7 +1145,7 @@ exports.BattleMovedex = {
 		accuracy: 100,
 		onTryHit: function(target) {
 			if (target.hasType('Ground')) {
-				this.add('-immune', target.id, '[msg]');
+				this.add('-immune', target, '[msg]');
 				return null;
 			}
 		}

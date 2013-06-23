@@ -1,30 +1,8 @@
 // The server port - the port to run Pokemon Showdown under
 exports.port = 8000;
 
-// The setuid user. If this is specified, the Pokemon Showdown server will
-// setuid() to this user after initialisation.
-//
-// WARNING: This is not generally the right way to run the server. If you want
-//          to run the server on a port below 1024, the correct way to do it
-//          is to run the server on port X > 1024 and then forward port the
-//          preferred port to port X.
-//
-//          If the server *.js files are writeable by the setuid user, this
-//          feature is equivalent to giving root to the setuid user, because
-//          they can just inject code to give themselves root into the part
-//          of the code before setuid() is called.
-//
-//          This feature should be used with caution.
-exports.setuid = '';
-
 // The server ID - a unique ID describing this Showdown server
 exports.serverid = 'Amethyst';
-
-// A signed assertion from the login server must be presented to this
-// server within this many seconds. This can be 1 minute (or possibly
-// less) unless your clock is wrong. In order to accommodate servers
-// with inaccurate clocks, the default is 25 hours.
-exports.tokenexpiry = 25*60*60;
 
 // proxyip - proxy IPs with trusted X-Forwarded-For headers
 //   This can be either false (meaning not to trust any proxies) or an array
@@ -103,12 +81,13 @@ exports.reportbattles = true;
 //   huge influxes of spammy users.
 exports.modchat = false;
 
-// backdoor - allow Zarel to provide tech support for your server
-//   This backdoor gives Zarel admin access to your server, which allows him
-//   to provide tech support. This can be useful in a variety of situations:
-//   if an attacker attacks your server and you are not online, if you need
-//   help setting up your server, etc.
-//   It is a backdoor, though, so if you do not trust Zarel you should
+// backdoor - allows Zarel and his authorised Pokemon Showdown development
+//            staff to provide tech support for your server
+//   This backdoor gives Zarel (and development staff approved by him) admin
+//   access to your server, which allows him to provide tech support. This
+//   can be useful in a variety of situations: if an attacker attacks your
+//   server and you are not online, if you need help setting up your server,
+//   etc. It is a backdoor, though, so if you do not trust Zarel you should
 //   disable this feature.
 exports.backdoor = true;
 
@@ -145,23 +124,6 @@ exports.simulatorprocesses = 1;
 // inactiveuserthreshold - how long a user must be inactive before being pruned
 // from the `users` array. The default is 1 hour.
 exports.inactiveuserthreshold = 1000*60*60;
-
-// Chat blacklist. Chat messages that match any of these regular
-// expressions will be dropped and not passed along to clients.
-exports.blacklist = [
-	/\bnimp\.org\b/
-];
-
-// reportbattlesperiod - by default, all battles are reported to clients
-// even if `reportbattles` is off. If you set this option to a value other
-// than false, then most battles will not be reported at all. Instead,
-// every so often the server will send information on the last 6 battles
-// to all clients; the `reportbattlesperiod` option specifies the length of
-// the period between reports in milliseconds.
-//
-// You should probably leave this value at `false`. It is only really
-// intended to be used by a busy server with thousands of concurrent users.
-exports.reportbattlesperiod = false;
 
 // Set this to true if you are using Pokemon Showdown on Heroku.
 exports.herokuhack = false;
@@ -211,6 +173,11 @@ exports.customavatars = {
 	'pillowisp':'pillow.png'
 	
 };
+
+// appealurl - specify a URL containing information on how users can appeal
+// disciplinary actions on your section. You can also leave this blank, in
+// which case users won't be given any information on how to appeal.
+exports.appealurl = 'http://amethyst.webuda.com/forums/forumdisplay.php?fid=33';
 
 // permissions and groups:
 //   Each entry in `groupsranking' specifies the ranking of the groups.

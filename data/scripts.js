@@ -35,7 +35,11 @@ exports.BattleScripts = {
 		var lockedMove = this.runEvent('LockMove', pokemon);
 		if (lockedMove === true) lockedMove = false;
 		if (!lockedMove) {
-			pokemon.deductPP(move, null, target);
+			if (!pokemon.deductPP(move, null, target) && (move.id !== 'struggle')) {
+				this.add('cant', pokemon, 'nopp', move);
+				this.clearActiveMove(true);
+				return;
+			}
 		}
 		pokemon.moveUsed(move);
 		this.useMove(move, pokemon, target, sourceEffect);
@@ -271,7 +275,7 @@ exports.BattleScripts = {
 
 		if (!damage && damage !== 0) return damage;
 
-		if (!move.negateSecondary) {
+		if (target && !move.negateSecondary) {
 			this.singleEvent('AfterMoveSecondary', move, null, target, pokemon, move);
 			this.runEvent('AfterMoveSecondary', target, pokemon, move);
 		}
@@ -372,20 +376,22 @@ exports.BattleScripts = {
 					return false;
 				}
 				didSomething = true;
-			} else if (damage === false && typeof hitResult === 'undefined') {
-				this.add('-fail', target);
 			}
 			if (damage === false || damage === null) {
+				if (damage === false) {
+					this.add('-fail', target);
+				}
 				this.debug('damage calculation interrupted');
 				return false;
 			}
+
 			if (moveData.boosts && !target.fainted) {
-				this.boost(moveData.boosts, target, pokemon, move);
-				didSomething = true;
+				hitResult = this.boost(moveData.boosts, target, pokemon, move);
+				didSomething = didSomething || hitResult;
 			}
 			if (moveData.heal && !target.fainted) {
 				var d = target.heal(Math.round(target.maxhp * moveData.heal[0] / moveData.heal[1]));
-				if (!d) {
+				if (!d && d !== 0) {
 					this.add('-fail', target);
 					this.debug('heal interrupted');
 					return false;
@@ -395,57 +401,59 @@ exports.BattleScripts = {
 			}
 			if (moveData.status) {
 				if (!target.status) {
-					target.setStatus(moveData.status, pokemon, move);
+					hitResult = target.setStatus(moveData.status, pokemon, move);
+					didSomething = didSomething || hitResult;
 				} else if (!isSecondary) {
 					if (target.status === moveData.status) {
 						this.add('-fail', target, target.status);
 					} else {
 						this.add('-fail', target);
 					}
+					return false;
 				}
-				didSomething = true;
 			}
 			if (moveData.forceStatus) {
-				if (target.setStatus(moveData.forceStatus, pokemon, move)) {
-					didSomething = true;
-				}
+				hitResult = target.setStatus(moveData.forceStatus, pokemon, move);
+				didSomething = didSomething || hitResult;
 			}
 			if (moveData.volatileStatus) {
-				if (target.addVolatile(moveData.volatileStatus, pokemon, move)) {
-					didSomething = true;
-				}
+				hitResult = target.addVolatile(moveData.volatileStatus, pokemon, move);
+				didSomething = didSomething || hitResult;
 			}
 			if (moveData.sideCondition) {
-				if (target.side.addSideCondition(moveData.sideCondition, pokemon, move)) {
-					didSomething = true;
-				}
+				hitResult = target.side.addSideCondition(moveData.sideCondition, pokemon, move);
+				didSomething = didSomething || hitResult;
 			}
 			if (moveData.weather) {
-				if (this.setWeather(moveData.weather, pokemon, move)) {
-					didSomething = true;
-				}
+				hitResult = this.setWeather(moveData.weather, pokemon, move);
+				didSomething = didSomething || hitResult;
 			}
 			if (moveData.pseudoWeather) {
-				if (this.addPseudoWeather(moveData.pseudoWeather, pokemon, move)) {
-					didSomething = true;
-				}
+				hitResult = this.addPseudoWeather(moveData.pseudoWeather, pokemon, move);
+				didSomething = didSomething || hitResult;
+			}
+			if (moveData.forceSwitch) {
+				didSomething = true; // at least defer the fail message to later
 			}
 			// Hit events
 			//   These are like the TryHit events, except we don't need a FieldHit event.
 			//   Scroll up for the TryHit event documentation, and just ignore the "Try" part. ;)
+			hitResult = null;
 			if (move.target === 'all' && !isSelf) {
-				hitResult = this.singleEvent('HitField', moveData, {}, target, pokemon, move);
+				if (moveData.onHitField) hitResult = this.singleEvent('HitField', moveData, {}, target, pokemon, move);
 			} else if ((move.target === 'foeSide' || move.target === 'allySide') && !isSelf) {
-				hitResult = this.singleEvent('HitSide', moveData, {}, target.side, pokemon, move);
+				if (moveData.onHitSide) hitResult = this.singleEvent('HitSide', moveData, {}, target.side, pokemon, move);
 			} else {
-				hitResult = this.singleEvent('Hit', moveData, {}, target, pokemon, move);
+				if (moveData.onHit) hitResult = this.singleEvent('Hit', moveData, {}, target, pokemon, move);
 				if (!isSelf && !isSecondary) {
 					this.runEvent('Hit', target, pokemon, move);
 				}
 			}
 
-			if (!hitResult && !didSomething) {
-				if (hitResult === false) this.add('-fail', target);
+			if (!hitResult && !didSomething && !moveData.self) {
+				if (!isSelf && !isSecondary) {
+					if (hitResult === false || didSomething === false) this.add('-fail', target);
+				}
 				this.debug('move failed because it did nothing');
 				return false;
 			}
@@ -462,9 +470,12 @@ exports.BattleScripts = {
 				}
 			}
 		}
-		if (target && target.hp > 0 && pokemon.hp > 0) {
-			if (moveData.forceSwitch && this.runEvent('DragOut', target, pokemon, move)) {
+		if (target && target.hp > 0 && pokemon.hp > 0 && moveData.forceSwitch) {
+			hitResult = this.runEvent('DragOut', target, pokemon, move);
+			if (hitResult) {
 				target.forceSwitchFlag = true;
+			} else if (hitResult === false) {
+				this.add('-fail', target);
 			}
 		}
 		if (move.selfSwitch && pokemon.hp) {

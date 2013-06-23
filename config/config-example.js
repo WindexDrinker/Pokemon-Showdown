@@ -1,30 +1,8 @@
 // The server port - the port to run Pokemon Showdown under
 exports.port = 8000;
 
-// The setuid user. If this is specified, the Pokemon Showdown server will
-// setuid() to this user after initialisation.
-//
-// WARNING: This is not generally the right way to run the server. If you want
-//          to run the server on a port below 1024, the correct way to do it
-//          is to run the server on port X > 1024 and then forward port the
-//          preferred port to port X.
-//
-//          If the server *.js files are writeable by the setuid user, this
-//          feature is equivalent to giving root to the setuid user, because
-//          they can just inject code to give themselves root into the part
-//          of the code before setuid() is called.
-//
-//          This feature should be used with caution.
-exports.setuid = '';
-
 // The server ID - a unique ID describing this Showdown server
 exports.serverid = 'testserver';
-
-// A signed assertion from the login server must be presented to this
-// server within this many seconds. This can be 1 minute (or possibly
-// less) unless your clock is wrong. In order to accommodate servers
-// with inaccurate clocks, the default is 25 hours.
-exports.tokenexpiry = 25*60*60;
 
 // proxyip - proxy IPs with trusted X-Forwarded-For headers
 //   This can be either false (meaning not to trust any proxies) or an array
@@ -38,16 +16,20 @@ exports.proxyip = false;
 //   Don't change this setting - there aren't any other login servers right now
 exports.loginserver = 'http://play.pokemonshowdown.com/';
 exports.loginserverkeyalgo = "RSA-SHA1";
-exports.loginserverpublickeyid = 1;
-exports.loginserverpublickey = "-----BEGIN PUBLIC KEY-----\n" +
-	"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2O8mOdl6ELJvx+XufPNk\n" +
-	"piAwG6G7dOG61RCly4inBtQ8OgAcotfbq1km1FIZJ4II7IzcmGAwQLoBb9TfpNNi\n" +
-	"+rN4shVth15riL4ip6YjKNxH4EFPTgvq5GnPmXdIIDxYnzRd3hIVqsCu6iKNcQm+\n" +
-	"e/yyQEd4NRCtNeQEHodkZK/7usZzY9gzePQeS6OclzXaS6G99dNBP3Z6frapEckE\n" +
-	"B2TSjcOvFaHWqbMR1Tk+B7ZEFvOXjsjlcL8PByqRErHglIxeujqtjzR46sLq6ofJ\n" +
-	"vohoUaig9PjfEfyPgcObzOjUki9QLcRcvqUZGTKmDUTgwjCGY22OlvfYI+qW0hxx\n" +
-	"mQIDAQAB\n" +
-	"-----END PUBLIC KEY-----\n";
+exports.loginserverpublickeyid = 2;
+exports.loginserverpublickey = "-----BEGIN RSA PUBLIC KEY-----\n" +
+	"MIICCgKCAgEAtFldA2rTCsPgqsp1odoH9vwhf5+QGIlOJO7STyY73W2+io33cV7t\n" +
+	"ReNuzs75YBkZ3pWoDn2be0eb2UqO8dM3xN419FdHNORQ897K9ogoeSbLNQwyA7XB\n" +
+	"N/wpAg9NpNu00wce2zi3/+4M/2H+9vlv2/POOj1epi6cD5hjVnAuKsuoGaDcByg2\n" +
+	"EOullPh/00TkEkcyYtaBknZpED0lt/4ekw16mjHKcbo9uFiw+tu5vv7DXOkfciW+\n" +
+	"9ApyYbNksC/TbDIvJ2RjzR9G33CPE+8J+XbS7U1jPvdFragCenz+B3AiGcPZwT66\n" +
+	"dvHAOYRus/w5ELswOVX/HvHUb/GRrh4blXWUDn4KpjqtlwqY4H2oa+h9tEENCk8T\n" +
+	"BWmv3gzGBM5QcehNsyEi9+1RUAmknqJW0QOC+kifbjbo/qtlzzlSvtbr4MwghCFe\n" +
+	"1EfezeNAtqwvICznq8ebsGETyPSqI7fSbpmVULkKbebSDw6kqDnQso3iLjSX9K9C\n" +
+	"0rwxwalCs/YzgX9Eq4jdx6yAHd7FNGEx4iu8qM78c7GKCisygZxF8kd0B7V7a5UO\n" +
+	"wdlWIlTxJ2dfCnnJBFEt/wDsL54q8KmGbzOTvRq5uz/tMvs6ycgLVgA9r1xmVU+1\n" +
+	"6lMr2wdSzyG7l3X3q1XyQ/CT5IP4unFs5HKpG31skxlfXv5a7KW5AfsCAwEAAQ==\n" +
+	"-----END RSA PUBLIC KEY-----\n";
 
 // Pokemon of the Day - put a pokemon's name here to make it Pokemon of the Day
 //   The PotD will always be in the #2 slot (not #1 so it won't be a lead)
@@ -99,12 +81,13 @@ exports.reportbattles = true;
 //   huge influxes of spammy users.
 exports.modchat = false;
 
-// backdoor - allow Zarel to provide tech support for your server
-//   This backdoor gives Zarel admin access to your server, which allows him
-//   to provide tech support. This can be useful in a variety of situations:
-//   if an attacker attacks your server and you are not online, if you need
-//   help setting up your server, etc.
-//   It is a backdoor, though, so if you do not trust Zarel you should
+// backdoor - allows Zarel and his authorised Pokemon Showdown development
+//            staff to provide tech support for your server
+//   This backdoor gives Zarel (and development staff approved by him) admin
+//   access to your server, which allows him to provide tech support. This
+//   can be useful in a variety of situations: if an attacker attacks your
+//   server and you are not online, if you need help setting up your server,
+//   etc. It is a backdoor, though, so if you do not trust Zarel you should
 //   disable this feature.
 exports.backdoor = true;
 
@@ -142,23 +125,6 @@ exports.simulatorprocesses = 1;
 // from the `users` array. The default is 1 hour.
 exports.inactiveuserthreshold = 1000*60*60;
 
-// Chat blacklist. Chat messages that match any of these regular
-// expressions will be dropped and not passed along to clients.
-exports.blacklist = [
-	/\bnimp\.org\b/
-];
-
-// reportbattlesperiod - by default, all battles are reported to clients
-// even if `reportbattles` is off. If you set this option to a value other
-// than false, then most battles will not be reported at all. Instead,
-// every so often the server will send information on the last 6 battles
-// to all clients; the `reportbattlesperiod` option specifies the length of
-// the period between reports in milliseconds.
-//
-// You should probably leave this value at `false`. It is only really
-// intended to be used by a busy server with thousands of concurrent users.
-exports.reportbattlesperiod = false;
-
 // Set this to true if you are using Pokemon Showdown on Heroku.
 exports.herokuhack = false;
 
@@ -173,6 +139,11 @@ exports.herokuhack = false;
 exports.customavatars = {
 	//'userid': 'customavatar.png'
 };
+
+// appealurl - specify a URL containing information on how users can appeal
+// disciplinary actions on your section. You can also leave this blank, in
+// which case users won't be given any information on how to appeal.
+exports.appealurl = '';
 
 // permissions and groups:
 //   Each entry in `groupsranking' specifies the ranking of the groups.

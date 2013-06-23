@@ -71,7 +71,7 @@ if (!Object.select) {
 // Make sure config.js exists, and copy it over from config-example.js
 // if it doesn't
 
-fs = require('fs');
+global.fs = require('fs');
 if (!('existsSync' in fs)) {
 	fs.existsSync = require('path').existsSync;
 }
@@ -88,7 +88,7 @@ if (!fs.existsSync('./config/config.js')) {
  * Load configuration
  *********************************************************/
 
-config = require('./config/config.js');
+global.config = require('./config/config.js');
 
 var watchFile = function() {
 	try {
@@ -111,9 +111,6 @@ if (config.watchconfig) {
 
 if (process.argv[2] && parseInt(process.argv[2])) {
 	config.port = parseInt(process.argv[2]);
-}
-if (process.argv[3]) {
-	config.setuid = process.argv[3];
 }
 
 /*********************************************************
@@ -178,7 +175,27 @@ try {
 // This is the main server that handles users connecting to our server
 // and doing things on our server.
 
-var server = require('sockjs').createServer({
+var sockjs = require('sockjs');
+
+// Warning: Terrible hack here. The version of faye-websocket that we use has
+//          a bug where sometimes the _cursor of a StreamReader ends up being
+//          NaN, which leads to an infinite loop. The newest version of
+//          faye-websocket has *other* bugs, so this really is the least
+//          terrible option to deal with this critical issue.
+(function() {
+	var StreamReader = require('./node_modules/sockjs/node_modules/' +
+			'faye-websocket/lib/faye/websocket/hybi_parser/stream_reader.js');
+	var _read = StreamReader.prototype.read;
+	StreamReader.prototype.read = function() {
+		if (isNaN(this._cursor)) {
+			// This will break out of the otherwise-infinite loop.
+			return null;
+		}
+		return _read.apply(this, arguments);
+	};
+})();
+
+var server = sockjs.createServer({
 	sockjs_url: "//play.pokemonshowdown.com/js/lib/sockjs-0.3.min.js",
 	log: function(severity, message) {
 		if (severity === 'error') console.log('ERROR: '+message);
@@ -188,9 +205,9 @@ var server = require('sockjs').createServer({
 });
 
 // Make `app`, `appssl`, and `server` available to the console.
-App = app;
-AppSSL = appssl;
-Server = server;
+global.App = app;
+global.AppSSL = appssl;
+global.Server = server;
 
 /*********************************************************
  * Set up most of our globals
@@ -204,28 +221,37 @@ Server = server;
  * If an object with an ID is passed, its ID will be returned.
  * Otherwise, an empty string will be returned.
  */
-toId = function(text) {
+global.toId = function(text) {
 	if (text && text.id) text = text.id;
 	else if (text && text.userid) text = text.userid;
 
 	return string(text).toLowerCase().replace(/[^a-z0-9]+/g, '');
 };
-toUserid = toId;
+global.toUserid = toId;
 
 /**
- * Validates a username or Pokemon nickname
+ * Sanitizes a username or Pokemon nickname
+ *
+ * Returns the passed name, sanitized for safe use as a name in the PS
+ * protocol.
+ *
+ * Such a string must uphold these guarantees:
+ * - must not contain any ASCII whitespace character other than a space
+ * - must not start or end with a space character
+ * - must not contain any of: | , [ ]
+ * - must not be the empty string
+ *
+ * If no such string can be found, returns the empty string. Calling
+ * functions are expected to check for that condition and deal with it
+ * accordingly.
+ *
+ * toName also enforces that there are not multiple space characters
+ * in the name, although this is not strictly necessary for safety.
  */
-var bannedNameStartChars = {'~':1, '&':1, '@':1, '%':1, '+':1, '-':1, '!':1, '?':1, '#':1, ' ':1};
-toName = function(name) {
+global.toName = function(name) {
 	name = string(name);
 	name = name.replace(/[\|\s\[\]\,]+/g, ' ').trim();
-	while (bannedNameStartChars[name.charAt(0)]) {
-		name = name.substr(1);
-	}
-	if (name.length > 18) name = name.substr(0,18);
-	if (config.namefilter) {
-		name = config.namefilter(name);
-	}
+	if (name.length > 18) name = name.substr(0,18).trim();
 	return name;
 };
 
@@ -233,7 +259,7 @@ toName = function(name) {
  * Escapes a string for HTML
  * If strEscape is true, escapes it for JavaScript, too
  */
-sanitize = function(str, strEscape) {
+global.sanitize = function(str, strEscape) {
 	str = (''+(str||''));
 	str = str.escapeHTML();
 	if (strEscape) str = str.replace(/'/g, '\\\'');
@@ -246,7 +272,7 @@ sanitize = function(str, strEscape) {
  * If we're expecting a string and being given anything that isn't a string
  * or a number, it's safe to assume it's an error, and return ''
  */
-string = function(str) {
+global.string = function(str) {
 	if (typeof str === 'string' || typeof str === 'number') return ''+str;
 	return '';
 }
@@ -255,7 +281,7 @@ string = function(str) {
  * Converts any variable to an integer (numbers get floored, non-numbers
  * become 0). Then clamps it between min and (optionally) max.
  */
-clampIntRange = function(num, min, max) {
+global.clampIntRange = function(num, min, max) {
 	if (typeof num !== 'number') num = 0;
 	num = Math.floor(num);
 	if (num < min) num = min;
@@ -263,40 +289,29 @@ clampIntRange = function(num, min, max) {
 	return num;
 };
 
-try {
-	if (config.setuid) {
-		process.setuid(config.setuid);
-		console.log("setuid succeeded, we are now running as "+config.setuid);
-	}
-}
-catch (err) {
-	console.log("ERROR: setuid failed: [%s] Call: [%s]", err.message, err.syscall);
-	process.exit(1);
-}
-
-LoginServer = require('./loginserver.js');
+global.LoginServer = require('./loginserver.js');
 
 watchFile('./config/custom.css', function(curr, prev) {
 	LoginServer.request('invalidatecss', {}, function() {});
 });
 LoginServer.request('invalidatecss', {}, function() {});
 
-Data = {};
+global.Data = {};
 
-Users = require('./users.js');
+global.Users = require('./users.js');
 
-Rooms = require('./rooms.js');
+global.Rooms = require('./rooms.js');
 
 delete process.send; // in case we're a child process
-Verifier = require('./verifier.js');
+global.Verifier = require('./verifier.js');
 
-CommandParser = require('./command-parser.js');
+global.CommandParser = require('./command-parser.js');
 
-Simulator = require('./simulator.js');
+global.Simulator = require('./simulator.js');
 
-lockdown = false;
+global.lockdown = false;
 
-sendData = function(socket, data) {
+global.sendData = function(socket, data) {
 	socket.write(data);
 };
 
@@ -354,7 +369,11 @@ global.isTrustedProxyIp = (function() {
 
 var socketCounter = 0;
 server.on('connection', function(socket) {
-	if (!socket.remoteAddress) {
+	if (!socket) {
+		// For reasons that are not entirely clear, SockJS sometimes triggers
+		// this event with a null `socket` argument.
+		return;
+	} else if (!socket.remoteAddress) {
 		// This condition occurs several times per day. It may be a SockJS bug.
 		try {
 			socket.end();
@@ -469,7 +488,7 @@ console.log('Test your server at http://localhost:' + config.port);
 // to the server. Anybody who connects while this require() is running will
 // have to wait a couple seconds before they are able to join the server, but
 // at least they probably won't receive a connection error message.
-Tools = require('./tools.js');
+global.Tools = require('./tools.js');
 
 // After loading tools, generate and cache the format list.
 Rooms.global.formatListText = Rooms.global.getFormatListText();

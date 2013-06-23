@@ -8,14 +8,52 @@ exports.BattleFormats = {
 		searchDefault: true,
 		rated: true,
 		challengeShow: true,
+		//searchShow: true,
+		isTeambuilderFormat: true,
+		ruleset: ['Pokemon', 'Standard', 'Evasion Abilities Clause', 'Team Preview'],
+		banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
+	},
+	oucurrent: {
+		name: "OU (current)",
+		section: "Singles",
+
+		effectType: 'Format',
+		challengeDefault: true,
+		rated: true,
+		challengeShow: true,
 		searchShow: true,
 		isTeambuilderFormat: true,
 		debug: true,
 		ruleset: ['Pokemon', 'Standard', 'Evasion Abilities Clause', 'Team Preview'],
 		banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 	},
-	ubers: {
+	oususpecttest: {
+		name: "OU (suspect test)",
+		section: "Singles",
+
 		effectType: 'Format',
+		challengeDefault: true,
+		rated: true,
+		challengeShow: true,
+		searchShow: true,
+		isTeambuilderFormat: true,
+		ruleset: ['Pokemon', 'Standard', 'Evasion Abilities Clause', 'Team Preview'],
+		banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew', 'Landorus']
+	},
+	ounostealthrock: {
+		name: "OU (no Stealth Rock)",
+		section: "Singles,"
+
+		effectType: 'Format',
+		challengeDefault: true,
+		rated: true,
+		challengeShow: true,
+		searchShow: true,
+		isTeambuilderFormat: true,
+		ruleset: ['Pokemon', 'Standard', 'Evasion Abilities Clause', 'Team Preview'],
+		banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew', 'Stealth Rock']
+	},
+	ubers: {
 		name: "Ubers",
 		section: "Singles",
 		rated: true,
@@ -185,6 +223,7 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 		isTeambuilderFormat: true,
 		ruleset: ['Pokemon', 'Standard', 'Evasion Abilities Clause', 'Team Preview'],
 		banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
+
 	},
 	suicidecup: {
 		effectType: 'Format',
@@ -1376,6 +1415,30 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 			var problems = [];
 
 			if (set.species === set.name) delete set.name;
+			// ----------- legality line ------------------------------------------
+			if (!format.banlistTable || !format.banlistTable['illegal']) return problems;
+			// everything after this line only happens if we're doing legality enforcement
+
+			// limit one of each move
+			var moves = [];
+			if (set.moves) {
+				var hasMove = {};
+				for (var i=0; i<set.moves.length; i++) {
+					var move = this.getMove(set.moves[i]);
+					var moveid = move.id;
+					if (hasMove[moveid]) continue;
+					hasMove[moveid] = true;
+					moves.push(set.moves[i]);
+				}
+			}
+			set.moves = moves;
+
+			if (template.num == 351) { // Castform
+				set.species = 'Castform';
+			}
+			if (template.num == 421) { // Cherrim
+				set.species = 'Cherrim';
+			}
 			if (template.num == 493) { // Arceus
 				if (set.ability === 'Multitype' && item.onPlate) {
 					set.species = 'Arceus-'+item.onPlate;
@@ -1432,6 +1495,20 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 		validateSet: function(set, format) {
 			// don't return
 			this.getEffect('Pokemon').validateSet.call(this, set, format);
+			
+			// limit one of each move
+			var moves = [];
+			if (set.moves) {
+				var hasMove = {};
+				for (var i=0; i<set.moves.length; i++) {
+					var move = this.getMove(set.moves[i]);
+					var moveid = move.id;
+					if (hasMove[moveid]) continue;
+					hasMove[moveid] = true;
+					moves.push(set.moves[i]);
+				}
+			}
+			set.moves = moves;
 		}
 	},
 	gen1pokemon: {

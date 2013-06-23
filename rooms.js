@@ -80,14 +80,12 @@ var GlobalRoom = (function() {
 			REPORT_USER_STATS_INTERVAL
 		);
 
-
 		if (config.reportbattlesperiod) {
 			this.reportBattlesInterval = setInterval(
 				this.reportRecentBattles.bind(this),
 				config.reportbattlesperiod
 			);
 		}
-
 
 		if (!config.herokuhack) {
 			this.sweepClosedSocketsInterval = setInterval(
@@ -156,7 +154,6 @@ var GlobalRoom = (function() {
 		return formatListText;
 	};
 
-
 	GlobalRoom.prototype.lastRoomReported = null;
 
 
@@ -177,7 +174,6 @@ var GlobalRoom = (function() {
 		var total = 0;
 		for (var i=this.rooms.length-1; i>=0; i--) {
 			var room = this.rooms[i];
-			if (lastRoomReported && (room.id === lastRoomReported)) break;
 			if (!room || !room.active) continue;
 			if (filter && filter !== room.format && filter !== true) continue;
 			var roomData = {};
@@ -411,11 +407,8 @@ var GlobalRoom = (function() {
 		newRoom.joinBattle(p2, p2team);
 		this.cancelSearch(p1, true);
 		this.cancelSearch(p2, true);
-		if (config.reportbattlesperiod) return;
 		if (config.reportbattles) {
 			rooms.lobby.add('|b|'+newRoom.id+'|'+p1.getIdentity()+'|'+p2.getIdentity());
-		} else {
-			this.send('|B|'+newRoom.id+'|'+p1.getIdentity()+'|'+p2.getIdentity());
 		}
 
 
@@ -1209,7 +1202,9 @@ var ChatRoom = (function() {
 			// nothing to report
 			return;
 		}
-		this.userList = this.getUserList();
+		if (config.reportjoinsperiod) {
+			this.userList = this.getUserList();
+		}
 		this.send(this.reportJoinsQueue.join('\n'));
 		this.reportJoinsQueue.length = 0;
 	};
