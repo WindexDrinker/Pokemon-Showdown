@@ -958,9 +958,9 @@ forums: function(target, room, user) {
                                 'Type: Grass<br />' +
                                 'Tier: Over Used (OU)<br />' +
                                 '<a href="gymleadermustang.wix.com%2F-amethystleague%23!gym-leaders%2FaboutPage" target="_blank">Thread</a><br />' +
-                                'Signature Pokemon: Roserade<br />' +
-                                '<img src="http://www.poke-amph.com/black-white/sprites/small/407.png"><br />' +
-                                'Badge: Growth Badge<br />' +
+                                'Signature Pokemon: Whimsicott<br />' +
+                                '<img src="http://www.poke-amph.com/black-white/sprites/small/574.png"><br />' +
+                                'Badge: Attract Badge<br />' +
                                 '<img src="http://i1305.photobucket.com/albums/s542/TheBattleTowerPS/K003_zps16041652.png">');
                 },
 	gomewex: function(target, room, user) {
@@ -1000,7 +1000,7 @@ forums: function(target, room, user) {
                              	'Badge: Cataegis Badge<br />' +
                            	'<img src="http://i1305.photobucket.com/albums/s542/TheBattleTowerPS/Zapmolcuno_zps229d8b2a.png">');
 		},
-		
+	auraburst: 'magma',	
 	magma: function(target, room, user) {
 		if(!this.canBroadcast()) return;
 		this.sendReplyBox('<b>Information on Gym Le@der Magma:</b><br />' +
@@ -1136,7 +1136,7 @@ forums: function(target, room, user) {
 	uuleaders: function(target, room, user) {
 		if(!this.canBroadcast()) return;
 		this.sendReplyBox('<b>List of Active Gym Leaders:</b>' +
-				'<ul><li>Gym Le@der ZacT94: Ghost</li><li>Gym Le@der Nord: Ice</li><li>Gym Le@der Boss: Fire</li><li>Gym Le@der CC: Psychic</li><li>Gym Le@der AOrtega: Fighting</li><li>Gym Le@der Ross: Grass</li><li>Gym Le@der Delibird: Rock</li><li>Gym Le@der piiiikachuuu: Normal</li><li>Gym Le@der Pupitar: Steel</li></ul>');
+				'<ul><li>Gym Le@der ZacT94: Ghost</li><li>Gym Le@der Nord: Ice</li><li>Gym Le@der Boss: Fire</li><li>Gym Le@der CC: Psychic</li><li>Gym Le@der AOrtega: Fighting</li><li>Gym Le@der Ross: Grass</li><li>Gym Le@der Delibird: Rock</li><li>Gym Le@der Pupitar: Steel</li></ul>');
 		},
  
         pika: 'chuuu',
