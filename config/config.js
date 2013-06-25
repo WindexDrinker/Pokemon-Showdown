@@ -171,7 +171,8 @@ exports.customavatars = {
 	'gymlederbluejob':'6008.png',
 	'jd':'jd.png',
 	'pillowisp':'pillow.png',
-	'frontiermanadam':'adam.png'
+	'frontiermanadam':'adam.png',
+	'darkgirafarig':'darkgirafarig.png'
 	
 };
 
