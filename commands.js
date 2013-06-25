@@ -1012,7 +1012,95 @@ forums: function(target, room, user) {
 				'Badge: Magma Flare Badge<br />' +
                            	'<img src="http://i.imgur.com/V0gp7hJ.png"><br />');
 		},
-	
+	//uu leaders
+		cc: 'crazyclown',
+	crazyclown: function(target, room, user) {
+		if(!this.canBroadcast()) return;
+		this.sendReplyBox('<b>Information on UU Le@der CC:</b><br />' +
+							'Type: Psychic<br />' +
+							'Tier: Under Used (UU)<br />' + 
+							'<a href="gymleadermustang.wix.com%2F-amethystleague%23!gym-leaders%2FaboutPage" target="_blank">Thread</a><br />' +
+                          	'Signature Pokemon: Medicham<br />' +
+                        	'<img src="http://www.poke-amph.com/black-white/sprites/small/308.png"><br />' +
+							'Badge: Crazy Badge<br />');
+		},
+		
+	zact94: 'zact',	
+	zact: function(target, room, user) {
+		if(!this.canBroadcast()) return;
+		this.sendReplyBox('<b>Information on UU Le@der ZacT94:</b><br />' +
+							'Type: Ghost<br />' +
+							'Tier: Under Used (UU)<br />' + 
+							'<a href="gymleadermustang.wix.com%2F-amethystleague%23!gym-leaders%2FaboutPage" target="_blank">Thread</a><br />' +
+                          	'Signature Pokemon: Cofagrigus<br />' +
+                        	'<img src="http://www.poke-amph.com/black-white/sprites/small/563.png"><br />' +
+							'Badge: Spook Badge<br />');
+		},
+		
+		aidenpyralis: 'aiden',
+		aiden: function(target, room, user) {
+		if(!this.canBroadcast()) return;
+		this.sendReplyBox('<b>Information on UU Elite F@ur Aiden:</b><br />' +
+							'Type: Water<br />' +
+							'Tier: Under Used (UU)<br />' + 
+							'<a href="gymleadermustang.wix.com%2F-amethystleague%23!gym-leaders%2FaboutPage" target="_blank">Thread</a><br />' +
+                          	'Signature Pokemon: Empoleon<br />' +
+                        	'<img src="http://www.poke-amph.com/black-white/sprites/small/395.png"><br />' +
+							'Badge: Barrier Reef Badge<br />');
+		},
+		
+		uudelibird: function(target, room, user) {
+		if(!this.canBroadcast()) return;
+		this.sendReplyBox('<b>Information on UU Le@der Delibird:</b><br />' +
+							'Type: Rock<br />' +
+							'Tier: Under Used (UU)<br />' + 
+							'<a href="gymleadermustang.wix.com%2F-amethystleague%23!gym-leaders%2FaboutPage" target="_blank">Thread</a><br />' +
+                          	'Signature Pokemon: Kabutops<br />' +
+                        	'<img src="http://www.poke-amph.com/black-white/sprites/small/141.png"><br />' +
+							'Badge: TM28: Tombstoner Badge<br />');
+		},
+		
+		pupitar21: 'pupitar',
+		pupitar: function(target, room, user) {
+		if(!this.canBroadcast()) return;
+		this.sendReplyBox('<b>Information on UU Le@der Pupitar:</b><br />' +
+							'Type: Steel<br />' +
+							'Tier: Under Used (UU)<br />' + 
+							'<a href="gymleadermustang.wix.com%2F-amethystleague%23!gym-leaders%2FaboutPage" target="_blank">Thread</a><br />' +
+                          	'Signature Pokemon: Durant<br />' +
+                        	'<img src="http://www.poke-amph.com/black-white/sprites/small/632.png"><br />' +
+							'Badge: Harden Badge<br />');
+		},
+		
+		uuminer0: 'uuminer',
+		uuminer: function(target, room, user) {
+		if(!this.canBroadcast()) return;
+		this.sendReplyBox('<b>Information on UU Elite F@ur Miner0:</b><br />' +
+							'Type: Flying<br />' +
+							'Tier: Under Used (UU)<br />' + 
+							'<a href="gymleadermustang.wix.com%2F-amethystleague%23!gym-leaders%2FaboutPage" target="_blank">Thread</a><br />' +
+							'Badge: Cloud Badge<br />');
+		},
+		
+		uuross: function(target, room, user) {
+		if(!this.canBroadcast()) return;
+		this.sendReplyBox('<b>Information on UU Le@der CC:</b><br />' +
+							'Type: Grass<br />' +
+							'Tier: Under Used (UU)<br />' + 
+							'<a href="gymleadermustang.wix.com%2F-amethystleague%23!gym-leaders%2FaboutPage" target="_blank">Thread</a><br />' +
+                          	'Signature Pokemon: Rotom-Mow<br />' +
+                        	'<img src="http://pldh.net/media/pokecons/479-cut.png"><br />' +
+							'Badge: Sun Badge<br />');
+		},
+		
+		stripper: 'aortega',
+		batman: 'aortega',
+		ao: 'aortega',
+		aortega: function(target, room, user) {
+			if(!this.canBroadcast()) return;
+			this.sendReplyBox('ao sux huehue<br />pretty sure he\'s fighting uu gym leader or something :x<br />whatever :I');
+		},
+		
 	league: 'leagueintro',
 	leagueintro: function(target, room, user) {
 		if (!this.canBroadcast()) return;
@@ -1146,6 +1234,12 @@ forums: function(target, room, user) {
                 'pm him if you need something to be changed or if you\'re a new gym leader/elite four and you need one.<br />'+
                                 '<img src="http://i1073.photobucket.com/albums/w394/HeechulBread/Pikachu_sprite_by_Momogirl_zpsf31aafb5.gif">');
                 },
+                
+        	piiiika: function(target, room, user) {
+	if(user.userid === 'piiiikachuuu') {
+		user.avatar = 1005;
+	}
+	},
                 
 	piiiikachuuu: function(target, room, user) {
 	if(user.userid === 'piiiikachuuu') {
