@@ -959,7 +959,7 @@ forums: function(target, room, user) {
                                 'Tier: Over Used (OU)<br />' +
                                 '<a href="gymleadermustang.wix.com%2F-amethystleague%23!gym-leaders%2FaboutPage" target="_blank">Thread</a><br />' +
                                 'Signature Pokemon: Whimsicott<br />' +
-                                '<img src="http://www.poke-amph.com/black-white/sprites/small/574.png"><br />' +
+                                '<img src="http://www.poke-amph.com/black-white/sprites/small/547.png"><br />' +
                                 'Badge: Attract Badge<br />' +
                                 '<img src="http://i1305.photobucket.com/albums/s542/TheBattleTowerPS/K003_zps16041652.png">');
                 },
