@@ -172,7 +172,8 @@ exports.customavatars = {
 	'jd':'jd.png',
 	'pillowisp':'pillow.png',
 	'frontiermanadam':'adam.png',
-	'darkgirafarig':'darkgirafarig.png'
+	'darkgirafarig':'darkgirafarig.png',
+	'uuledercc':'uuledercc.png'
 	
 };
 
