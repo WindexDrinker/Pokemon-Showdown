@@ -1172,7 +1172,7 @@ forums: function(target, room, user) {
 			if(canbs == false) {
 				this.sendReply('You turned on /bs.');
 				canbs = true;
-				logModCommand(user.name + ' turned on /bs');
+				this.logModCommand(user.name + ' turned on /bs');
 			}
 		}
 		},
@@ -1188,7 +1188,7 @@ forums: function(target, room, user) {
 			if(canbs == true) {
 				this.sendReply('You turned off /bs.');
 				canbs = false;
-				logModCommand(user.name + ' turned off /bs');
+				this.logModCommand(user.name + ' turned off /bs');
 			}
 		}
 		},
