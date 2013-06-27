@@ -225,7 +225,7 @@ exports.appealurl = 'http://amethyst.webuda.com/forums/forumdisplay.php?fid=33';
 //     - forcewin: /forcewin command.
 //     - battlemessage: /a command.
 //	   - hide: /hide and /show commands.
-exports.groupsranking = [' ', '+', '$', '%', '@', '&', '&&', '~', '♠'];
+exports.groupsranking = [' ', '+', '$', '%', '@', '&', '~', '♠'];
 exports.groups = {
 	'♠': {
 		id: "sysop",
