@@ -1084,7 +1084,7 @@ forums: function(target, room, user) {
 		
 		uuross: function(target, room, user) {
 		if(!this.canBroadcast()) return;
-		this.sendReplyBox('<b>Information on UU Le@der CC:</b><br />' +
+		this.sendReplyBox('<b>Information on UU Le@der Ross:</b><br />' +
 							'Type: Grass<br />' +
 							'Tier: Under Used (UU)<br />' + 
 							'<a href="gymleadermustang.wix.com%2F-amethystleague%23!gym-leaders%2FaboutPage" target="_blank">Thread</a><br />' +
@@ -1099,6 +1099,39 @@ forums: function(target, room, user) {
 		aortega: function(target, room, user) {
 			if(!this.canBroadcast()) return;
 			this.sendReplyBox('ao sux huehue<br />pretty sure he\'s fighting uu gym leader or something :x<br />whatever :I');
+		},
+		
+			uuhope: function(target, room, user) {
+			if(!this.canBroadcast()) return;
+		this.sendReplyBox('<b>Information on Elite F@ur Hope:</b><br />' +
+							'Type: Psychic<br />' +
+							'Tier: Under Used (UU)<br />' + 
+							'<a href="gymleadermustang.wix.com%2F-amethystleague%23!gym-leaders%2FaboutPage" target="_blank">Thread</a><br />' +
+                          	'Signature Pokemon: Mew<br />' +
+							'<img src="http://www.poke-amph.com/black-white/sprites/small/151.png"><br />' +
+							'Badge: ESP Badge<br />');
+		},
+		
+	nord: function(target, room, user) {
+		if(!this.canBroadcast()) return;
+				this.sendReplyBox('<b>Information on Gym Le@der Nord:</b><br />' +
+							'Type: Ice<br />' +
+							'Tier: Over Used (OU)<br />' + 
+							'<a href="gymleadermustang.wix.com%2F-amethystleague%23!gym-leaders%2FaboutPage" target="_blank">Thread</a><br />' +
+                          	'Signature Pokemon: Regice<br />' +
+							'<img src="http://www.poke-amph.com/black-white/sprites/small/378.png"><br />' +
+							'Badge: Berg Badge<br />');
+		},
+		
+	uunord: function(target, room, user) {
+			if(!this.canBroadcast()) return;
+		this.sendReplyBox('<b>Information on UU Le@der Nord:</b><br />' +
+							'Type: Ice<br />' +
+							'Tier: Under Used (UU)<br />' + 
+							'<a href="gymleadermustang.wix.com%2F-amethystleague%23!gym-leaders%2FaboutPage" target="_blank">Thread</a><br />' +
+                          	'Signature Pokemon: Glaceon<br />' +
+							'<img src="http://www.poke-amph.com/black-white/sprites/small/471.png"><br />' +
+							'Badge: Snow Badge<br />');
 		},
 		
 	league: 'leagueintro',
