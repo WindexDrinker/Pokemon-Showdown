@@ -1141,9 +1141,9 @@ forums: function(target, room, user) {
 		},
 		
 		
-	
+	//see if setting this to mod level will improve it, else I'll remove
 	peton: function(target, room, user) {
-		if(!user.can('mute')) {
+		if(!user.can('ban')) {
 			return this.sendReply('You do not have the authority to use this command.');
 		}
 		else {
@@ -1158,7 +1158,7 @@ forums: function(target, room, user) {
 		},
 		
 	petoff: function(target, room, user) {
-		if(!user.can('mute')){
+		if(!user.can('ban')){
 			return this.sendReply('you do not have the authority to use this command.');
 		}
 		else {
@@ -1195,7 +1195,7 @@ forums: function(target, room, user) {
         	},
         
 	bson: function(target, room, user) {
-		if(!user.can('mute')) {
+		if(!user.can('ban')) {
 			return this.sendReply('You do not have the authority to use this command.');
 		}
 		else {
@@ -1211,7 +1211,7 @@ forums: function(target, room, user) {
 		},
 		
 	bsoff: function(target, room, user) {
-		if(!user.can('mute')){
+		if(!user.can('ban')){
 			return this.sendReply('you do not have the authority to use this command.');
 		}
 		else {
@@ -1934,7 +1934,7 @@ return this.privateModCommand('' + targetUser.name + ' has had a note added by '
 		});
 		return false;
 		}
-		if (!this.can('modlog')) return false;
+		if (!this.can('declare')) return false;
 		var lines = 0;
 		if (!target.match('[^0-9]')) { 
 			lines = parseInt(target || 15, 10);
