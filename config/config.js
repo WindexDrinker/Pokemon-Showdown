@@ -237,12 +237,6 @@ exports.groups = {
                 id: "admin",
                 name: "Administrator",
                 root: true,
-                rank: 7
-        },
-        '&&': {
-                id: "sysadmin",
-                name: "System Administrator",
-                root: true,
                 rank: 6
         },
         '&': {
@@ -295,6 +289,7 @@ exports.groups = {
                 name: "Leader",
                 inherit: '+',
                 broadcast: true,
+                warn: true,
                 rank: 2
         },
         '+': {
