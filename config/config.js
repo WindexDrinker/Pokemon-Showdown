@@ -265,7 +265,7 @@ exports.groups = {
         '%': {
                 id: "tmod",
                 name: "Trial Moderator",
-                inherit: '+',
+                inherit: '♠',
                 jurisdiction: 'u',
                 announce: true,
                 warn: true,
