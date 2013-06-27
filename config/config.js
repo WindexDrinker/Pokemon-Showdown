@@ -225,7 +225,7 @@ exports.appealurl = 'http://amethyst.webuda.com/forums/forumdisplay.php?fid=33';
 //     - forcewin: /forcewin command.
 //     - battlemessage: /a command.
 //	   - hide: /hide and /show commands.
-exports.groupsranking = [' ', '♠', '$', '%', '@', '&', '~'];
+exports.groupsranking = [' ', '+', '$', '%', '@', '&', '~'];
 exports.groups = {
         '~': {
                 id: "admin",
@@ -265,7 +265,7 @@ exports.groups = {
         '%': {
                 id: "tmod",
                 name: "Trial Moderator",
-                inherit: '♠',
+                inherit: '+',
                 jurisdiction: 'u',
                 announce: true,
                 warn: true,
@@ -286,7 +286,7 @@ exports.groups = {
                 warn: true,
                 rank: 2
         },
-        '♠': {
+        '+': {
                 id: "voice",
                 name: "Voice",
                 inherit: ' ',
