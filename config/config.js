@@ -246,6 +246,8 @@ exports.groups = {
                 namelock: true,
                 forcerenameto: true,
                 disableladder: true,
+                //this is /crashfixed
+                hotpatch: true,
                 rank: 5
         },
         '@': {
@@ -258,6 +260,7 @@ exports.groups = {
                 redirect: true,
                 forcerename: true,
                 modlog: true,
+                lock: true,
                 ip: true,
                 alts: '@u',
                 rank: 4
@@ -273,7 +276,6 @@ exports.groups = {
                 forcerename: true,
                 timer: true,
                 alts: '%u',
-                lock: true,
                 bypassblocks: 'u%@&~',
                 receiveauthmessages: true,
                 rank: 3
