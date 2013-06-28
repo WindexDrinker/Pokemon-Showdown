@@ -1510,8 +1510,6 @@ if (!this.can('mute')) return false;
 return this.privateModCommand('' + targetUser.name + ' has had a note added by ' + user.name + '. (' + target + ')');
 },
 
-	kick: 'warn',
-	k: 'warn',
 	warn: function(target, room, user) {
 		if (!target) return this.parse('/help warn');
 
@@ -1524,6 +1522,20 @@ return this.privateModCommand('' + targetUser.name + ' has had a note added by '
 
 		this.addModCommand(''+targetUser.name+' was warned by '+user.name+'.' + (target ? " (" + target + ")" : ""));
 		targetUser.send('|c|~|/warn '+target);
+	},
+	
+	kick: function(target, room, user) {
+		if (!target) return this.parse('/help kick');
+
+		target = this.splitTarget(target);
+		var targetUser = this.targetUser;
+		if (!targetUser || !targetUser.connected) {
+			return this.sendReply('User '+this.targetUsername+' not found.');
+		}
+		if (!this.can('warn', targetUser)) return false;
+
+		this.addModCommand(targetUser.name + ' was kicked from ' + room.id + ' by ' + user.name);
+		targetUser.leaveRoom(room.id);
 	},
 
 	m: 'mute',
