@@ -174,7 +174,7 @@ exports.customavatars = {
 	'frontiermanadam':'adam.png',
 	'darkgirafarig':'darkgirafarig.png',
 	'uuledercc':'uuledercc.png',
-	'uulederpupitar':'pupitar.png',
+	'uulederpupitar':'1006.png',
 	'gymlderhope':'hope.png',
 	'gymldrmgm':'magma.png'
 	
