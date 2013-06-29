@@ -1342,6 +1342,7 @@ return this.sendReply('/nopoof - Access denied.');
 if(!poofeh)
 return this.sendReply('poof is currently disabled.');
 poofeh = false;
+this.logModCommand(user.name + ' disabled poof.');
 return this.sendReply('poof is now disabled.');
 },
 
@@ -1351,6 +1352,7 @@ return this.sendReply('/poofon - Access denied.');
 if(poofeh)
 return this.sendReply('poof is currently enabled.');
 poofeh = true;
+this.logModCommand(user.name + ' enabled poof');
 return this.sendReply('poof is now enabled.');
 },
 
