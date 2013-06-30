@@ -167,7 +167,7 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 		ruleset: ['Pokemon', 'Standard', 'Team Preview'],
 		banlist: ['Uber', 'Drizzle', 'Soul Dew', 'Drought', 'Sand Stream', 'Snow Warning']
 	},
-	gennextou: {
+/*	gennextou: {
 		mod: 'gennext',
 		effectType: 'Format',
 		name: "Gen-NEXT OU",
@@ -177,7 +177,7 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 		rated: true,
 		ruleset: ['Pokemon', 'Standard NEXT', 'Team Preview'],
 		banlist: ['Uber']
-	},
+	}, 
 	oulenient: {
 		effectType: 'Format',
 		name: "OU Lenient",
@@ -200,7 +200,7 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 		isTeambuilderFormat: true,
 		ruleset: ['Pokemon', 'Standard All Abilities', 'Evasion Abilities Clause', 'Team Preview'],
 		banlist: ['Illegal', 'Uber', 'Soul Dew', 'Pure Power', 'Huge Power', 'Wonder Guard', 'Moody', 'Imposter', 'Snow Cloak', 'Sand Veil', 'Zen Mode', 'Shedinja ++ Sturdy']
-	},
+	}, */
 	ousixmoves: {
 		effectType: 'Format',
 		name: "OU Six Moves",
@@ -359,7 +359,7 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 		ruleset: ['Pokemon', 'OHKO Clause'],
 		banlist: ['Wonder Guard', 'Pure Power', 'Huge Power', 'Shadow Tag', 'Arena Trap']
 	},
-	pu: {
+/*	pu: {
 		effectType: 'Format',
 		name: "PU",
 		section: "Other Metas",
@@ -413,7 +413,7 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 		isTeambuilderFormat: true,
 		ruleset: ['Pokemon', 'Standard'],
 		banlist: ['Uber']
-	},
+	}, */
 	gen1ou: {
 		mod: 'gen1',
 		effectType: 'Format',
@@ -426,7 +426,7 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 		isTeambuilderFormat: true,
 		ruleset: ['Pokemon', 'Standard'],
 		banlist: ['Uber', 'Wrap', 'Fire Spin', 'Clamp', 'Bind']
-	},
+	}, /*
 	gen1ubers: {
 		mod: 'gen1',
 		effectType: 'Format',
@@ -465,7 +465,7 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 		isTeambuilderFormat: true,
 		ruleset: ['Pokemon', 'Little Cup', 'Sleep Clause', 'Species Clause', 'OHKO Clause', 'Evasion Clause', 'Freeze Clause'],
 		banlist: ['Uber', 'OU', 'UU', 'Illegal', 'Sonicboom', 'Dragon Rage']
-	},
+	}, */
 	/*gen1randombattle: {
 		mod: 'gen1',
 		effectType: 'Format',
@@ -517,7 +517,7 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 		ruleset: ['Pokemon', 'Standard'],
 		banlist: ['Uber']
 	},
-	gen4hackmons: {
+/*	gen4hackmons: {
 		mod: 'gen4',
 		effectType: 'Format',
 		name: "[Gen 4] Hackmons",
@@ -533,7 +533,7 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 		canUseRandomTeam: true,
 		debug: true,
 		ruleset: []
-	},
+	}, */
 	gen3ou: {
 		name: "[Gen 3] OU",
 		mod: 'gen3',
@@ -547,7 +547,7 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 		ruleset: ['Pokemon', 'Standard'],
 		banlist: ['Uber']
 	},
-	gen3hackmons: {
+/*	gen3hackmons: {
 		mod: 'gen3',
 		effectType: 'Format',
 		name: "[Gen 3] Hackmons",
@@ -574,7 +574,7 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 		isTeambuilderFormat: true,
 		ruleset: ['Pokemon', 'Standard'],
 		banlist: ['Uber']
-	},
+	}, */
 	//leave these out atm due to them being broken (no function to create the random teams they need)
 	/*seasoningsgreetings: {
 		effectType: 'Format',
@@ -1234,7 +1234,7 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 		debug: true,
 		ruleset: ['PotD', 'Pokemon']
 	},
-	nudoubles: {
+/*	nudoubles: {
 		effectType: 'Format',
 		section: 'Doubles',
 		gameType: 'Doubles',
@@ -1257,7 +1257,7 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 		isTeambuilderFormat: true,
 		ruleset: ['Pokemon', 'Standard', 'Team Preview', 'Little Cup'],
 		banlist: ['Sonicboom', 'Dragon Rage', 'Berry Juice', 'Carvanha', 'Meditite', 'Gligar', 'Scyther', 'Sneasel', 'Tangela', 'Vulpix', 'Yanma', 'Soul Dew']
-	},
+	}, */
 	
 	// rules
 	standard: {
