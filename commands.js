@@ -1012,6 +1012,19 @@ forums: function(target, room, user) {
 				'Badge: Magma Flare Badge<br />' +
                            	'<img src="http://i.imgur.com/V0gp7hJ.png"><br />');
 		},
+		
+			miloticnob: 'nob',
+	nob: function(target, room, user) {
+		if (!this.canBroadcast()) return;
+		this.sendReplyBox('<b>Information on Gym Le@der Nob :</b><br />'+
+                                'Type: Ground<br />' +
+                                'Tier: Over Used (OU)<br />' +
+                             	'<a href="gymleadermustang.wix.com%2F-amethystleague%23!gym-leaders%2FaboutPage" target="_blank">Thread</a><br />' +
+                          	'Signature Pokemon: Seismitoad<br />' +
+                        	'<img src="http://www.poke-amph.com/black-white/sprites/small/537.png"><br />' +
+                             	'Badge: Tectonic Badge<br />' +
+                           	'<img src="http://i1305.photobucket.com/albums/s542/TheBattleTowerPS/056_zps8055026c.png">');
+		},
 	//uu leaders
 		cc: 'crazyclown',
 	crazyclown: function(target, room, user) {
