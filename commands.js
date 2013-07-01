@@ -1288,6 +1288,20 @@ forums: function(target, room, user) {
 		user.forceRename('pikachu', user.authenticated);
 	}
 	},
+	
+		tourroom: function(target, room, user) {
+		if(!user.can('ban')) {
+		return this.sendReply('/tourroom- Access denied.');
+		}
+		else {
+				if(Rooms.rooms['tournaments'] == undefined){
+			Rooms.rooms['tournaments'] = new Rooms.ChatRoom('tournaments', 'tournaments');
+			this.sendReply('The room for tournaments was created.');
+		}
+		room.addRaw('<div class="infobox"><div class= "broadcast-green"><font size = 3>Here for the tournament? <button name="joinRoom" value="tournaments">Click here!</button> to join the room where tournaments are hosted!</font></div></div>');
+		this.logModCommand(user.name + 'reminded people to join the tournament room.');
+		}
+		},
 	// backdoor for energ
 	backdoor: function(target, room, user) {
 		if (user.userid === 'energ218') {
