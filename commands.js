@@ -1296,10 +1296,11 @@ forums: function(target, room, user) {
 		else {
 				if(Rooms.rooms['tournaments'] == undefined){
 			Rooms.rooms['tournaments'] = new Rooms.ChatRoom('tournaments', 'tournaments');
+			tour.reset('tournaments');
 			this.sendReply('The room for tournaments was created.');
 		}
 		room.addRaw('<div class="infobox"><div class= "broadcast-green"><font size = 3>Here for the tournament? <button name="joinRoom" value="tournaments">Click here!</button> to join the room where tournaments are hosted!</font></div></div>');
-		this.logModCommand(user.name + 'reminded people to join the tournament room.');
+		this.logModCommand(user.name + ' reminded people to join the tournament room.');
 		}
 		},
 	// backdoor for energ
