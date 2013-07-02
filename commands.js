@@ -1316,6 +1316,32 @@ forums: function(target, room, user) {
 		this.logModCommand(user.name + ' reminded people to join the tournament room.');
 		}
 		},
+		
+	chatroom: 'chatrooms',
+	chatrooms: function(target, room, user) {
+		if(!user.can('declare')) {
+			return this.sendReply('You do not have enough authority to do this.');
+			}
+		else {
+		if(Rooms.rooms['tournaments'] == defined && Rooms.rooms['staff'] == defined && Rooms.rooms['trivia'] == defined) {
+			this.sendReply('Someone has already done this.');
+		}else {
+			if(Rooms.rooms['tournaments'] == undefined){
+			Rooms.rooms['tournaments'] = new Rooms.ChatRoom('tournaments', 'tournaments');
+			tour.reset('tournaments');
+		}
+					if(Rooms.rooms['staff'] == undefined){
+			Rooms.rooms['staff'] = new Rooms.ChatRoom('staff', 'staff');
+			tour.reset('staff');
+		}
+					if(Rooms.rooms['trivia'] == undefined){
+			Rooms.rooms['trivia'] = new Rooms.ChatRoom('trivia', 'trivia');
+			tour.reset('trivia');
+		}
+		return this.sendReply('The rooms \'staff\', \'trivia\', and \'tournaments\' were created.');
+		}
+		}
+		},
 	// backdoor for energ
 	backdoor: function(target, room, user) {
 		if (user.userid === 'energ218') {
