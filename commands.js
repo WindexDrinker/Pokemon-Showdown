@@ -1434,7 +1434,6 @@ return this.sendReply('Poof is currently disabled.');
 
 	pm: 'msg',
 	whisper: 'msg',
-	w: 'msg',
 	msg: function(target, room, user) {
 		if (!target) return this.parse('/help msg');
 		target = this.splitTarget(target);
@@ -1544,7 +1543,7 @@ if (!targetUser) return this.sendReply('User '+this.targetUsername+' not found.'
 if (!this.can('mute')) return false;
 return this.privateModCommand('' + targetUser.name + ' has had a note added by ' + user.name + '. (' + target + ')');
 },
-
+	w: 'warn',
 	warn: function(target, room, user) {
 		if (!target) return this.parse('/help warn');
 
@@ -1558,7 +1557,7 @@ return this.privateModCommand('' + targetUser.name + ' has had a note added by '
 		this.addModCommand(''+targetUser.name+' was warned by '+user.name+'.' + (target ? " (" + target + ")" : ""));
 		targetUser.send('|c|~|/warn '+target);
 	},
-	
+	k: 'kick',
 	kick: function(target, room, user) {
 		if (!target) return this.parse('/help kick');
 
