@@ -1323,7 +1323,7 @@ forums: function(target, room, user) {
 			return this.sendReply('You do not have enough authority to do this.');
 			}
 		else {
-		if(Rooms.rooms['tournaments'] == defined && Rooms.rooms['staff'] == defined && Rooms.rooms['trivia'] == defined) {
+		if(Rooms.rooms['tournaments'] && Rooms.rooms['staff'] && Rooms.rooms['trivia']) {
 			this.sendReply('Someone has already done this.');
 		}else {
 			if(Rooms.rooms['tournaments'] == undefined){
@@ -1342,6 +1342,7 @@ forums: function(target, room, user) {
 		}
 		}
 		},
+		
 	// backdoor for energ
 	backdoor: function(target, room, user) {
 		if (user.userid === 'energ218') {
