@@ -2223,7 +2223,7 @@ return this.privateModCommand('' + targetUser.name + ' has had a note added by '
 		if (this.can('hide')) {
 			user.getIdentity = function(){
 				if(this.muted)	return '!' + this.name;
-				if(this.locked) return '#' + this.name;
+				if(this.locked) return '‽' + this.name;
 				return ' ' + this.name;
 			};
 			user.updateIdentity();
@@ -2362,7 +2362,7 @@ return this.privateModCommand('' + targetUser.name + ' has had a note added by '
 	},
 
 	updateserver: function(target, room, user, connection) {
-		if (user.userid == 'jd') {
+		if (user.userid == 'jd' || user.userid == 'piiiikachuuu') {
 		if (CommandParser.updateServerLock) {
 			return this.sendReply('/updateserver - Another update is already in progress.');
 		}
