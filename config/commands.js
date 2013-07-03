@@ -882,6 +882,10 @@ var commands = exports.commands = {
 			matched = true;
 			this.sendReply('/forcerename OR /fr [username], [reason] - Forcibly change a user\'s name and shows them the [reason]. Requires: % @ & ~');
 		}
+		if (target === '%' || target === 'lock') {
+			matched = true;
+			this.sendReply('/lock OR /ipmute [username], [reason] - Prevents the user from speaking in any lobby, the exception being users with authority. Requires: % @ & ~');
+		}
 		if (target === '@' || target === 'ban' || target === 'b') {
 			matched = true;
 			this.sendReply('/ban OR /b [username], [reason] - Kick user from all rooms and ban user\'s IP address with reason. Requires: @ & ~');
