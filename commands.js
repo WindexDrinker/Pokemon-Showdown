@@ -1025,6 +1025,18 @@ forums: function(target, room, user) {
                              	'Badge: Tectonic Badge<br />' +
                            	'<img src="http://i1305.photobucket.com/albums/s542/TheBattleTowerPS/056_zps8055026c.png">');
 		},
+	
+			topazio: function(target, room, user) {
+		if(!this.canBroadcast()) return;
+				this.sendReplyBox('<b>Information on Gym Le@der Topazio:</b><br />' +
+							'Type: Ground<br />' +
+							'Tier: Over Used (OU)<br />' + 
+							'<a href="gymleadermustang.wix.com%2F-amethystleague%23!gym-leaders%2FaboutPage" target="_blank">Thread</a><br />' +
+                          	'Signature Pokemon: Gliscor<br />' +
+							'<img src="http://www.poke-amph.com/black-white/sprites/small/472.png"><br />' +
+							'Badge: Soil Badge<br />' +
+						 	'<img src="http://i1305.photobucket.com/albums/s542/TheBattleTowerPS/037_zps7830eeed.png">'	);
+		},
 	//uu leaders
 		cc: 'crazyclown',
 	crazyclown: function(target, room, user) {
