@@ -261,7 +261,6 @@ exports.groups = {
                 redirect: true,
                 forcerename: true,
                 modlog: true,
-                lock: true,
                 ip: true,
                 alts: '@u',
                 rank: 4
@@ -276,6 +275,7 @@ exports.groups = {
                 mute: true,
                 forcerename: true,
                 timer: true,
+                lock: true,
                 alts: '%u',
                 bypassblocks: 'u%@&~',
                 receiveauthmessages: true,
