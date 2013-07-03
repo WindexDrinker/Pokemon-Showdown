@@ -249,7 +249,7 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 		ruleset: ['Pokemon', 'Standard', 'Evasion Abilities Clause', 'Team Preview'],
 		banlist: ['Smeargle']
 	},
-	slowmons: {
+	/*slowmons: {
 		effectType: 'Format',
 		name: 'Slowmons',
 		section: "Other Metas",
@@ -279,10 +279,10 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 					}
 				};
 			}
-		}
+		}*/
 
 	// Other Metagames
-	///////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
 	
 	stabmons: {
 		effectType: 'Format',
