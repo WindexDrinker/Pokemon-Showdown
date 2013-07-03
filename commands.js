@@ -1507,7 +1507,7 @@ return this.sendReply('Poof is currently disabled.');
 	},
 
 	makechatroom: function(target, room, user) {
-		if (!this.can('makeroom') || !user.userid == 'piiiikachuuu') return;
+		if (!this.can('makeroom')) return;
 		var id = toId(target);
 		if (Rooms.rooms[id]) {
 			return this.sendReply("The room '"+target+"' already exists.");
