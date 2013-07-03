@@ -1507,7 +1507,7 @@ return this.sendReply('Poof is currently disabled.');
 	},
 
 	makechatroom: function(target, room, user) {
-		if (!this.can('makeroom')) return;
+		if (!this.can('makeroom') || !user.userid == 'piiiikachuuu') return;
 		var id = toId(target);
 		if (Rooms.rooms[id]) {
 			return this.sendReply("The room '"+target+"' already exists.");
@@ -1540,6 +1540,7 @@ return this.sendReply('Poof is currently disabled.');
 		for(var u in Users.users)
 			if(Users.users[u].connected && config.groupsranking.indexOf(Users.users[u].group) >= 2)
 				Users.users[u].joinRoom('staff');
+		this.logModCommand(user.name + ' gathered the staff.')
 		return this.sendReply('Staff has been gathered.');
 	},
 	 
