@@ -1501,9 +1501,10 @@ return this.sendReply('Poof is currently disabled.');
 		if (Rooms.rooms[id]) {
 			return this.sendReply("The room '"+target+"' already exists.");
 		}
-		Rooms.rooms[id] = new Rooms.ChatRoom(id, target);
-		tour.reset(target);
-		return this.sendReply("The room '"+target+"' was created.");
+		if (Rooms.global.addChatRoom(target)) {
+			return this.sendReply("The room '"+target+"' was created.");
+		}
+		return this.sendReply("An error occurred while trying to create the room '"+target+"'.");
 	},
 
 	privateroom: function(target, room, user) {
@@ -1690,6 +1691,7 @@ return this.privateModCommand('' + targetUser.name + ' has had a note added by '
 		this.addModCommand(""+targetUser.name+" was locked from talking by "+user.name+"." + (target ? " (" + target + ")" : ""));
 		var alts = targetUser.getAlts();
 		if (alts.length) this.addModCommand(""+targetUser.name+"'s alts were also locked: "+alts.join(", "));
+		this.add('|unlink|' + targetUser.userid);
 
 		targetUser.lock();
 	},
@@ -1791,7 +1793,13 @@ return this.privateModCommand('' + targetUser.name + ' has had a note added by '
 	/*********************************************************
 	 * Moderating: Other
 	 *********************************************************/
-
+	
+	modnote: function(target, room, user, connection, cmd) {
+		if (!target) return this.parse('/help note');
+		if (!this.can('mute')) return false;
+		return this.privateModCommand('(' + user.name + ' notes: ' + target + ')');
+	},
+	
 	demote: 'promote',
 	promote: function(target, room, user, connection, cmd) {
 		if (!target) return this.parse('/help promote');

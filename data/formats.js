@@ -280,6 +280,20 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 				};
 			}
 		}
+
+	// Other Metagames
+	///////////////////////////////////////////////////////////////////
+	
+	stabmons: {
+		effectType: 'Format',
+		name: "Stabmons",
+		section: "OM of the Month",
+		mod: 'stabmons',
+		rated: true,
+		challengeShow: true,
+		searchShow: true,
+		ruleset: ['Pokemon', 'Standard', 'Evasion Abilities Clause', 'Team Preview'],
+		banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 	},
 	colorchangemeta: {
 		effectType: 'Format',
@@ -416,6 +430,11 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 	}, */
 	gen1ou: {
 		mod: 'gen1',
+		banlist: ['Abra', 'Aipom', 'Archen', 'Axew', 'Bronzor', 'Chinchou', 'Clamperl', 'Cottonee', 'Cranidos', 'Croagunk', 'Diglett', 'Dratini', 'Drifloon', 'Drilbur', 'Dwebble', 'Elekid', 'Ferroseed', 'Foongus', 'Frillish', 'Gastly', 'Hippopotas', 'Houndour', 'Koffing', 'Larvesta', 'Lileep', 'Machop', 'Magnemite', 'Mienfoo', 'Misdreavus', 'Murkrow', 'Onix', 'Pawniard', 'Ponyta', 'Porygon', 'Riolu', 'Sandshrew', 'Scraggy', 'Shellder', 'Slowpoke', 'Snover', 'Staryu', 'Timburr', 'Tirtouga']
+		},
+	dreamworld: {
+		name: "Dream World",
+		section: "Other Metagames",
 		effectType: 'Format',
 		name: "[Gen 1] OU",
 		section: "Past Generations",
@@ -450,8 +469,8 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 		searchShow: true,
 		debug: true,
 		isTeambuilderFormat: true,
-		ruleset: ['Pokemon', 'Sleep Clause', 'Species Clause', 'OHKO Clause', 'Evasion Clause', 'Freeze Clause'],
-		banlist: ['Uber', 'OU', 'Illegal']
+		ruleset: ['NU'],
+		banlist: ["Charizard", "Wartortle", "Kadabra", "Golem", "Haunter", "Exeggutor", "Weezing", "Kangaskhan", "Pinsir", "Lapras", "Ampharos", "Misdreavus", "Piloswine", "Miltank", "Ludicolo", "Swellow", "Gardevoir", "Ninjask", "Torkoal", "Cacturne", "Altaria", "Armaldo", "Gorebyss", "Regirock", "Regice", "Bastiodon", "Floatzel", "Drifblim", "Skuntank", "Lickilicky", "Probopass", "Rotom-Fan", "Samurott", "Musharna", "Gurdurr", "Sawk", "Carracosta", "Garbodor", "Sawsbuck", "Alomomola", "Golurk", "Braviary", "Electabuzz", "Electrode", "Liepard", "Tangela", "Eelektross", "Ditto", "Seismitoad", "Zangoose", "Roselia", "Serperior", "Metang", "Tauros", "Cradily", "Primeape", "Scolipede", "Jynx", "Basculin", "Gigalith", "Camerupt", "Golbat"]
 	},
 	gen1lc: {
 		mod: 'gen1',
