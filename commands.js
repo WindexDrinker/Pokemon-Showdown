@@ -1037,6 +1037,18 @@ forums: function(target, room, user) {
 							'Badge: Soil Badge<br />' +
 						 	'<img src="http://i1305.photobucket.com/albums/s542/TheBattleTowerPS/037_zps7830eeed.png">'	);
 		},
+		
+			gray: function(target, room, user) {
+		if(!this.canBroadcast()) return;
+				this.sendReplyBox('<b>Information on Gym Le@der Gray:</b><br />' +
+							'Type: Electric<br />' +
+							'Tier: Over Used (OU)<br />' + 
+							'<a href="gymleadermustang.wix.com%2F-amethystleague%23!gym-leaders%2FaboutPage" target="_blank">Thread</a><br />' +
+                          	'Signature Pokemon: Luxray<br />' +
+							'<img src="http://www.poke-amph.com/black-white/sprites/small/405.png"><br />' +
+							'Badge: Kirin Badge<br />' +
+						 	'<img src="http://i1305.photobucket.com/albums/s542/TheBattleTowerPS/019_zps1c48a4cf.png">'	);
+		},
 	//uu leaders
 		cc: 'crazyclown',
 	crazyclown: function(target, room, user) {
