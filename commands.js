@@ -1106,12 +1106,11 @@ forums: function(target, room, user) {
 							'Badge: Toxic Badge<br />');
 		},
 		
-		stripper: 'aortega',
 		batman: 'aortega',
 		ao: 'aortega',
 		aortega: function(target, room, user) {
 			if(!this.canBroadcast()) return;
-			this.sendReplyBox('ao sux huehue<br />pretty sure he\'s fighting uu gym leader or something :x<br />whatever :I');
+			this.sendReplyBox('Gym Le@der AOrtega: UU, Fighting type, etc etc.');
 		},
 		
 			uuhope: function(target, room, user) {
