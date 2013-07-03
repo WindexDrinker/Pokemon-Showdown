@@ -227,7 +227,7 @@ var User = (function () {
 	User.prototype.getIdentity = function(roomid) {
 		if (!roomid) roomid = 'lobby';
 		if (this.locked) {
-			return '#'+this.name;
+			return '‽'+this.name;
 		}
 		if (this.mutedRooms[roomid]) {
 			return '!'+this.name;
