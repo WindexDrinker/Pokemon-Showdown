@@ -226,13 +226,13 @@ exports.appealurl = 'http://amethyst.webuda.com/forums/forumdisplay.php?fid=33';
 //     - forcewin: /forcewin command.
 //     - battlemessage: /a command.
 //	   - hide: /hide and /show commands.
-exports.groupsranking = [' ', '♠', '$', '%', '@', '&', '~'];
+exports.groupsranking = [' ', '♠', '%', '@', '&', '~'];
 exports.groups = {
         '~': {
                 id: "admin",
                 name: "Administrator",
                 root: true,
-                rank: 6
+                rank: 5
         },
         '&': {
                 id: "smod",
@@ -249,7 +249,7 @@ exports.groups = {
                 disableladder: true,
                 //this is /crashfixed
                 hotpatch: true,
-                rank: 5
+                rank: 4
         },
         '@': {
                 id: "mod",
@@ -263,7 +263,7 @@ exports.groups = {
                 modlog: true,
                 ip: true,
                 alts: '@u',
-                rank: 4
+                rank: 3
         },
         '%': {
                 id: "tmod",
@@ -279,14 +279,6 @@ exports.groups = {
                 alts: '%u',
                 bypassblocks: 'u%@&~',
                 receiveauthmessages: true,
-                rank: 3
-        },
-        '$': {
-                id: "leader",
-                name: "Leader",
-                inherit: '',
-                broadcast: true,
-                warn: true,
                 rank: 2
         },
         '♠': {
