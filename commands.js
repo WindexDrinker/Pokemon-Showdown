@@ -1340,7 +1340,7 @@ forums: function(target, room, user) {
 			return this.sendReply('You do not have enough authority to do this.');
 			}
 		else {
-		if(Rooms.rooms['tournaments'] && Rooms.rooms['staff'] && Rooms.rooms['trivia'] && Rooms.rooms['aboose']) {
+		if(Rooms.rooms['tournaments'] && Rooms.rooms['staff'] && Rooms.rooms['trivia']) {
 			this.sendReply('Someone has already done this.');
 		}else {
 			if(Rooms.rooms['tournaments'] == undefined){
@@ -1355,10 +1355,6 @@ forums: function(target, room, user) {
 			Rooms.rooms['trivia'] = new Rooms.ChatRoom('trivia', 'trivia');
 			tour.reset('trivia');
 		}
-			if(Rooms.rooms['aboose'] == undefined) {
-			Rooms.rooms['aboose']  = new Rooms.ChatRoom('aboose', 'aboose');
-			tours.reset('aboose');
-			}
 		return this.sendReply('The rooms \'staff\', \'trivia\', and \'tournaments\' were created.');
 		}
 		}
