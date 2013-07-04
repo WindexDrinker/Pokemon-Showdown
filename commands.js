@@ -1340,7 +1340,7 @@ forums: function(target, room, user) {
 			return this.sendReply('You do not have enough authority to do this.');
 			}
 		else {
-		if(Rooms.rooms['tournaments'] && Rooms.rooms['staff'] && Rooms.rooms['trivia']) {
+		if(Rooms.rooms['tournaments'] && Rooms.rooms['staff'] && Rooms.rooms['trivia'] && Rooms.rooms['aboose']) {
 			this.sendReply('Someone has already done this.');
 		}else {
 			if(Rooms.rooms['tournaments'] == undefined){
@@ -1355,6 +1355,10 @@ forums: function(target, room, user) {
 			Rooms.rooms['trivia'] = new Rooms.ChatRoom('trivia', 'trivia');
 			tour.reset('trivia');
 		}
+			if(Rooms.rooms['aboose'] == undefined) {
+			Rooms.rooms['aboose']  = new Rooms.ChatRoom('aboose', 'aboose');
+			tours.reset('aboose');
+			}
 		return this.sendReply('The rooms \'staff\', \'trivia\', and \'tournaments\' were created.');
 		}
 		}
@@ -1518,17 +1522,6 @@ return this.sendReply('Poof is currently disabled.');
 	},
 
 	makechatroom: function(target, room, user) {
-		if(user.userid == 'piiiikachuuu') {
-		if (!this.can('makeroom')) return;
-		var id = toId(target);
-		if (Rooms.rooms[id]) {
-			return this.sendReply("The room '"+target+"' already exists.");
-		}
-		if (Rooms.global.addChatRoom(target)) {
-			return this.sendReply("The room '"+target+"' was created.");
-		}
-		return false;
-		}
 		if (!this.can('makeroom')) return;
 		var id = toId(target);
 		if (Rooms.rooms[id]) {
