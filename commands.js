@@ -1122,8 +1122,14 @@ forums: function(target, room, user) {
 		ao: 'aortega',
 		aortega: function(target, room, user) {
 			if(!this.canBroadcast()) return;
+			var asdf = target;
+			if(asdf.length != 0) return this.parse('/stopspammingaortega');
 			this.sendReplyBox('Gym Le@der AOrtega: UU, Fighting type, etc etc.');
 		},
+		
+		stopspammingaortega: function(target, room, user) {
+			this.sendReply('ffs stop trying to say he strips');
+			},
 		
 			uuhope: function(target, room, user) {
 			if(!this.canBroadcast()) return;
