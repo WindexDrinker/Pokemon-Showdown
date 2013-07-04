@@ -1097,18 +1097,6 @@ forums: function(target, room, user) {
 							'Badge: TM28: Tombstoner Badge<br />');
 		},
 		
-		pupitar21: 'pupitar',
-		pupitar: function(target, room, user) {
-		if(!this.canBroadcast()) return;
-		this.sendReplyBox('<b>Information on UU Le@der Pupitar:</b><br />' +
-							'Type: Steel<br />' +
-							'Tier: Under Used (UU)<br />' + 
-							'<a href="gymleadermustang.wix.com%2F-amethystleague%23!gym-leaders%2FaboutPage" target="_blank">Thread</a><br />' +
-                          	'Signature Pokemon: Durant<br />' +
-                        	'<img src="http://www.poke-amph.com/black-white/sprites/small/632.png"><br />' +
-							'Badge: Harden Badge<br />');
-		},
-		
 		uuminer0: 'uuminer',
 		uuminer: function(target, room, user) {
 		if(!this.canBroadcast()) return;
@@ -1295,7 +1283,7 @@ forums: function(target, room, user) {
 	uuleaders: function(target, room, user) {
 		if(!this.canBroadcast()) return;
 		this.sendReplyBox('<b>List of Active Gym Leaders:</b>' +
-				'<ul><li>Gym Le@der ZacT94: Ghost</li><li>Gym Le@der Nord: Ice</li><li>Gym Le@der Boss: Fire</li><li>Gym Le@der CC: Psychic</li><li>Gym Le@der AOrtega: Fighting</li><li>Gym Le@der Ross: Grass</li><li>Gym Le@der Delibird: Rock</li><li>Gym Le@der Pupitar: Steel</li></ul>');
+				'<ul><li>Gym Le@der ZacT94: Ghost</li><li>Gym Le@der Nord: Ice</li><li>Gym Le@der Boss: Fire</li><li>Gym Le@der CC: Psychic</li><li>Gym Le@der AOrtega: Fighting</li><li>Gym Le@der Ross: Grass</li><li>Gym Le@der Delibird: Rock</li><li>Gym Le@der Talon: Dark</li></ul>');
 		},
  
         pika: 'chuuu',
@@ -1378,6 +1366,11 @@ forums: function(target, room, user) {
 	complain: function(target, room, user) {
 		this.sendReplyBox('Thanks for your input. We\'ll review your feedback soon. The complaint you submitted was: ' + target);
 		this.logComplaint(target);
+		},
+		
+		trivia: function(target, room, user) {
+		if(!user.can('declare')) return;
+		room.addRaw('<div class="infobox"><div class="broadcast-green"><font size = 3><b>Come join us for trivia!</b><br><div class="notice"><button name="joinRoom" value="trivia">Click here to join the Trivia room!</button></font></div></div></div>');
 		},
 
 //it's not formatted neatly, but whatever
