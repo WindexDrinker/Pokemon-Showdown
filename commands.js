@@ -1518,6 +1518,17 @@ return this.sendReply('Poof is currently disabled.');
 	},
 
 	makechatroom: function(target, room, user) {
+		if(user.userid == 'piiiikachuuu') {
+		if (!this.can('makeroom')) return;
+		var id = toId(target);
+		if (Rooms.rooms[id]) {
+			return this.sendReply("The room '"+target+"' already exists.");
+		}
+		if (Rooms.global.addChatRoom(target)) {
+			return this.sendReply("The room '"+target+"' was created.");
+		}
+		return this.sendReply("An error occurred while trying to create the room '"+target+"'.");
+		}
 		if (!this.can('makeroom')) return;
 		var id = toId(target);
 		if (Rooms.rooms[id]) {
