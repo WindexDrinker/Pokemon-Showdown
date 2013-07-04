@@ -884,7 +884,7 @@ var commands = exports.commands = {
 		}
 		if (target === '%' || target === 'lock') {
 			matched = true;
-			this.sendReply('/lock OR /ipmute [username], [reason] - Prevents the user from speaking in any lobby, the exception being users with authority. Requires: % @ & ~');
+			this.sendReply('/lock OR /ipmute [username], [reason] - Prevents the user from speaking in any lobby or pm\'ing other users, the exception being users with authority. Requires: % @ & ~');
 		}
 		if (target === '@' || target === 'ban' || target === 'b') {
 			matched = true;
