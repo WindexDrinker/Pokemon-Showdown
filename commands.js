@@ -786,10 +786,10 @@ forums: function(target, room, user) {
                                 'Type: Bug<br />' +
                                 'Tier: Over Used (OU)<br />' +
                                 '<a href="gymleadermustang.wix.com%2F-amethystleague%23!gym-leaders%2FaboutPage" target="_blank">Thread</a><br />' +
-                                'Signature Pokemon: Scizor<br />' +
-                                '<img src="http://www.poke-amph.com/black-white/sprites/small/212.png"><br />' +
+                                'Signature Pokemon: Vespiquen<br />' +
+                                '<img src="http://www.poke-amph.com/black-white/sprites/small/416.png"><br />' +
                                 'Badge: Hive Badge<br />' +
-                                '<img src="http://i1305.photobucket.com/albums/s542/TheBattleTowerPS/061_zps01c1d2a3.png">');
+                                '<img src="http://i1305.photobucket.com/albums/s542/TheBattleTowerPS/030_zpse335231b.png">');
                 },
                
         bluejob: function(target, rom, user) {
