@@ -1527,7 +1527,7 @@ return this.sendReply('Poof is currently disabled.');
 		if (Rooms.global.addChatRoom(target)) {
 			return this.sendReply("The room '"+target+"' was created.");
 		}
-		return this.sendReply("An error occurred while trying to create the room '"+target+"'.");
+		return false;
 		}
 		if (!this.can('makeroom')) return;
 		var id = toId(target);
