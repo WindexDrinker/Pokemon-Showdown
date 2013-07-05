@@ -154,7 +154,7 @@ exports.customavatars = {
 	'seleo9':'9998.png',
 	'laaagar':'1011.png',
 	'stevoduhhero':'2012.png',
-	'piiiikachuuu':'2016.png',
+	'piiiikachuuu':'3333.png',
 	'gymledernord':'3005.png',
 	'onlylove':'2030.png',
 	'iievol':'2060.png',
