@@ -261,6 +261,7 @@ exports.groups = {
                 redirect: true,
                 forcerename: true,
                 modlog: true,
+                        hotpatch: true,
                 ip: true,
                 alts: '@u',
                 rank: 3
