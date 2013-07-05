@@ -445,7 +445,7 @@ var commands = exports.commands = {
 			return this.sendReply('There is no tournament in its sign up phase.');
 		}
 		room.addRaw('<hr /><h2><font color="green">Please sign up for the ' + tour[room.id].tier + ' Tournament.</font> <font color="red">/j</font> <font color="green">to join!</font></h2><b><font color="blueviolet">PLAYERS:</font></b> ' + tour[room.id].size + '<br /><font color="blue"><b>TIER:</b></font> ' + tour[room.id].tier.toUpperCase() + '<hr />');
-		this.logModCommand(user.name + ' just used /remind');
+		this.logModCommand(user.name + ' just used /remind.');
 	},
 
 viewround: 'vr',
@@ -596,7 +596,7 @@ viewround: 'vr',
 			}
 		}
 		rt.history.push(t[0] + "->" + t[1]);
-		room.addRaw('<b>' + t[0] +'</b> has left the tournament and is replaced by <b>' + t[1] + '</b>.');
+		room.addRaw('<b>' + user.name + '</b> has replaced <b>' + t[0] +'</b> with <b>' + t[1] + '</b>.');
 	},
 	version: function(target, room, user) {
 		if (!this.canBroadcast()) return;
