@@ -108,7 +108,7 @@ exports.BattleFormats = {
 		ruleset: ['Pokemon', 'Standard', 'Team Preview', 'Little Cup'],
 		banlist: ['Sonicboom', 'Dragon Rage', 'Berry Juice', 'Carvanha', 'Meditite', 'Gligar', 'Scyther', 'Sneasel', 'Tangela', 'Vulpix', 'Yanma', 'Soul Dew']
 	},
-   challengecup: {
+/*   challengecup: {
 		effectType: 'Format',
 		name: "Challenge Cup",
 		section: "Singles",
@@ -136,8 +136,8 @@ exports.BattleFormats = {
 			this.p2.pokemon = this.p2.pokemon.slice(0, 1);
 			this.p2.pokemonLeft = this.p2.pokemon.length;
 		}
-	},
-oumonotype: { 
+	}, */
+/*oumonotype: { 
 name: "OU Monotype", 
 section: "Other Metagames", 
 effectType: 'Format', 
@@ -145,10 +145,11 @@ challengeShow: true,
 isTeambuilderFormat: true, 
 ruleset: ['Pokemon', 'Standard', 'Same Type Clause', 'Evasion Abilities Clause', 'Team Preview'], 
 banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew'] 
-},
+}, */
 	randombattle: {
 		effectType: 'Format',
 		name: "Random Battle",
+		section: "Singles",
 		team: 'random',
 		canUseRandomTeam: true,
 		rated: true,
@@ -345,7 +346,7 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 	cap: {
 		effectType: 'Format',
 		name: "CAP",
-		section: "Other Metas",
+		section: "Singles",
 		rated: true,
 		challengeShow: true,
 	 	searchShow: true,
@@ -355,8 +356,8 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 	},
 	seasonaljollyjuly: {
 		effectType: 'Format',
-		name: "[Seasonal] Jolly July",
-		section: "OM of the Month",
+		name: "Jolly July",
+		section: "Seasonal",
 		team: 'randomSeasonalJuly',
 		canUseRandomTeam: true,
 		rated: true,
@@ -408,7 +409,7 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 						'Edmonton', 'Houston', 'Mexico DF', 'Barcelona', 'Blanes'
 					],
 					'S': [
-						'Buenos Aires', 'Lima', 'Johanesburg', 'Sydney', 'Melbourne',
+						'Buenos Aires', 'Lima', 'Johannesburg', 'Sydney', 'Melbourne',
 						'Santiago de Chile', 'Bogota', 'Lima', 'Montevideo',
 						'Wellington', 'Canberra', 'Jakarta', 'Kampala', 'Mumbai',
 						'Auckland', 'Pretoria', 'Cape Town'
@@ -477,7 +478,7 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 	},
 	challengecup: {
 		name: "Challenge Cup",
-		section: "Other Metagames",
+		section: "Other Metas",
 
 		effectType: 'Format',
 		team: 'randomCC',
@@ -489,7 +490,7 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 	},
 	challengecup1vs1: {
 		name: "Challenge Cup 1-vs-1",
-		section: "Other Metagames",
+		section: "Other Metas",
 
 		effectType: 'Format',
 		team: 'randomCC',
@@ -508,7 +509,7 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 	},
 	hackmons: {
 		name: "Hackmons",
-		section: "Other Metagames",
+		section: "Other Metas",
 
 		effectType: 'Format',
 		rated: true,
@@ -536,7 +537,7 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 	},
 	dreamworld: {
 		name: "Dream World",
-		section: "Other Metagames",
+		section: "Other Metas",
 		effectType: 'Format',
 		name: "[Gen 1] OU",
 		section: "Past Generations",
