@@ -757,6 +757,10 @@ var commands = exports.commands = {
 			matched = true;
 			this.sendReply('/msg OR /whisper OR /w [username], [message] - Send a private message.');
 		}
+		if (target === 'all' || target === 'complaint' || target === 'complain') {
+			matched = true;
+			this.sendReply('/complain OR /complaint [message] - Adds a complaint to the list of complaints which will be reviewed by server staff.');
+		}
 		if (target === 'all' || target === 'r' || target === 'reply') {
 			matched = true;
 			this.sendReply('/reply OR /r [message] - Send a private message to the last person you received a message from, or sent a message to.');
