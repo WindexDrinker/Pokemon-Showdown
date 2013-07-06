@@ -410,7 +410,7 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 		ruleset: ['Pokemon', 'OHKO Clause'],
 		banlist: ['Wonder Guard', 'Pure Power', 'Huge Power', 'Shadow Tag', 'Arena Trap']
 	},
-	seasonaljollyjuly: {
+	jollyjuly: {
 		effectType: 'Format',
 		name: "Jolly July",
 		section: "Seasonal",
