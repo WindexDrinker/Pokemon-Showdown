@@ -1368,6 +1368,8 @@ forums: function(target, room, user) {
 		}
 	},
 	
+	cry: 'complain',
+	bitch: 'complain',
 	complaint: 'complain',
 	complain: function(target, room, user) {
 		this.sendReplyBox('Thanks for your input. We\'ll review your feedback soon. The complaint you submitted was: ' + target);
