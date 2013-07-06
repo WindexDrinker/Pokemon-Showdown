@@ -1289,7 +1289,7 @@ forums: function(target, room, user) {
 	uuleaders: function(target, room, user) {
 		if(!this.canBroadcast()) return;
 		this.sendReplyBox('<b>List of Active Gym Leaders:</b>' +
-				'<ul><li>Gym Le@der ZacT94: Ghost</li><li>Gym Le@der Nord: Ice</li><li>Gym Le@der Boss: Fire</li><li>Gym Le@der CC: Psychic</li><li>Gym Le@der AOrtega: Fighting</li><li>Gym Le@der Ross: Grass</li><li>Gym Le@der Delibird: Rock</li><li>Gym Le@der Talon: Dark</li></ul>');
+				'<ul><li>Gym Le@der ZacT94: Ghost</li><li>Gym Le@der Nord: Ice</li><li>Gym Le@der Boss: Fire</li><li>Gym Le@der CC: Psychic</li><li>Gym Le@der AOrtega: Fighting</li><li>Gym Le@der Ross: Poison</li><li>Gym Le@der Delibird: Rock</li><li>Gym Le@der Talon: Dark</li></ul>');
 		},
  
         pika: 'chuuu',
@@ -1324,11 +1324,6 @@ forums: function(target, room, user) {
 		return this.sendReply('/tourroom- Access denied.');
 		}
 		else {
-				if(Rooms.rooms['tournaments'] == undefined){
-		Rooms.global.addChatRoom('tournaments');
-		tour.reset('tournaments');
-			this.sendReply('The room for tournaments was created.');
-		}
 		room.addRaw('<div class="infobox"><div class= "broadcast-green"><font size = 3>Here for the tournament? <button name="joinRoom" value="tournaments">Click here!</button> to join the room where tournaments are hosted!</font></div></div>');
 		this.logModCommand(user.name + ' reminded people to join the tournament room.');
 		}
