@@ -1484,6 +1484,7 @@ return this.sendReply('Poof is currently disabled.');
 		return this.parse('/msg '+(user.lastPM||'')+', '+target);
 	},
 
+	w: 'msg',
 	pm: 'msg',
 	whisper: 'msg',
 	msg: function(target, room, user) {
@@ -1689,7 +1690,7 @@ if (!targetUser) return this.sendReply('User '+this.targetUsername+' not found.'
 if (!this.can('mute')) return false;
 return this.privateModCommand('' + targetUser.name + ' has had a note added by ' + user.name + '. (' + target + ')');
 },
-	w: 'warn',
+
 	warn: function(target, room, user) {
 		if (!target) return this.parse('/help warn');
 
