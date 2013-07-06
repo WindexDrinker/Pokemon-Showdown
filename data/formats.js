@@ -108,6 +108,17 @@ exports.BattleFormats = {
 		ruleset: ['Pokemon', 'Standard', 'Team Preview', 'Little Cup'],
 		banlist: ['Sonicboom', 'Dragon Rage', 'Berry Juice', 'Carvanha', 'Meditite', 'Gligar', 'Scyther', 'Sneasel', 'Tangela', 'Vulpix', 'Yanma', 'Soul Dew']
 	},
+	cap: {
+		effectType: 'Format',
+		name: "CAP",
+		section: "Singles",
+		rated: true,
+		challengeShow: true,
+	 	searchShow: true,
+		isTeambuilderFormat: true,
+		ruleset: ['CAP Pokemon', 'Standard', 'Team Preview'],
+		banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
+	},
 /*   challengecup: {
 		effectType: 'Format',
 		name: "Challenge Cup",
@@ -284,19 +295,6 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 
 	// Other Metagames
 	//////////////////////////////////////////////////////////////////
-	
-	oumonotype: {
-		name: "OU Monotype",
-		section: "OM of the Month",
-
-		effectType: 'Format',
-		rated: true,
-		challengeShow: true,
-		searchShow: true,
-		isTeambuilderFormat: true,
-		ruleset: ['Pokemon', 'Standard', 'Same Type Clause', 'Evasion Abilities Clause', 'Team Preview'],
-		banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
-	},
 
 	colorchangemeta: {
 		effectType: 'Format',
@@ -343,16 +341,72 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 		team: 'random',
 		ruleset: ['Hax Clause', 'Team Preview']
 	},
-	cap: {
+	
+	oumonotype: {
+		name: "OU Monotype",
+		section: "OM of the Month",
+
 		effectType: 'Format',
-		name: "CAP",
-		section: "Singles",
 		rated: true,
 		challengeShow: true,
-	 	searchShow: true,
+		searchShow: true,
 		isTeambuilderFormat: true,
-		ruleset: ['CAP Pokemon', 'Standard', 'Team Preview'],
+		ruleset: ['Pokemon', 'Standard', 'Same Type Clause', 'Evasion Abilities Clause', 'Team Preview'],
 		banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
+	},
+	challengecup: {
+		name: "Challenge Cup",
+		section: "Other Metas",
+
+		effectType: 'Format',
+		team: 'randomCC',
+		canUseRandomTeam: true,
+		rated: true,
+		challengeShow: true,
+		searchShow: true,
+		ruleset: ['Pokemon', 'HP Percentage Mod']
+	},
+	challengecup1vs1: {
+		name: "Challenge Cup 1-vs-1",
+		section: "Other Metas",
+
+		effectType: 'Format',
+		team: 'randomCC',
+		canUseRandomTeam: true,
+		rated: true,
+		challengeShow: true,
+		searchShow: true,
+		ruleset: ['Pokemon', 'Team Preview 1v1', 'HP Percentage Mod'],
+		onBegin: function() {
+			this.debug('Cutting down to 1');
+			this.p1.pokemon = this.p1.pokemon.slice(0, 1);
+			this.p1.pokemonLeft = this.p1.pokemon.length;
+			this.p2.pokemon = this.p2.pokemon.slice(0, 1);
+			this.p2.pokemonLeft = this.p2.pokemon.length;
+		}
+	},
+	hackmons: {
+		name: "Hackmons",
+		section: "Other Metas",
+
+		effectType: 'Format',
+		rated: true,
+		challengeShow: true,
+		searchShow: true,
+		isTeambuilderFormat: true,
+		ruleset: ['Hackmon'],
+		banlist: []
+	},
+	balancedhackmons: {
+		effectType: 'Format',
+		name: "Balanced Hackmons",
+		section: "Other Metas",
+		rated: true,
+		challengeShow: true,
+		searchShow: true,
+		isTeambuilderFormat: true,
+		ruleset: ['Pokemon', 'OHKO Clause'],
+		banlist: ['Wonder Guard', 'Pure Power', 'Huge Power', 'Shadow Tag', 'Arena Trap']
 	},
 	seasonaljollyjuly: {
 		effectType: 'Format',
@@ -476,130 +530,6 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 			if (move.id === 'fireblast') move.name = 'July 4th Fireworks';
 		}
 	},
-	challengecup: {
-		name: "Challenge Cup",
-		section: "Other Metas",
-
-		effectType: 'Format',
-		team: 'randomCC',
-		canUseRandomTeam: true,
-		rated: true,
-		challengeShow: true,
-		searchShow: true,
-		ruleset: ['Pokemon', 'HP Percentage Mod']
-	},
-	challengecup1vs1: {
-		name: "Challenge Cup 1-vs-1",
-		section: "Other Metas",
-
-		effectType: 'Format',
-		team: 'randomCC',
-		canUseRandomTeam: true,
-		rated: true,
-		challengeShow: true,
-		searchShow: true,
-		ruleset: ['Pokemon', 'Team Preview 1v1', 'HP Percentage Mod'],
-		onBegin: function() {
-			this.debug('Cutting down to 1');
-			this.p1.pokemon = this.p1.pokemon.slice(0, 1);
-			this.p1.pokemonLeft = this.p1.pokemon.length;
-			this.p2.pokemon = this.p2.pokemon.slice(0, 1);
-			this.p2.pokemonLeft = this.p2.pokemon.length;
-		}
-	},
-	hackmons: {
-		name: "Hackmons",
-		section: "Other Metas",
-
-		effectType: 'Format',
-		rated: true,
-		challengeShow: true,
-		searchShow: true,
-		isTeambuilderFormat: true,
-		ruleset: ['Hackmon'],
-		banlist: []
-	},
-	balancedhackmons: {
-		effectType: 'Format',
-		name: "Balanced Hackmons",
-		section: "Other Metas",
-		rated: true,
-		challengeShow: true,
-		searchShow: true,
-		isTeambuilderFormat: true,
-		ruleset: ['Pokemon', 'OHKO Clause'],
-		banlist: ['Wonder Guard', 'Pure Power', 'Huge Power', 'Shadow Tag', 'Arena Trap']
-	},
-
-	gen1ou: {
-		mod: 'gen1',
-		banlist: ['Abra', 'Aipom', 'Archen', 'Axew', 'Bronzor', 'Chinchou', 'Clamperl', 'Cottonee', 'Cranidos', 'Croagunk', 'Diglett', 'Dratini', 'Drifloon', 'Drilbur', 'Dwebble', 'Elekid', 'Ferroseed', 'Foongus', 'Frillish', 'Gastly', 'Hippopotas', 'Houndour', 'Koffing', 'Larvesta', 'Lileep', 'Machop', 'Magnemite', 'Mienfoo', 'Misdreavus', 'Murkrow', 'Onix', 'Pawniard', 'Ponyta', 'Porygon', 'Riolu', 'Sandshrew', 'Scraggy', 'Shellder', 'Slowpoke', 'Snover', 'Staryu', 'Timburr', 'Tirtouga']
-	},
-	dreamworld: {
-		name: "Dream World",
-		section: "Other Metas",
-		effectType: 'Format',
-		name: "[Gen 1] OU",
-		section: "Past Generations",
-		rated: true,
-		challengeShow: true,
-		searchShow: true,
-		debug: true,
-		isTeambuilderFormat: true,
-		ruleset: ['Pokemon', 'Standard'],
-		banlist: ['Uber', 'Wrap', 'Fire Spin', 'Clamp', 'Bind']
-	}, 
-	gen1challengecup: {
-		mod: 'gen1',
-		effectType: 'Format',
-		name: "[Gen 1] Challenge Cup",
-		section: "Past Generations",
-		team: 'randomCC',
-		canUseRandomTeam: true,
-		rated: true,
-		challengeShow: true,
-		searchShow: true,
-		ruleset: ['Pokemon']
-	},
-	gen4uber: {
-		name: "[Gen 4] Uber",
-		mod: 'gen4',
-		section: "Past Generations",
-		effectType: 'Format',
-		challengeDefault: true,
-		rated: true,
-		challengeShow: true,
-		searchShow: true,
-		isTeambuilderFormat: true,
-		ruleset: ['Pokemon', 'Standard'],
-		banlist: []
-	},
-	gen4ou: {
-		name: "[Gen 4] OU",
-		mod: 'gen4',
-		section: "Past Generations",
-		effectType: 'Format',
-		challengeDefault: true,
-		rated: true,
-		challengeShow: true,
-		searchShow: true,
-		isTeambuilderFormat: true,
-		ruleset: ['Pokemon', 'Standard'],
-		banlist: ['Uber']
-	},
-	gen3ou: {
-		name: "[Gen 3] OU",
-		mod: 'gen3',
-		section: "Past Generations",
-		effectType: 'Format',
-		challengeDefault: true,
-		rated: true,
-		challengeShow: true,
-		searchShow: true,
-		isTeambuilderFormat: true,
-		ruleset: ['Pokemon', 'Standard'],
-		banlist: ['Uber']
-	},
 
 	junejubilee: {
 		effectType: 'Format',
@@ -672,10 +602,82 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 			}
 		}
 	},
+	
+	gen1ou: {
+		mod: 'gen1',
+		banlist: ['Abra', 'Aipom', 'Archen', 'Axew', 'Bronzor', 'Chinchou', 'Clamperl', 'Cottonee', 'Cranidos', 'Croagunk', 'Diglett', 'Dratini', 'Drifloon', 'Drilbur', 'Dwebble', 'Elekid', 'Ferroseed', 'Foongus', 'Frillish', 'Gastly', 'Hippopotas', 'Houndour', 'Koffing', 'Larvesta', 'Lileep', 'Machop', 'Magnemite', 'Mienfoo', 'Misdreavus', 'Murkrow', 'Onix', 'Pawniard', 'Ponyta', 'Porygon', 'Riolu', 'Sandshrew', 'Scraggy', 'Shellder', 'Slowpoke', 'Snover', 'Staryu', 'Timburr', 'Tirtouga']
+	},
+	dreamworld: {
+		name: "Dream World",
+		section: "Other Metas",
+		effectType: 'Format',
+		name: "[Gen 1] OU",
+		section: "Past Generations",
+		rated: true,
+		challengeShow: true,
+		searchShow: true,
+		debug: true,
+		isTeambuilderFormat: true,
+		ruleset: ['Pokemon', 'Standard'],
+		banlist: ['Uber', 'Wrap', 'Fire Spin', 'Clamp', 'Bind']
+	}, 
+	gen1challengecup: {
+		mod: 'gen1',
+		effectType: 'Format',
+		name: "[Gen 1] Challenge Cup",
+		section: "Past Generations",
+		team: 'randomCC',
+		canUseRandomTeam: true,
+		rated: true,
+		challengeShow: true,
+		searchShow: true,
+		ruleset: ['Pokemon']
+	},
+	gen4uber: {
+		name: "[Gen 4] Uber",
+		mod: 'gen4',
+		section: "Past Generations",
+		effectType: 'Format',
+		challengeDefault: true,
+		rated: true,
+		challengeShow: true,
+		searchShow: true,
+		isTeambuilderFormat: true,
+		ruleset: ['Pokemon', 'Standard'],
+		banlist: []
+	},
+	gen4ou: {
+		name: "[Gen 4] OU",
+		mod: 'gen4',
+		section: "Past Generations",
+		effectType: 'Format',
+		challengeDefault: true,
+		rated: true,
+		challengeShow: true,
+		searchShow: true,
+		isTeambuilderFormat: true,
+		ruleset: ['Pokemon', 'Standard'],
+		banlist: ['Uber']
+	},
+	gen3ou: {
+		name: "[Gen 3] OU",
+		mod: 'gen3',
+		section: "Past Generations",
+		effectType: 'Format',
+		challengeDefault: true,
+		rated: true,
+		challengeShow: true,
+		searchShow: true,
+		isTeambuilderFormat: true,
+		ruleset: ['Pokemon', 'Standard'],
+		banlist: ['Uber']
+	},
+
+
 	customgame: {
 		effectType: 'Format',
 		name: "Custom Game",
-		
+		section: "Custom Games",
 		challengeShow: true,
 		canUseRandomTeam: true,
 		debug: true,
@@ -686,6 +688,7 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 	customgamenoteampreview: {
 		effectType: 'Format',
 		name: "Custom Game (no Team Preview)",
+		section: "Custom Games",
 		challengeShow: true,
 		canUseRandomTeam: true,
 		debug: true,
