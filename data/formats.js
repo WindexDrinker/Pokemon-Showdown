@@ -119,6 +119,19 @@ exports.BattleFormats = {
 		ruleset: ['CAP Pokemon', 'Standard', 'Team Preview'],
 		banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 	},
+	
+	oumonotype: {
+		name: "OU Monotype",
+		section: "OM of the Month",
+
+		effectType: 'Format',
+		rated: true,
+		challengeShow: true,
+		searchShow: true,
+		isTeambuilderFormat: true,
+		ruleset: ['Pokemon', 'Standard', 'Same Type Clause', 'Evasion Abilities Clause', 'Team Preview'],
+		banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
+	},
 /*   challengecup: {
 		effectType: 'Format',
 		name: "Challenge Cup",
@@ -341,19 +354,7 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 		team: 'random',
 		ruleset: ['Hax Clause', 'Team Preview']
 	},
-	
-	oumonotype: {
-		name: "OU Monotype",
-		section: "OM of the Month",
 
-		effectType: 'Format',
-		rated: true,
-		challengeShow: true,
-		searchShow: true,
-		isTeambuilderFormat: true,
-		ruleset: ['Pokemon', 'Standard', 'Same Type Clause', 'Evasion Abilities Clause', 'Team Preview'],
-		banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
-	},
 	challengecup: {
 		name: "Challenge Cup",
 		section: "Other Metas",
