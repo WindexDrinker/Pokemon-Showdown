@@ -1325,8 +1325,8 @@ forums: function(target, room, user) {
 		}
 		else {
 				if(Rooms.rooms['tournaments'] == undefined){
-			Rooms.rooms['tournaments'] = new Rooms.ChatRoom('tournaments', 'tournaments');
-			tour.reset('tournaments');
+		Rooms.global.addChatRoom('tournaments');
+		tour.reset('tournaments');
 			this.sendReply('The room for tournaments was created.');
 		}
 		room.addRaw('<div class="infobox"><div class= "broadcast-green"><font size = 3>Here for the tournament? <button name="joinRoom" value="tournaments">Click here!</button> to join the room where tournaments are hosted!</font></div></div>');
@@ -1344,15 +1344,11 @@ forums: function(target, room, user) {
 			this.sendReply('Someone has already done this.');
 		}else {
 			if(Rooms.rooms['tournaments'] == undefined){
-			Rooms.rooms['tournaments'] = new Rooms.ChatRoom('tournaments', 'tournaments');
+			Rooms.global.addChatRoom('tournaments');
 			tour.reset('tournaments');
 		}
-					if(Rooms.rooms['staff'] == undefined){
-			Rooms.rooms['staff'] = new Rooms.ChatRoom('staff', 'staff');
-			tour.reset('staff');
-		}
 					if(Rooms.rooms['trivia'] == undefined){
-			Rooms.rooms['trivia'] = new Rooms.ChatRoom('trivia', 'trivia');
+			Rooms.global.addChatRoom('trivia');
 			tour.reset('trivia');
 		}
 		return this.sendReply('The rooms \'staff\', \'trivia\', and \'tournaments\' were created.');
@@ -1528,6 +1524,7 @@ return this.sendReply('Poof is currently disabled.');
 			return this.sendReply("The room '"+target+"' already exists.");
 		}
 		if (Rooms.global.addChatRoom(target)) {
+			
 			return this.sendReply("The room '"+target+"' was created.");
 		}
 		return this.sendReply("An error occurred while trying to create the room '"+target+"'.");
