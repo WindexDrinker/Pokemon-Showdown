@@ -608,17 +608,29 @@ viewround: 'vr',
 	/*********************************************************
 	 * Rock-Paper-Scissors
 	 *********************************************************/
+	rpshelp: 'rockpaperscissorshelp',
+	rockpaperscissorshelp: function(target, room, user) {
+		if(!this.canBroadcast()) return;
+		this.sendReplyBox('<b><font size = 3>Rock-Paper-Scissors</font></b><br>This is the classic game of rock-paper-scissors. The commands are as follows:<br>' +
+							'- /rps - starts the game. Requires: %@&~<br>' +
+							'- /jrps OR /joinrps - join the game<br>' +
+							'- /respond [choice] OR /shoot [choice] - chooses either rock, paper, or scissors<br>' +
+							'- /compare - compares the two responses and determines a winner. Requires: +%@&~<br>' +
+							'- /endrps - ends the game (only necessary for stopping mid-game; it will end on its own after using /compare). Requires: +%@&~<br>' +
+							'PM me any glitches you find. Thanks!');
+	},
 	rps: "rockpaperscissors",
 	rockpaperscissors: function(target, room, user) {
-		if(rockpaperscissors === false && user.can('mute')) {
+		if(rockpaperscissors === false && user.can('broadcast')) {
 			rockpaperscissors = true;
 			return this.add('|html|<b>' + user.name + '</b> has started a game of rock-paper-scissors! /jrps or /joinrps to join.');
 		}
-		if(!user.can('mute')) {
+		if(!user.can('broadcast')) {
 			return this.sendReply('You do not have enough authority to do this.');
 		}
 	},
 	
+	respond: 'shoot',
 	shoot: function(target, room, user) {
 		if(gamestart === false) {
 			return this.sendReply('There is currently no game of rock-paper-scissors going on.');
@@ -669,7 +681,7 @@ viewround: 'vr',
 	},
 		
 	compare: function(target, room, user) {
-		if(!user.can('mute')) {
+		if(!user.can('broadcast')) {
 			return this.sendReply('You do not have enough authority to do this.');
 		}
 		if(gamestart === false) {
@@ -722,13 +734,13 @@ viewround: 'vr',
 	},
 	
 	endrps: function(target, room, user) {
-		if(!user.can('mute')) {
+		if(!user.can('broadcast')) {
 			return this.sendReply('You do not have enough authority to do this.');
 		}
 		if(rockpaperscissors === false) {
 			return this.sendReply('There is no game of rock-paper-scissors happening right now.');
 		}
-		if(user.can('mute') && rockpaperscissors === true) {
+		if(user.can('broadcast') && rockpaperscissors === true) {
 			rockpaperscissors = false;
 			numberofspots = 2;
 			gamestart = false;
