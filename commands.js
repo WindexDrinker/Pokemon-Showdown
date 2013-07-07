@@ -612,7 +612,7 @@ viewround: 'vr',
 	rockpaperscissors: function(target, room, user) {
 		if(rockpaperscissors === false && user.can('mute')) {
 			rockpaperscissors = true;
-			return this.add('|html|<b>' + user.name + '</b> has started a game of rock-paper-scissors!');
+			return this.add('|html|<b>' + user.name + '</b> has started a game of rock-paper-scissors! /jrps or /joinrps to join.');
 		}
 		if(!user.can('mute')) {
 			return this.sendReply('You do not have enough authority to do this.');
