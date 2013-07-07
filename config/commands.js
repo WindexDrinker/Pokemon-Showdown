@@ -793,10 +793,10 @@ var commands = exports.commands = {
 		if (target === 'rps' || target === 'rockpaperscissors') {
 			matched = true;
 			this.sendReplyBox('<b><font size = 3>Rock-Paper-Scissors</font></b><br>This is the classic game of rock-paper-scissors. The commands are as follows:<br>' +
-					'- /rps - starts the game. Requires: +%@&~<br>' +
+					'- /rps - starts the game<br>' +
 					'- /jrps OR /joinrps - join the game<br>' +
 					'- /respond [choice] OR /shoot [choice] - chooses either rock, paper, or scissors<br>' +
-					'- /compare - compares the two responses and determines a winner. Requires: +%@&~<br>' +
+					'- /compare - compares the two responses and determines a winner<br>' +
 					'- /endrps - ends the game (only necessary for stopping mid-game; it will end on its own after using /compare). Requires: +%@&~<br>' +
 					'<br>PM me any glitches you find. Thanks! - piiiikachuuu');
 		}
