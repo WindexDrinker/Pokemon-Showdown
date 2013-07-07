@@ -617,7 +617,7 @@ viewround: 'vr',
 							'- /respond [choice] OR /shoot [choice] - chooses either rock, paper, or scissors<br>' +
 							'- /compare - compares the two responses and determines a winner. Requires: +%@&~<br>' +
 							'- /endrps - ends the game (only necessary for stopping mid-game; it will end on its own after using /compare). Requires: +%@&~<br>' +
-							'PM me any glitches you find. Thanks!');
+							'<br>PM me any glitches you find. Thanks! - piiiikachuuu');
 	},
 	rps: "rockpaperscissors",
 	rockpaperscissors: function(target, room, user) {
