@@ -169,6 +169,37 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 		searchShow: true,
 		ruleset: ['PotD', 'Pokemon', 'Sleep Clause']
 	},
+	challengecup: {
+		name: "Challenge Cup",
+		section: "Challenge Cup",
+
+		effectType: 'Format',
+		team: 'randomCC',
+		canUseRandomTeam: true,
+		rated: true,
+		challengeShow: true,
+		searchShow: true,
+		ruleset: ['Pokemon', 'HP Percentage Mod']
+	},
+	challengecup1vs1: {
+		name: "Challenge Cup 1-vs-1",
+		section: "Challenge Cup",
+
+		effectType: 'Format',
+		team: 'randomCC',
+		canUseRandomTeam: true,
+		rated: true,
+		challengeShow: true,
+		searchShow: true,
+		ruleset: ['Pokemon', 'Team Preview 1v1', 'HP Percentage Mod'],
+		onBegin: function() {
+			this.debug('Cutting down to 1');
+			this.p1.pokemon = this.p1.pokemon.slice(0, 1);
+			this.p1.pokemonLeft = this.p1.pokemon.length;
+			this.p2.pokemon = this.p2.pokemon.slice(0, 1);
+			this.p2.pokemonLeft = this.p2.pokemon.length;
+		}
+	},
 	
 	oumonotype: {
 		name: "OU Monotype",
@@ -356,37 +387,7 @@ banlist: ['Uber', 'Drizzle ++ Swift Swim', 'Soul Dew']
 		ruleset: ['Hax Clause', 'Team Preview']
 	},
 
-	challengecup: {
-		name: "Challenge Cup",
-		section: "Other Metas",
 
-		effectType: 'Format',
-		team: 'randomCC',
-		canUseRandomTeam: true,
-		rated: true,
-		challengeShow: true,
-		searchShow: true,
-		ruleset: ['Pokemon', 'HP Percentage Mod']
-	},
-	challengecup1vs1: {
-		name: "Challenge Cup 1-vs-1",
-		section: "Other Metas",
-
-		effectType: 'Format',
-		team: 'randomCC',
-		canUseRandomTeam: true,
-		rated: true,
-		challengeShow: true,
-		searchShow: true,
-		ruleset: ['Pokemon', 'Team Preview 1v1', 'HP Percentage Mod'],
-		onBegin: function() {
-			this.debug('Cutting down to 1');
-			this.p1.pokemon = this.p1.pokemon.slice(0, 1);
-			this.p1.pokemonLeft = this.p1.pokemon.length;
-			this.p2.pokemon = this.p2.pokemon.slice(0, 1);
-			this.p2.pokemonLeft = this.p2.pokemon.length;
-		}
-	},
 	hackmons: {
 		name: "Hackmons",
 		section: "Other Metas",
