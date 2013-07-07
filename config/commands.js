@@ -789,6 +789,15 @@ var commands = exports.commands = {
 			matched = true;
 			this.sendReply('/msg OR /whisper OR /w [username], [message] - Send a private message.');
 		}
+		if (target === 'rps' || target === 'rockpaperscissors') {
+			this.sendReplyBox('<b><font size = 3>Rock-Paper-Scissors</font></b><br>This is the classic game of rock-paper-scissors. The commands are as follows:<br>' +
+					'- /rps - starts the game. Requires: +%@&~<br>' +
+					'- /jrps OR /joinrps - join the game<br>' +
+					'- /respond [choice] OR /shoot [choice] - chooses either rock, paper, or scissors<br>' +
+					'- /compare - compares the two responses and determines a winner. Requires: +%@&~<br>' +
+					'- /endrps - ends the game (only necessary for stopping mid-game; it will end on its own after using /compare). Requires: +%@&~<br>' +
+					'<br>PM me any glitches you find. Thanks! - piiiikachuuu');
+		}
 		if (target === 'all' || target === 'complaint' || target === 'complain') {
 			matched = true;
 			this.sendReply('/complain OR /complaint [message] - Adds a complaint to the list of complaints which will be reviewed by server staff.');
