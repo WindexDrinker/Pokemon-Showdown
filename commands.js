@@ -611,9 +611,9 @@ viewround: 'vr',
 
 	rps: "rockpaperscissors",
 	rockpaperscissors: function(target, room, user) {
-		if(room.id != 'rps') {
+		/*if(room.id != 'rps') {
 			return this.sendReply('|html|You must do this in the room \'rps\'. Click<button name = "joinRoom" value = "rps">here</button>to join the room.');
-		}
+		}*/
 		if(rockpaperscissors === false) {
 			rockpaperscissors = true;
 			return this.add('|html|<b>' + user.name + '</b> has started a game of rock-paper-scissors! /jrps or /joinrps to join.');
