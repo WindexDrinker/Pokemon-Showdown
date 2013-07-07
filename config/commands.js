@@ -783,7 +783,7 @@ var commands = exports.commands = {
 	h: 'help',
 	'?': 'help',
 	help: function(target, room, user) {
-
+		if(!user.canBroadcast()) return;
 		target = target.toLowerCase();
 		var matched = false;
 		if (target === 'all' || target === 'msg' || target === 'pm' || target === 'whisper' || target === 'w') {
