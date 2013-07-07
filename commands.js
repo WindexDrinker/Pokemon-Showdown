@@ -614,12 +614,9 @@ viewround: 'vr',
 		if(room.id != 'rps') {
 			return this.sendReply('|html|You must do this in the room \'rps\'. Click<button name = "joinRoom" value = "rps">here</button>to join the room.');
 		}
-		if(rockpaperscissors === false && user.can('broadcast') || rockpaperscissors === false && room.auth[userid] !== '%') {
+		if(rockpaperscissors === false) {
 			rockpaperscissors = true;
 			return this.add('|html|<b>' + user.name + '</b> has started a game of rock-paper-scissors! /jrps or /joinrps to join.');
-		}
-		if(!user.can('broadcast') || room.auth[userid] !== '%') {
-			return this.sendReply('You do not have enough authority to do this.');
 		}
 	},
 	
@@ -674,14 +671,10 @@ viewround: 'vr',
 	},
 		
 	compare: function(target, room, user) {
-		if(!user.can('broadcast')) {
-			return this.sendReply('You do not have enough authority to do this.');
-		}
 		if(gamestart === false) {
 			return this.sendReply('There is no rock-paper-scissors game going on right now.');
 		}
 		else {
-		if(user.can('mute')) {
 		if(player1response[0] === undefined && player2response[0] === undefined) {
 			return this.sendReply('Neither ' + rpsplayers[0] + ' nor ' + rpsplayers[1] + ' has responded yet.');
 		}
@@ -721,7 +714,6 @@ viewround: 'vr',
 		rpsplayersid = [];
 		player1response = [];
 		player2response = [];
-		}
 		}
 		}
 	},
