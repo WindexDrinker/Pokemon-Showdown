@@ -612,7 +612,7 @@ viewround: 'vr',
 	rockpaperscissorshelp: function(target, room, user) {
 		if(!this.canBroadcast()) return;
 		this.sendReplyBox('<b><font size = 3>Rock-Paper-Scissors</font></b><br>This is the classic game of rock-paper-scissors. The commands are as follows:<br>' +
-							'- /rps - starts the game. Requires: %@&~<br>' +
+							'- /rps - starts the game. Requires: +%@&~<br>' +
 							'- /jrps OR /joinrps - join the game<br>' +
 							'- /respond [choice] OR /shoot [choice] - chooses either rock, paper, or scissors<br>' +
 							'- /compare - compares the two responses and determines a winner. Requires: +%@&~<br>' +
