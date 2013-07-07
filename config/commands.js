@@ -783,6 +783,7 @@ var commands = exports.commands = {
 	h: 'help',
 	'?': 'help',
 	help: function(target, room, user) {
+		if(!this.canBroadcast()) return;
 		target = target.toLowerCase();
 		var matched = false;
 		if (target === 'all' || target === 'msg' || target === 'pm' || target === 'whisper' || target === 'w') {
@@ -790,6 +791,7 @@ var commands = exports.commands = {
 			this.sendReply('/msg OR /whisper OR /w [username], [message] - Send a private message.');
 		}
 		if (target === 'rps' || target === 'rockpaperscissors') {
+			matched = true;
 			this.sendReplyBox('<b><font size = 3>Rock-Paper-Scissors</font></b><br>This is the classic game of rock-paper-scissors. The commands are as follows:<br>' +
 					'- /rps - starts the game. Requires: +%@&~<br>' +
 					'- /jrps OR /joinrps - join the game<br>' +
