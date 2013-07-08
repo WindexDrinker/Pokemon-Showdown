@@ -1335,6 +1335,18 @@ forums: function(target, room, user) {
 							'Badge: Snow Badge<br />');
 		},
 		
+		uumiloticnob: 'uunob',
+		uunob: function(target, room, user) {
+			if(!this.canBroadcast()) return;
+		this.sendReplyBox('<b>Information on UU Le@der Nob:</b><br />' +
+							'Type: Steel<br />' +
+							'Tier: Under Used (UU)<br />' + 
+							'<a href="gymleadermustang.wix.com%2F-amethystleague%23!gym-leaders%2FaboutPage" target="_blank">Thread</a><br />' +
+                          	'Signature Pokemon: Empoleon<br />' +
+							'<img src="http://www.poke-amph.com/black-white/sprites/small/395.png"><br />' +
+							'Badge: Iron Badge<br />');
+		},
+		
 	league: 'leagueintro',
 	leagueintro: function(target, room, user) {
 		if (!this.canBroadcast()) return;
