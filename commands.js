@@ -949,8 +949,8 @@ forums: function(target, room, user) {
         seasons: function(target, rom, user) {
                 if (!this.canBroadcast()) return;
                 this.sendReplyBox('Leader qSeasons!<br>' +
-                		'Type: Everything o3o' +
-                		'He even gets his own shiny badge: <img src = "http://i1305.photobucket.com/albums/s542/TheBattleTowerPS/153_zpsa3af73f7.png">' +
+                		'Type: Everything o3o<br>' +
+                		'He even gets his own shiny badge: <img src = "http://i1305.photobucket.com/albums/s542/TheBattleTowerPS/153_zpsa3af73f7.png"><br>' +
                 		':D');
                 },
                
