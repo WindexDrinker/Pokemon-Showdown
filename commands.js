@@ -210,6 +210,7 @@ var crypto = require('crypto');
 var poofeh = true;
 var canpet = true;
 var canbs = true;
+//rps
 var rockpaperscissors  = false;
 var numberofspots = 2;
 var gamestart = false;
@@ -217,6 +218,14 @@ var rpsplayers = new Array();
 var rpsplayersid = new Array();
 var player1response = new Array();
 var player2response = new Array();
+//hangman
+var hangman = false;
+var guessword = new Array();
+var hangmaner = new Array();
+var guessletters = new Array();
+var guessedletters = new Array();
+var correctletters = new Array();
+var givenguesses = 8;
 
 var commands = exports.commands = {
 
@@ -768,6 +777,158 @@ viewround: 'vr',
 		}
 	}
 	},
+	/*********************************************************
+	 * hangman
+	 *********************************************************/
+	 hangman: function(target, room, user) {
+	if(!user.can('broadcast')) {
+		return this.sendReply('You do not have enough authority to do this.');
+	}
+	if(hangman === true) {
+		return this.sendReply('There is already a game of hangman going on.');
+	}
+	if(!target) return this.parse('/help hangman');
+	if(hangman === false) {
+		hangman = true;
+		var targetword = target.toLowerCase();
+		guessword.push(targetword);
+		hangmaner.push(user.userid);
+		var word = target;
+		for(var i = 0; i < target.length; i++) {
+			guessletters.push(word[i]);
+		}
+		return this.add('|html|<b>' + user.name + '</b> started a game of hangman! The word has ' + target.length + ' letters.');
+	}
+	},
+	
+	word: function(target, room, user) {
+		if(hangman === false) {
+		return this.sendReply('There is no game of hangman going on.');
+	}
+	if(user.userid === hangmaner[0]) {
+		return this.sendReply('Your word is \'' + guessword[0] + '\'.');
+	}
+	else {
+		return this.sendReply('You are not the person who started hangman.');
+	}
+	},
+	
+	guess: function(target, room, user) {
+	if(hangman === false) {
+		return this.sendReply('There is no game of hangman going on.');
+	}
+			if(user.userid === hangmaner[0]) {
+			return this.sendReply('You cannot guess the word because you are running hangman!');
+		}
+	if(!target) {
+		return this.sendReply('Please specify a letter to guess.');
+	}
+	if(target.length > 1) {
+		return this.sendReply('Please specify a single letter to guess. To guess the word, use /guessword.');
+	}
+	lettertarget = target.toLowerCase();
+	for(var y = 0; y < 27; y++) {
+		if(target === guessedletters[y]) {
+			return this.sendReply('Someone has already guessed the letter \'' + lettertarget + '\'.');
+		}
+	}
+	var letterright = new Array();
+	for(var a = 0; a < guessword[0].length; a++) {
+		if(lettertarget === guessletters[a]) {
+			var c = a + 1;
+			letterright.push(c);
+			correctletters.push(c);
+		}
+	}
+	if(letterright[0] === undefined) {
+		givenguesses = givenguesses - 1;
+			if(givenguesses === 0) {
+			return this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + lettertarget + '\', but it was not in the word. You have failed to guess the word, so the man has been...uh...he went to sleep.');
+				hangman = false;
+				guessword = [];
+				hangmaner = [];
+				guessletters = [];
+				guessedletters = [];
+				correctletters = [];
+				givenguesses = 8;	
+		}
+		this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + lettertarget + '\', but it was not in the word.');
+	}
+	else {
+	this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + lettertarget + '\', which was letter(s) ' + letterright.toString() + ' of the word.');
+	}
+	guessedletters.push(lettertarget);
+	if(correctletters.length === guessword[0].length) {
+		return this.add('|html|Congratulations! <b>' + user.name + '</b> has guessed the word, which was: \'' + guessword[0] + '\'.');
+				hangman = false;
+				guessword = [];
+				hangmaner = [];
+				guessletters = [];
+				guessedletters = [];
+				correctlyguessedletters = [];
+				givenguesses = 8;	
+		}
+	},
+	
+	guessword: function(target, room, user) {
+		if(hangman === false) {
+		return this.sendReply('There is no game of hangman going on.');
+	}
+		if(!target) {
+			return this.sendReply('Please specify the word you are trying to guess.');
+		}
+		if(user.userid === hangmaner[0]) {
+			return this.sendReply('You cannot guess the word because you are running hangman!');
+		}
+		var targetword = target.toLowerCase();
+		if(targetword === guessword[0]) {
+			this.add('|html|Congratulations! <b>' + user.name + '</b> has guessed the word, which was: \'' + guessword[0] + '\'.');
+							hangman = false;
+				guessword = [];
+				hangmaner = [];
+				guessletters = [];
+				guessedletters = [];
+				correctletters = [];
+				givenguesses = 8;	
+		}
+		else {
+			givenguesses = givenguesses - 1;
+			if(givenguesses === 0) {
+			return this.add('|html|<b>' + user.name + '</b> guessed the word \'' + lettertarget + '\', but it was not the word. You have failed to guess the word, so the man has been...uh...he went to sleep.');
+							hangman = false;
+				guessword = [];
+				hangmaner = [];
+				guessletters = [];
+				guessedletters = [];
+				correctletters = [];
+				givenguesses = 8;	
+			}
+			this.add('|html|<b>' + user.name + '</b> guessed the word \'' + lettertarget + '\', but it was not the word.');
+		}
+		},
+	
+	endhangman: function(target, room, user) {
+		if(!user.can('broadcast')) {
+			return this.sendReply('You do not have enough authority to do this.');
+		}
+		if(hangman === false) {
+			return this.sendReplyl('There is no game going on.');
+		}
+		if(hangman === true) {
+			this.add('|html|<b>' + user.name + '</b> ended the game of hangman.');
+				hangman = false;
+				guessword = [];
+				hangmaner = [];
+				guessletters = [];
+				guessedletters = [];
+				correctletters = [];
+				givenguesses = 8;	
+			}
+		},
+		
+	/*********************************************************
+	 * everything else
+	 *********************************************************/
 	 
 	version: function(target, room, user) {
 		if (!this.canBroadcast()) return;
