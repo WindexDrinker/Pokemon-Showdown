@@ -165,7 +165,6 @@ exports.customavatars = {
 	'gymledertalon':'3003.png',
 	'gymledersam':'3004.png',
 	'elitfourross':'3006.png',
-	'gymlederhope':'3007.png',
 	'gymledercuddly':'6003.png',
 	'gymlederdelibird':'6001.png',
 	'gymlederbluejob':'6008.png',
@@ -174,7 +173,6 @@ exports.customavatars = {
 	'frontiermanadam':'adam.png',
 	'darkgirafarig':'darkgirafarig.png',
 	'uuledercc':'uuledercc.png',
-	'uulederpupitar':'1006.png',
 	'gymlderhope':'hope.png',
 	'gymldrmgm':'magma.png',
 	'gymlederrss':'3006.png'
