@@ -800,6 +800,18 @@ var commands = exports.commands = {
 					'- /endrps - ends the game (only necessary for stopping mid-game; it will end on its own after using /compare). Requires: +%@&~<br>' +
 					'<br>PM me any glitches you find. Thanks! - piiiikachuuu');
 		}
+		if (target === 'hangman') {
+			matched = true;
+			this.sendReplyBox('<font size = 3>Hangman</font><br>This is the game of hangman. The host player will pick a word, and other players will be allowed 8 guesses to figure out the word by guessing letters.<br>' +
+				'The commands to run hangman are as follows:<br>' + 
+				'- /hangman [word] - starts the game. Requires: +%@&~<br>' +
+				'- /guess [letter] - allows users to guess letters<br>' +
+				'- /guessword [word] - allows users to guess words<br>' +
+				'- /viewhangman - shows how many letters have been guessed, as well as how many guess are left<br>' +
+				'- /word - displays the word to the host<br>' +
+				'- /endhangman - ends the game if something goes wrong. Requires: +%@&~<br><br>' +
+				'PM me if you find any bugs. Have fun! - pika');
+		}
 		if (target === 'all' || target === 'complaint' || target === 'complain') {
 			matched = true;
 			this.sendReply('/complain OR /complaint [message] - Adds a complaint to the list of complaints which will be reviewed by server staff.');
