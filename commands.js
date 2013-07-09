@@ -808,7 +808,7 @@ viewround: 'vr',
 		if(hangman === false) {
 			return this.sendReply('There is no game of hangman going on right now.');
 		}
-		this.sendReply('|html|<font size = 2>' + spaces.join(" ") + '</font>');
+		this.sendReply('|html|<font size = 2>' + spaces.join(" ") + '<br>Guesses left: ' + givenguesses + '</font>');
 	},
 	
 	word: function(target, room, user) {
