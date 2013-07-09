@@ -860,14 +860,15 @@ viewround: 'vr',
 	}
 	guessedletters.push(lettertarget);
 	if(correctletters.length === guessword[0].length) {
-		return this.add('|html|Congratulations! <b>' + user.name + '</b> has guessed the word, which was: \'' + guessword[0] + '\'.');
+	
 				hangman = false;
 				guessword = [];
 				hangmaner = [];
 				guessletters = [];
 				guessedletters = [];
 				correctlyguessedletters = [];
-				givenguesses = 8;	
+				givenguesses = 8;
+					return this.add('|html|Congratulations! <b>' + user.name + '</b> has guessed the word, which was: \'' + guessword[0] + '\'.');
 		}
 	},
 	
@@ -895,14 +896,15 @@ viewround: 'vr',
 		else {
 			givenguesses = givenguesses - 1;
 			if(givenguesses === 0) {
-			return this.add('|html|<b>' + user.name + '</b> guessed the word \'' + lettertarget + '\', but it was not the word. You have failed to guess the word, so the man has been...uh...he went to sleep.');
-							hangman = false;
+		
+				hangman = false;
 				guessword = [];
 				hangmaner = [];
 				guessletters = [];
 				guessedletters = [];
 				correctletters = [];
-				givenguesses = 8;	
+				givenguesses = 8;
+					return this.add('|html|<b>' + user.name + '</b> guessed the word \'' + lettertarget + '\', but it was not the word. You have failed to guess the word, so the man has been...uh...he went to sleep.');
 			}
 			this.add('|html|<b>' + user.name + '</b> guessed the word \'' + lettertarget + '\', but it was not the word.');
 		}
@@ -913,7 +915,7 @@ viewround: 'vr',
 			return this.sendReply('You do not have enough authority to do this.');
 		}
 		if(hangman === false) {
-			return this.sendReplyl('There is no game going on.');
+			return this.sendReply('There is no game going on.');
 		}
 		if(hangman === true) {
 			this.add('|html|<b>' + user.name + '</b> ended the game of hangman.');
