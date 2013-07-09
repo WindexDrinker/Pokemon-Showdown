@@ -860,7 +860,7 @@ viewround: 'vr',
 	}
 	guessedletters.push(lettertarget);
 	if(correctletters.length === guessword[0].length) {
-	
+				this.add('|html|Congratulations! <b>' + user.name + '</b> has guessed the word, which was: \'' + guessword[0] + '\'.');
 				hangman = false;
 				guessword = [];
 				hangmaner = [];
@@ -868,7 +868,7 @@ viewround: 'vr',
 				guessedletters = [];
 				correctlyguessedletters = [];
 				givenguesses = 8;
-					return this.add('|html|Congratulations! <b>' + user.name + '</b> has guessed the word, which was: \'' + guessword[0] + '\'.');
+				
 		}
 	},
 	
