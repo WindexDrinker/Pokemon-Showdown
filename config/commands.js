@@ -807,10 +807,10 @@ var commands = exports.commands = {
 				'- /hangman [word] - starts the game. Requires: +%@&~<br>' +
 				'- /guess [letter] - allows users to guess letters<br>' +
 				'- /guessword [word] - allows users to guess words<br>' +
-				'- /viewhangman - shows how many letters have been guessed, as well as how many guess are left<br>' +
+				'- /viewhangman - shows the progress and how many guesses are left<br>' +
 				'- /word - displays the word to the host<br>' +
 				'- /endhangman - ends the game if something goes wrong. Requires: +%@&~<br><br>' +
-				'PM me if you find any bugs. Have fun! - pika');
+				'PM me if you find any bugs. Have fun! - piiiikachuuu');
 		}
 		if (target === 'all' || target === 'complaint' || target === 'complain') {
 			matched = true;
