@@ -845,7 +845,7 @@ viewround: 'vr',
 	}
 	lettertarget = target.toLowerCase();
 	for(var y = 0; y < 27; y++) {
-		if(target === guessedletters[y]) {
+		if(lettertarget === guessedletters[y]) {
 			return this.sendReply('Someone has already guessed the letter \'' + lettertarget + '\'.');
 		}
 	}
@@ -855,13 +855,13 @@ viewround: 'vr',
 			var c = a + 1;
 			letterright.push(c);
 			correctletters.push(c);
-			spaces[a] = target;
+			spaces[a] = lettertarget;
 		}
 	}
 	if(letterright[0] === undefined) {
 		givenguesses = givenguesses - 1;
 			if(givenguesses === 0) {
-		
+
 				hangman = false;
 				guessword = [];
 				hangmaner = [];
@@ -888,7 +888,7 @@ viewround: 'vr',
 				correctlyguessedletters = [];
 				spaces = [];
 				givenguesses = 8;
-				
+
 		}
 	},
 	
