@@ -226,6 +226,7 @@ var guessletters = new Array();
 var guessedletters = new Array();
 var correctletters = new Array();
 var givenguesses = 8;
+var spaces = new Array();
 
 var commands = exports.commands = {
 
@@ -796,9 +797,18 @@ viewround: 'vr',
 		var word = target;
 		for(var i = 0; i < target.length; i++) {
 			guessletters.push(word[i]);
+			spaces.push('_');
 		}
-		return this.add('|html|<b>' + user.name + '</b> started a game of hangman! The word has ' + target.length + ' letters.');
+		return this.add('|html|<div class = "infobox"><div class = "broadcast-green"><center><font size = 2><b>' + user.name + '</b> started a game of hangman! The word has ' + target.length + ' letters.<br>' + spaces.join(" ") + '</font></center></div></div>');
 	}
+	},
+	
+	viewhangman: function(target, room, user) {
+		if(!this.canBroadcast()) return;
+		if(hangman === false) {
+			return this.sendReply('There is no game of hangman going on right now.');
+		}
+		this.sendReply('|html|<font size = 2>' + spaces.join(" ") + '</font>');
 	},
 	
 	word: function(target, room, user) {
@@ -838,6 +848,7 @@ viewround: 'vr',
 			var c = a + 1;
 			letterright.push(c);
 			correctletters.push(c);
+			spaces[a] = target;
 		}
 	}
 	if(letterright[0] === undefined) {
@@ -850,6 +861,7 @@ viewround: 'vr',
 				guessletters = [];
 				guessedletters = [];
 				correctletters = [];
+				spaces = [];
 				givenguesses = 8;
 				return this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + lettertarget + '\', but it was not in the word. You have failed to guess the word, so the man has been...uh...he went to sleep.');
 		}
@@ -867,6 +879,7 @@ viewround: 'vr',
 				guessletters = [];
 				guessedletters = [];
 				correctlyguessedletters = [];
+				spaces = [];
 				givenguesses = 8;
 				
 		}
@@ -891,6 +904,7 @@ viewround: 'vr',
 				guessletters = [];
 				guessedletters = [];
 				correctletters = [];
+				spaces = [];
 				givenguesses = 8;	
 		}
 		else {
@@ -903,6 +917,7 @@ viewround: 'vr',
 				guessletters = [];
 				guessedletters = [];
 				correctletters = [];
+				spaces = [];
 				givenguesses = 8;
 					return this.add('|html|<b>' + user.name + '</b> guessed the word \'' + lettertarget + '\', but it was not the word. You have failed to guess the word, so the man has been...uh...he went to sleep.');
 			}
