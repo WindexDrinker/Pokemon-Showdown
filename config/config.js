@@ -175,7 +175,8 @@ exports.customavatars = {
 	'uuledercc':'uuledercc.png',
 	'gymlderhope':'hope.png',
 	'gymldrmgm':'magma.png',
-	'gymlederrss':'3006.png'
+	'gymlederrss':'3006.png',
+	'solsticeequinox':'solstice.png'
 	
 };
 
