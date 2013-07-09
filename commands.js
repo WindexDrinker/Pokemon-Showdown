@@ -791,6 +791,13 @@ viewround: 'vr',
 	if(!target) return this.parse('/help hangman');
 	if(hangman === false) {
 		hangman = true;
+						guessword = [];
+				hangmaner = [];
+				guessletters = [];
+				guessedletters = [];
+				correctletters = [];
+				spaces = [];
+				givenguesses = 8;
 		var targetword = target.toLowerCase();
 		guessword.push(targetword);
 		hangmaner.push(user.userid);
@@ -919,9 +926,9 @@ viewround: 'vr',
 				correctletters = [];
 				spaces = [];
 				givenguesses = 8;
-					return this.add('|html|<b>' + user.name + '</b> guessed the word \'' + lettertarget + '\', but it was not the word. You have failed to guess the word, so the man has been...uh...he went to sleep.');
+					return this.add('|html|<b>' + user.name + '</b> guessed the word \'' + targetword + '\', but it was not the word. You have failed to guess the word, so the man has been...uh...he went to sleep.');
 			}
-			this.add('|html|<b>' + user.name + '</b> guessed the word \'' + lettertarget + '\', but it was not the word.');
+			this.add('|html|<b>' + user.name + '</b> guessed the word \'' + targetword + '\', but it was not the word.');
 		}
 		},
 	
