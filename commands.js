@@ -843,14 +843,15 @@ viewround: 'vr',
 	if(letterright[0] === undefined) {
 		givenguesses = givenguesses - 1;
 			if(givenguesses === 0) {
-			return this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + lettertarget + '\', but it was not in the word. You have failed to guess the word, so the man has been...uh...he went to sleep.');
+		
 				hangman = false;
 				guessword = [];
 				hangmaner = [];
 				guessletters = [];
 				guessedletters = [];
 				correctletters = [];
-				givenguesses = 8;	
+				givenguesses = 8;
+				return this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + lettertarget + '\', but it was not in the word. You have failed to guess the word, so the man has been...uh...he went to sleep.');
 		}
 		this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + lettertarget + '\', but it was not in the word.');
 	}
