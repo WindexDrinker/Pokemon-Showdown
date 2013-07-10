@@ -227,6 +227,7 @@ var guessedletters = new Array();
 var correctletters = new Array();
 var givenguesses = 8;
 var spaces = new Array();
+var hangmantopic = new Array();
 
 var commands = exports.commands = {
 
@@ -824,8 +825,24 @@ viewround: 'vr',
 		if(hangman === false) {
 			return this.sendReply('There is no game of hangman going on right now.');
 		}
-		this.sendReply('|html|<font size = 2>' + spaces.join(" ") + '<br>Guesses left: ' + givenguesses + '</font>');
+	this.sendReply('|html|<font size = 2>' + spaces.join(" ") + '<br>Guesses left: ' + givenguesses + '<br>Category: ' + hangmantopic[0] + '</font>');
 	},
+	
+	 topic: 'category',
+	 category: function(target, room, user) {
+		if(room.id != 'hangman') {
+			return this.sendReply('|html|Please do this in the room "hangman". You can join it <button name = "joinRoom" value = "hangman">here</button>.');
+		}
+		if(hangman === false) {
+			return this.sendReply('There is no game of hangman going on right now.');
+		}
+		if(user.userid != hangmaner[0]) {
+			return this.sendReply('You cannot change the category because you are not running hangman.');
+		}
+		hangmantopic[0] = target;
+		return this.sendReply('You set the category of hangman to \'' + target + '\'.');
+		},
+		
 	
 	word: function(target, room, user) {
 		if(hangman === false) {
@@ -881,6 +898,7 @@ viewround: 'vr',
 				guessedletters = [];
 				correctletters = [];
 				spaces = [];
+				hangmantopic = [];
 				givenguesses = 8;
 				return this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + lettertarget + '\', but it was not in the word. You have failed to guess the word, so the man has been...uh...he went to sleep.');
 		}
@@ -899,6 +917,7 @@ viewround: 'vr',
 				guessedletters = [];
 				correctlyguessedletters = [];
 				spaces = [];
+				hangmantopic = [];
 				givenguesses = 8;
 
 		}
@@ -927,6 +946,7 @@ viewround: 'vr',
 				guessedletters = [];
 				correctletters = [];
 				spaces = [];
+				hangmantopic = [];
 				givenguesses = 8;	
 		}
 		else {
@@ -940,6 +960,7 @@ viewround: 'vr',
 				guessedletters = [];
 				correctletters = [];
 				spaces = [];
+				hangmantopoic = [];
 				givenguesses = 8;
 					return this.add('|html|<b>' + user.name + '</b> guessed the word \'' + targetword + '\', but it was not the word. You have failed to guess the word, so the man has been...uh...he went to sleep.');
 			}
