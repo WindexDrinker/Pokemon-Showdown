@@ -785,11 +785,17 @@ viewround: 'vr',
 	if(!user.can('broadcast')) {
 		return this.sendReply('You do not have enough authority to do this.');
 	}
+			if(room.id!= 'hangman') {
+		return this.sendReply('|html|Please do this in the room "hangman". You can join it <button name = "joinRoom" value = "hangman">here</button>.');
+	}
 	if(hangman === true) {
 		return this.sendReply('There is already a game of hangman going on.');
 	}
 	if(!target) return this.parse('/help hangman');
 	if(hangman === false) {
+		if(target.indexOf(' ') != -1) {
+			return this.sendReply('Please don\'t put spaces in the word.');
+		}
 		hangman = true;
 						guessword = [];
 				hangmaner = [];
@@ -811,6 +817,9 @@ viewround: 'vr',
 	},
 	
 	viewhangman: function(target, room, user) {
+			if(room.id!= 'hangman') {
+		return this.sendReply('|html|Please do this in the room "hangman". You can join it <button name = "joinRoom" value = "hangman">here</button>.');
+	}
 		if(!this.canBroadcast()) return;
 		if(hangman === false) {
 			return this.sendReply('There is no game of hangman going on right now.');
@@ -831,6 +840,9 @@ viewround: 'vr',
 	},
 	
 	guess: function(target, room, user) {
+			if(room.id!= 'hangman') {
+		return this.sendReply('|html|Please do this in the room "hangman". You can join it <button name = "joinRoom" value = "hangman">here</button>.');
+	}
 	if(hangman === false) {
 		return this.sendReply('There is no game of hangman going on.');
 	}
@@ -893,6 +905,9 @@ viewround: 'vr',
 	},
 	
 	guessword: function(target, room, user) {
+			if(room.id!= 'hangman') {
+		return this.sendReply('|html|Please do this in the room "hangman". You can join it <button name = "joinRoom" value = "hangman">here</button>.');
+	}
 		if(hangman === false) {
 		return this.sendReply('There is no game of hangman going on.');
 	}
@@ -933,6 +948,9 @@ viewround: 'vr',
 		},
 	
 	endhangman: function(target, room, user) {
+			if(room.id!= 'hangman') {
+		return this.sendReply('|html|Please do this in the room "hangman". You can join it <button name = "joinRoom" value = "hangman">here</button>.');
+	}
 		if(!user.can('broadcast')) {
 			return this.sendReply('You do not have enough authority to do this.');
 		}
