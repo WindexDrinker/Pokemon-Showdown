@@ -805,6 +805,7 @@ var commands = exports.commands = {
 			this.sendReplyBox('<font size = 3>Hangman</font><br>This is the game of hangman. The host player will pick a word, and other players will be allowed 8 guesses to figure out the word by guessing letters.<br>' +
 				'The commands to run hangman are as follows:<br>' + 
 				'- /hangman [word] - starts the game. Requires: +%@&~<br>' +
+				'- /topic OR /category - allows the host to specify a category<br>' +
 				'- /guess [letter] - allows users to guess letters<br>' +
 				'- /guessword [word] - allows users to guess words<br>' +
 				'- /viewhangman - shows the progress and how many guesses are left<br>' +
