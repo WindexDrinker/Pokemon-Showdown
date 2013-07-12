@@ -289,7 +289,7 @@ exports.BattleMovedex = {
 		basePower: 60,
 		category: "Special",
 		desc: "Deals damage to one adjacent target with a 10% chance to raise the user's Attack, Defense, Speed, Special Attack, and Special Defense by 1 stage.",
-		shortDesc: "10% chance to boost all of the user's stats by 1.",
+		shortDesc: "10% chance to boost all stats by 1 (not acc/eva).",
 		id: "ancientpower",
 		name: "AncientPower",
 		pp: 5,
@@ -2021,7 +2021,7 @@ exports.BattleMovedex = {
 		basePower: 75,
 		category: "Physical",
 		desc: "Deals damage to one adjacent target with a 50% chance to lower its Defense by 1 stage. Makes contact.",
-		shortDesc: "50% chance to lower the target's Defense by 1",
+		shortDesc: "50% chance to lower the target's Defense by 1.",
 		id: "crushclaw",
 		name: "Crush Claw",
 		pp: 10,
@@ -2255,7 +2255,7 @@ exports.BattleMovedex = {
 		basePower: 0,
 		category: "Status",
 		desc: "The user is protected from most attacks made by other Pokemon during this turn. This attack has a 1/X chance of being successful, where X starts at 1 and doubles each time this move is successfully used. X resets to 1 if this attack fails or if the user's last used move is not Detect, Endure, Protect, Quick Guard, or Wide Guard. If X is 256 or more, this move has a 1/(2^32) chance of being successful. Fails if the user moves last this turn. Priority +4.",
-		shortDesc: "Prevents moves from affecting the user for a turn.",
+		shortDesc: "Prevents moves from affecting the user this turn.",
 		id: "detect",
 		isViable: true,
 		name: "Detect",
@@ -2310,9 +2310,9 @@ exports.BattleMovedex = {
 				}
 				return 0;
 			},
-			onSourceBasePower: function(basePower, target, source, move) {
+			onSourceModifyDamage: function(damage, source, target, move) {
 				if (move.id === 'earthquake' || move.id === 'magnitude') {
-					return basePower * 2;
+					return this.modify(damage, 2);
 				}
 			}
 		},
@@ -2439,9 +2439,9 @@ exports.BattleMovedex = {
 				}
 				return 0;
 			},
-			onSourceBasePower: function(basePower, target, source, move) {
+			onSourceModifyDamage: function(damage, source, target, move) {
 				if (move.id === 'surf' || move.id === 'whirlpool') {
-					return basePower * 2;
+					return this.modify(damage, 2);
 				}
 			}
 		},
@@ -3330,7 +3330,7 @@ exports.BattleMovedex = {
 		basePower: 40,
 		category: "Physical",
 		desc: "Deals damage to one adjacent target with a 100% chance to flinch it. Fails unless it is the user's first turn on the field. Makes contact. Priority +3.",
-		shortDesc: "Hits first. First turn out only. The target flinches.",
+		shortDesc: "Hits first. First turn out only. 100% flinch chance.",
 		id: "fakeout",
 		isViable: true,
 		name: "Fake Out",
@@ -5302,7 +5302,7 @@ exports.BattleMovedex = {
 		basePower: 0,
 		category: "Status",
 		desc: "Causes one adjacent ally to have the power of its attack this turn boosted to 1.5x (this effect is stackable). Fails if there is no adjacent ally, but does not fail if the ally is using a two-turn move. This move ignores Protect and Detect. Ignores a target's Substitute. Priority +5.",
-		shortDesc: "Increases the power of an ally's move by 50%.",
+		shortDesc: "One adjacent ally's move power is 1.5x this turn.",
 		id: "helpinghand",
 		name: "Helping Hand",
 		pp: 20,
@@ -6537,7 +6537,7 @@ exports.BattleMovedex = {
 		basePower: 0,
 		category: "Status",
 		desc: "For 5 turns, the user and its party members take 0.5x damage from special attacks, or 0.66x damage if in a double or triple battle. Critical hits ignore this protection. It is removed from the user's side if the user or an ally is successfully hit by Brick Break or Defog. Lasts for 8 turns if the user is holding Light Clay.",
-		shortDesc: "For 5 turns, allies' Sp. Def is 2x; 1.5x if not 1vs1.",
+		shortDesc: "For 5 turns, special damage to allies is halved.",
 		id: "lightscreen",
 		isViable: true,
 		name: "Light Screen",
@@ -6553,12 +6553,12 @@ exports.BattleMovedex = {
 				}
 				return 5;
 			},
-			onFoeBasePower: function(basePower, attacker, defender, move) {
-				if (this.getCategory(move) === 'Special' && defender.side === this.effectData.target) {
-					if (!move.crit && attacker.ability !== 'infiltrator') {
+			onFoeModifyDamage: function(damage, source, target, move) {
+				if (this.getCategory(move) === 'Special' && target.side === this.effectData.target) {
+					if (!move.crit && source.ability !== 'infiltrator') {
 						this.debug('Light Screen weaken')
-						if (attacker.side.active.length > 1) return basePower*2/3;
-						return basePower/2;
+						if (source.side.active.length > 1) return this.modify(damage, 0.66);
+						return this.modify(damage, 0.5);
 					}
 				}
 			},
@@ -7176,7 +7176,7 @@ exports.BattleMovedex = {
 		},
 		category: "Physical",
 		desc: "Deals damage to the last foe to hit the user with an attack this turn. The damage is equal to 1.5x the HP lost by the user from that attack. If that foe's position is no longer in use, damage is done to a random foe in range. Only the last hit of a multi-hit attack is counted. Fails if the user moves first or if the user was not hit by a foe's attack this turn.",
-		shortDesc: "The foe takes 1.5x the damage it did to the user.",
+		shortDesc: "If hit by an attack, returns 1.5x damage.",
 		id: "metalburst",
 		name: "Metal Burst",
 		pp: 10,
@@ -7367,6 +7367,14 @@ exports.BattleMovedex = {
 		priority: 0,
 		isSnatchable: true,
 		volatileStatus: 'minimize',
+		effect: {
+			noCopy: true,
+			onSourceModifyDamage: function(damage, source, target, move) {
+				if (move.id === 'stomp' || move.id === 'steamroller') {
+					return this.modify(damage, 2);
+				}
+			}
+		},
 		boosts: {
 			evasion: 2
 		},
@@ -7909,7 +7917,7 @@ exports.BattleMovedex = {
 		basePower: 60,
 		category: "Special",
 		desc: "Deals damage to one adjacent target with a 10% chance to raise the user's Attack, Defense, Speed, Special Attack, and Special Defense by 1 stage.",
-		shortDesc: "10% chance to boost all of the user's stats by 1.",
+		shortDesc: "10% chance to boost all stats by 1 (not acc/eva).",
 		id: "ominouswind",
 		name: "Ominous Wind",
 		pp: 5,
@@ -8069,18 +8077,22 @@ exports.BattleMovedex = {
 		priority: 0,
 		isSoundBased: true,
 		onHitField: function(target, source) {
-			this.add('-fieldactivate', 'move: Perish Song');
+			var result = true;
 			for (var i=0; i<this.sides.length; i++) {
 				for (var j=0; j<this.sides[i].active.length; j++) {
+					if (!this.sides[i].active[j].volatiles['perishsong']) {
+						result = false;
+					}
 					if (this.sides[i].active[j].ability !== 'soundproof') {
 						this.sides[i].active[j].addVolatile('perishsong');
-					}
-					else {
+					} else {
 						this.add('-immune', this.sides[i].active[j], '[msg]');
 						this.add('-end', this.sides[i].active[j], 'Perish Song');
 					}
 				}
 			}
+			if (result) return false;
+			this.add('-fieldactivate', 'move: Perish Song');
 		},
 		effect: {
 			duration: 4,
@@ -8344,7 +8356,7 @@ exports.BattleMovedex = {
 		basePower: 0,
 		category: "Status",
 		desc: "The user swaps its Attack and Special Attack stat stage changes with one adjacent target. Ignores a target's Substitute.",
-		shortDesc: "Swaps Attack and Sp. Atk changes with target.",
+		shortDesc: "Swaps Attack and Sp. Atk stat stages with target.",
 		id: "powerswap",
 		name: "Power Swap",
 		pp: 10,
@@ -8460,7 +8472,7 @@ exports.BattleMovedex = {
 		basePower: 0,
 		category: "Status",
 		desc: "The user is protected from most attacks made by other Pokemon during this turn. This attack has a 1/X chance of being successful, where X starts at 1 and doubles each time this move is successfully used. X resets to 1 if this attack fails or if the user's last used move is not Detect, Endure, Protect, Quick Guard, or Wide Guard. If X is 256 or more, this move has a 1/(2^32) chance of being successful. Fails if the user moves last this turn. Priority +4.",
-		shortDesc: "Prevents moves from affecting the user for a turn.",
+		shortDesc: "Prevents moves from affecting the user this turn.",
 		id: "protect",
 		isViable: true,
 		name: "Protect",
@@ -8525,7 +8537,7 @@ exports.BattleMovedex = {
 		basePower: 0,
 		category: "Status",
 		desc: "The user copies all of one adjacent target's current stat stage changes. This move ignores Protect and Detect. Ignores a target's Substitute.",
-		shortDesc: "Copies the target's stat changes.",
+		shortDesc: "Copies the target's current stat stages.",
 		id: "psychup",
 		name: "Psych Up",
 		pp: 10,
@@ -8668,7 +8680,7 @@ exports.BattleMovedex = {
 		},
 		category: "Special",
 		desc: "Deals damage to one adjacent target equal to (user's level) * (X+50) / 100, where X is a random number from 0 to 100, rounded down, but not less than 1HP.",
-		shortDesc: "Random damage equal to .5-1.5x user's level.",
+		shortDesc: "Random damage equal to 0.5x-1.5x user's level.",
 		id: "psywave",
 		name: "Psywave",
 		pp: 15,
@@ -8751,7 +8763,7 @@ exports.BattleMovedex = {
 		basePower: 0,
 		category: "Status",
 		desc: "Causes one adjacent target to take its turn after all other Pokemon this turn, no matter the priority of its selected move. Fails if the target already moved this turn.",
-		shortDesc: "Forces the target to move last.",
+		shortDesc: "Forces the target to move last this turn.",
 		id: "quash",
 		name: "Quash",
 		pp: 15,
@@ -8799,7 +8811,7 @@ exports.BattleMovedex = {
 		basePower: 0,
 		category: "Status",
 		desc: "The user and its party members are protected from attacks with original priority greater than 0 made by other Pokemon, including allies, during this turn. This attack has a 1/X chance of being successful, where X starts at 1 and doubles each time this move is successfully used. X resets to 1 if this attack fails or if the user's last used move is not Detect, Endure, Protect, Quick Guard, or Wide Guard. If X is 256 or more, this move has a 1/(2^32) chance of being successful. Fails if the user moves last this turn or if this move is already in effect for the user's side. Priority +3.",
-		shortDesc: "Protects allies from priority attacks for one turn.",
+		shortDesc: "Protects allies from priority attacks this turn.",
 		id: "quickguard",
 		name: "Quick Guard",
 		pp: 15,
@@ -8935,7 +8947,7 @@ exports.BattleMovedex = {
 		basePower: 20,
 		category: "Physical",
 		desc: "Deals damage to one adjacent target. If this move is successful and the user has not fainted, the effects of Leech Seed and partial-trapping moves end for the user, and all hazards are removed from the user's side of the field.",
-		shortDesc: "Frees user from hazards, partial trap, Leech Seed.",
+		shortDesc: "Frees user from hazards/partial trap/Leech Seed.",
 		id: "rapidspin",
 		isViable: true,
 		name: "Rapid Spin",
@@ -9080,7 +9092,7 @@ exports.BattleMovedex = {
 		basePower: 0,
 		category: "Status",
 		desc: "For 5 turns, the user and its party members take 0.5x damage from physical attacks, or 0.66x damage if in a double or triple battle. Critical hits ignore this protection. It is removed from the user's side if the user or an ally is successfully hit by Brick Break or Defog. Brick Break removes the effect before damage is calculated. Lasts for 8 turns if the user is holding Light Clay.",
-		shortDesc: "For 5 turns, allies' Defense is 2x; 1.5x if not 1vs1.",
+		shortDesc: "For 5 turns, physical damage to allies is halved.",
 		id: "reflect",
 		isViable: true,
 		name: "Reflect",
@@ -9096,12 +9108,12 @@ exports.BattleMovedex = {
 				}
 				return 5;
 			},
-			onFoeBasePower: function(basePower, attacker, defender, move) {
-				if (this.getCategory(move) === 'Physical' && defender.side === this.effectData.target) {
-					if (!move.crit && attacker.ability !== 'infiltrator') {
+			onFoeModifyDamage: function(damage, source, target, move) {
+				if (this.getCategory(move) === 'Physical' && target.side === this.effectData.target) {
+					if (!move.crit && source.ability !== 'infiltrator') {
 						this.debug('Reflect weaken');
-						if (attacker.side.active.length > 1) return basePower*2/3;
-						return basePower/2;
+						if (source.side.active.length > 1) return this.modify(damage, 0.66);
+						return this.modify(damage, 0.5);
 					}
 				}
 			},
@@ -9606,7 +9618,7 @@ exports.BattleMovedex = {
 		basePower: 0,
 		category: "Status",
 		desc: "The user restores 1/2 of its maximum HP, rounded half up. Until the end of the turn, Flying-type users lose their Flying-type and pure Flying-type users become Normal-type. Does nothing if the user's HP is full.",
-		shortDesc: "Heals 50% HP. Removes Flying-type 'til turn ends.",
+		shortDesc: "Heals 50% HP. Flying-type removed 'til turn ends.",
 		id: "roost",
 		isViable: true,
 		name: "Roost",
@@ -10260,7 +10272,7 @@ exports.BattleMovedex = {
 		basePower: 60,
 		category: "Special",
 		desc: "Deals damage to one adjacent target with a 10% chance to raise the user's Attack, Defense, Speed, Special Attack, and Special Defense by 1 stage.",
-		shortDesc: "10% chance to boost all of the user's stats by 1.",
+		shortDesc: "10% chance to boost all stats by 1 (not acc/eva).",
 		id: "silverwind",
 		name: "Silver Wind",
 		pp: 5,
@@ -10558,7 +10570,7 @@ exports.BattleMovedex = {
 		basePower: 85,
 		category: "Physical",
 		desc: "Deals damage to one adjacent target. This move can hit a target using Bounce, Fly, or Sky Drop. Makes contact. Damage is boosted to 1.2x by the Ability Iron Fist.",
-		shortDesc: "Can hit Pokemon using Bounce or Fly.",
+		shortDesc: "Can hit Pokemon using Bounce, Fly, or Sky Drop.",
 		id: "skyuppercut",
 		isViable: true,
 		name: "Sky Uppercut",
@@ -11301,12 +11313,8 @@ exports.BattleMovedex = {
 		num: 23,
 		accuracy: 100,
 		basePower: 65,
-		basePowerCallback: function(pokemon, target) {
-			if (target.volatiles['minimize']) return 130;
-			return 65;
-		},
 		category: "Physical",
-		desc: "Deals damage to one adjacent target with a 30% chance to flinch it. Power doubles if Minimize was used previously by the target. Makes contact.",
+		desc: "Deals damage to one adjacent target with a 30% chance to flinch it. Damage doubles if Minimize was used previously by the target. Makes contact.",
 		shortDesc: "30% chance to flinch the target.",
 		id: "stomp",
 		name: "Stomp",
@@ -11378,12 +11386,8 @@ exports.BattleMovedex = {
 		num: 537,
 		accuracy: 100,
 		basePower: 65,
-		basePowerCallback: function(pokemon, target) {
-			if (target.volatiles['minimize']) return 130;
-			return 65;
-		},
 		category: "Physical",
-		desc: "Deals damage to one adjacent target with a 30% chance to flinch it. Power doubles if Minimize was used previously by the target. Makes contact.",
+		desc: "Deals damage to one adjacent target with a 30% chance to flinch it. Damage doubles if Minimize was used previously by the target. Makes contact.",
 		shortDesc: "30% chance to flinch the target.",
 		id: "steamroller",
 		name: "Steamroller",
@@ -12357,7 +12361,7 @@ exports.BattleMovedex = {
 		basePower: 0,
 		category: "Status",
 		desc: "Prevents one adjacent target from using the same move two turns in a row, starting next turn. This effect lasts until the target leaves the field. Pokemon protected by Magic Coat or the Ability Magic Bounce are unaffected and instead use this move themselves. Ignores a target's Substitute.",
-		shortDesc: "Target can't use the same move twice in a row.",
+		shortDesc: "Target can't select the same move twice in a row.",
 		id: "torment",
 		isViable: true,
 		name: "Torment",
@@ -13144,7 +13148,7 @@ exports.BattleMovedex = {
 		basePower: 0,
 		category: "Status",
 		desc: "The user and its party members are protected from damaging attacks made by other Pokemon, including allies, during this turn that target all adjacent foes or all adjacent Pokemon. This attack has a 1/X chance of being successful, where X starts at 1 and doubles each time this move is successfully used. X resets to 1 if this attack fails or if the user's last used move is not Detect, Endure, Protect, Quick Guard, or Wide Guard. If X is 256 or more, this move has a 1/(2^32) chance of being successful. Fails if the user moves last this turn or if this move is already in effect for the user's side. Priority +3.",
-		shortDesc: "Protects allies from multi-target hits for one turn.",
+		shortDesc: "Protects allies from multi-target hits this turn.",
 		id: "wideguard",
 		name: "Wide Guard",
 		pp: 10,

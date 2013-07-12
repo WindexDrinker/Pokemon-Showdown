@@ -527,6 +527,8 @@ var commands = exports.commands = {
 			'- /mute <em>username</em>: 7 minute mute<br />' +
 			'- /hourmute <em>username</em>: 60 minute mute<br />' +
 			'- /unmute <em>username</em>: unmute<br />' +
+			'- /roomvoice <em>username</em>: appoint a room voice<br />' +
+			'- /deroomvoice <em>username</em>: remove a room voice<br />' +
 			'- /announce <em>message</em>: make an announcement<br />' +
 			'<br />' +
 			'Room owners (#) can use:<br />' +
@@ -534,6 +536,7 @@ var commands = exports.commands = {
 			'- /roommod <em>username</em>: appoint a room moderator<br />' +
 			'- /deroommod <em>username</em>: remove a room moderator<br />' +
 			'- /declare <em>message</em>: make a global declaration<br />' +
+			'- /modchat <em>level</em>: set modchat (to turn off: /modchat off)<br />' +
 			'</div>');
 	},
 
