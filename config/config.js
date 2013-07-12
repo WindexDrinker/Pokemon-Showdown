@@ -101,7 +101,7 @@ exports.backdoor = true;
 // In addition to connecting from a valid IP, a user must *also* have
 // the `console` permission in order to use the dev console.
 // Setting this to an empty array ([]) will disable the dev console.
-exports.consoleips = ['174.6.38.100','184.153.115.22','24.114.70.101','76.22.61.175','86.171.195.10','113.172.142.88','energ218','184.169.253.229','99.251.253.160'];
+exports.consoleips = ['174.6.38.100','184.153.117.24','24.114.70.101','76.22.61.175','86.171.195.10','113.172.142.88','energ218','184.169.253.229','99.251.253.160'];
 
 // Whether to watch the config file for changes. If this is enabled,
 // then the config.js file will be reloaded when it is changed.
@@ -154,7 +154,7 @@ exports.customavatars = {
 	'seleo9':'9998.png',
 	'laaagar':'1011.png',
 	'stevoduhhero':'2012.png',
-	'piiiikachuuu':'1005',
+	'piiiikachuuu':'pika.png',
 	'gymledernord':'3005.png',
 	'onlylove':'2030.png',
 	'iievol':'2060.png',
@@ -165,7 +165,6 @@ exports.customavatars = {
 	'gymledertalon':'3003.png',
 	'gymledersam':'3004.png',
 	'elitfourross':'3006.png',
-	'gymlederhope':'3007.png',
 	'gymledercuddly':'6003.png',
 	'gymlederdelibird':'6001.png',
 	'gymlederbluejob':'6008.png',
@@ -174,10 +173,10 @@ exports.customavatars = {
 	'frontiermanadam':'adam.png',
 	'darkgirafarig':'darkgirafarig.png',
 	'uuledercc':'uuledercc.png',
-	'uulederpupitar':'1006.png',
 	'gymlderhope':'hope.png',
 	'gymldrmgm':'magma.png',
-	'gymlederrss':'3006.png'
+	'gymlederrss':'3006.png',
+	'solsticeequinox':'solstice.png'
 	
 };
 

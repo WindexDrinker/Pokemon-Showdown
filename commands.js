@@ -210,6 +210,24 @@ var crypto = require('crypto');
 var poofeh = true;
 var canpet = true;
 var canbs = true;
+//rps
+var rockpaperscissors  = false;
+var numberofspots = 2;
+var gamestart = false;
+var rpsplayers = new Array();
+var rpsplayersid = new Array();
+var player1response = new Array();
+var player2response = new Array();
+//hangman
+var hangman = false;
+var guessword = new Array();
+var hangmaner = new Array();
+var guessletters = new Array();
+var guessedletters = new Array();
+var correctletters = new Array();
+var givenguesses = 8;
+var spaces = new Array();
+var hangmantopic = new Array();
 
 var commands = exports.commands = {
 
@@ -598,6 +616,383 @@ viewround: 'vr',
 		rt.history.push(t[0] + "->" + t[1]);
 		room.addRaw('<b>' + user.name + '</b> has replaced <b>' + t[0] +'</b> with <b>' + t[1] + '</b>.');
 	},
+	/*********************************************************
+	 * Rock-Paper-Scissors
+	 *********************************************************/
+
+	rps: "rockpaperscissors",
+	rockpaperscissors: function(target, room, user) {
+		/*if(room.id != 'rps') {
+			return this.sendReply('|html|You must do this in the room \'rps\'. Click<button name = "joinRoom" value = "rps">here</button>to join the room.');
+		}*/
+		if(rockpaperscissors === false) {
+			rockpaperscissors = true;
+			return this.add('|html|<b>' + user.name + '</b> has started a game of rock-paper-scissors! /jrps or /joinrps to join.');
+		}
+	},
+	
+	respond: 'shoot',
+	shoot: function(target, room, user) {
+		if(gamestart === false) {
+			return this.sendReply('There is currently no game of rock-paper-scissors going on.');
+		}
+		else {
+			if(user.userid === rpsplayersid[0]) {
+				if(player1response[0]) {
+					return this.sendReply('You have already responded.');
+				}
+			if(target === 'rock') {
+				player1response.push('rock');
+				return this.sendReply('You responded with rock.');
+			} 
+			if(target === 'paper') {
+				player1response.push('paper');
+				return this.sendReply('You responded with paper.');
+			}
+			if(target === 'scissors') {
+				player1response.push('scissors');
+				return this.sendReply('You responded with scissors.');
+			}
+			else {
+			return this.sendReply('Please respond with one of the following: rock, paper, or scissors.');
+			}
+		}
+		if(user.userid === rpsplayersid[1]) {
+			if(player2response[0]) {
+				return this.sendReply('You have already responded.');
+			}
+			if(target === 'rock') {
+				player2response.push('rock');
+				return this.sendReply('You responded with rock.');
+			} 
+			if(target === 'paper') {
+				player2response.push('paper');
+				return this.sendReply('You responded with paper.');
+			}
+			if(target === 'scissors') {
+				player2response.push('scissors');
+				return this.sendReply('You responded with scissors.');
+			}
+			else {
+			return this.sendReply('Please respond with one of the following: rock, paper, or scissors.');
+			}
+		}
+		else return this.sendReply('You are not in this game of rock-paper-scissors.');
+	}
+	},
+		
+	compare: function(target, room, user) {
+		if(gamestart === false) {
+			return this.sendReply('There is no rock-paper-scissors game going on right now.');
+		}
+		else {
+		if(player1response[0] === undefined && player2response[0] === undefined) {
+			return this.sendReply('Neither ' + rpsplayers[0] + ' nor ' + rpsplayers[1] + ' has responded yet.');
+		}
+		if(player1response[0] === undefined) {
+			return this.sendReply(rpsplayers[0] + ' has not responded yet.');
+		}
+		if(player2response[0] === undefined) {
+			return this.sendReply(rpsplayers[1] + ' has not responded yet.');
+		}
+		else {
+			if(player1response[0] === player2response[0]) {
+				this.add('Both players responded with \'' + player1response[0] + '\', so the game of rock-paper-scissors between ' + rpsplayers[0] + ' and ' + rpsplayers[1] + ' was a tie!');
+			}
+			if(player1response[0] === 'rock' && player2response[0] === 'paper') {
+				this.add('|html|' + rpsplayers[0] + ' responded with \'rock\' and ' + rpsplayers[1] + ' responded with \'paper\', so <b>' + rpsplayers[1] + '</b> won the game of rock-paper-scissors!');
+			}
+			if(player1response[0] === 'rock' && player2response[0] === 'scissors') {
+				this.add('|html|' + rpsplayers[0] + ' responded with \'rock\' and ' + rpsplayers[1] + ' responded with \'scissors\', so <b>' + rpsplayers[0] + '</b> won the game of rock-paper-scissors!');
+			}
+			if(player1response[0] === 'paper' && player2response[0] === 'rock') {
+				this.add('|html|' + rpsplayers[0] + ' responded with \'paper\' and ' + rpsplayers[1] + ' responded with \'rock\', so <b>' + rpsplayers[0] + '</b> won the game of rock-paper-scissors!');
+			}
+			if(player1response[0] === 'paper' && player2response[0] === 'scissors') {
+				this.add('|html|' + rpsplayers[0] + ' responded with \'paper\' and ' + rpsplayers[1] + ' responded with \'scissors\', so <b>' + rpsplayers[1] + '</b> won the game of rock-paper-scissors!');
+			}
+			if(player1response[0] === 'scissors' && player2response[0] === 'rock') {
+				this.add('|html|' + rpsplayers[0] + ' responded with \'scissors\' and ' + rpsplayers[1] + ' responded with \'rock\', so <b>' + rpsplayers[1] + '</b> won the game of rock-paper-scissors!');
+			}
+			if(player1response[0] === 'scissors' && player2response[0] === 'paper') {
+				this.add('|html|' + rpsplayers[0] + ' responded with \'scissors\' and ' + rpsplayers[1] + ' responded with \'paper\', so <b>' + rpsplayers[0] + '</b> won the game of rock-paper-scissors!');
+			}
+
+		rockpaperscissors = false;
+		numberofspots = 2;
+		gamestart = false;
+		rpsplayers = [];
+		rpsplayersid = [];
+		player1response = [];
+		player2response = [];
+		}
+		}
+	},
+	
+	endrps: function(target, room, user) {
+		if(!user.can('broadcast')) {
+			return this.sendReply('You do not have enough authority to do this.');
+		}
+		if(rockpaperscissors === false) {
+			return this.sendReply('There is no game of rock-paper-scissors happening right now.');
+		}
+		if(user.can('broadcast') && rockpaperscissors === true) {
+			rockpaperscissors = false;
+			numberofspots = 2;
+			gamestart = false;
+			rpsplayers = [];
+			rpsplayersid = [];
+			player1response = [];
+			player2response = [];
+			return this.add('|html|<b>' + user.name + '</b> ended the game of rock-paper-scissors.');
+		}
+	},
+	
+	jrps: 'joinrps',
+	joinrps: function(target, room, user) {
+		if(rockpaperscissors === false) {
+			return this.sendReply('There is no game going on right now.');
+		}
+		if(numberofspots === 0) {
+			return this.sendReply('There is no more space in the game.');
+		}
+		else {
+			if(rpsplayers[0] === undefined) {
+				numberofspots = numberofspots - 1;
+				this.add('|html|<b>' + user.name + '</b> has joined the game of rock-paper-scissors! One spot remaining.');
+				rpsplayers.push(user.name);
+				rpsplayersid.push(user.userid);
+				return false;
+			}
+		if(rpsplayers[0] === user.name) {
+			return this.sendReply('You are already in the game.');
+		}
+		if(rpsplayers[0] && rpsplayers[1] === undefined) {
+			numberofspots = numberofspots - 1;
+			this.add('|html|<b>' + user.name + '</b> has joined the game of rock-paper-scissors!');
+			rpsplayers.push(user.name);
+			rpsplayersid.push(user.userid);
+		}
+		if(numberofspots === 0) {
+			this.add('|html|The game of rock-paper-scissors between <b>' + rpsplayers[0] + '</b> and <b>' + rpsplayers[1] + '</b> has begun!');
+			gamestart = true;
+		}
+	}
+	},
+	/*********************************************************
+	 * hangman
+	 *********************************************************/
+	 hangman: function(target, room, user) {
+	if(!user.can('broadcast')) {
+		return this.sendReply('You do not have enough authority to do this.');
+	}
+			if(room.id!= 'hangman') {
+		return this.sendReply('|html|Please do this in the room "hangman". You can join it <button name = "joinRoom" value = "hangman">here</button>.');
+	}
+	if(hangman === true) {
+		return this.sendReply('There is already a game of hangman going on.');
+	}
+	if(!target) return this.parse('/help hangman');
+	if(hangman === false) {
+		if(target.indexOf(' ') != -1) {
+			return this.sendReply('Please don\'t put spaces in the word.');
+		}
+		hangman = true;
+						guessword = [];
+				hangmaner = [];
+				guessletters = [];
+				guessedletters = [];
+				correctletters = [];
+				spaces = [];
+				givenguesses = 8;
+		var targetword = target.toLowerCase();
+		guessword.push(targetword);
+		hangmaner.push(user.userid);
+		for(var i = 0; i < target.length; i++) {
+			guessletters.push(targetword[i]);
+			spaces.push('_');
+		}
+		return this.add('|html|<div class = "infobox"><div class = "broadcast-green"><center><font size = 2><b>' + user.name + '</b> started a game of hangman! The word has ' + target.length + ' letters.<br>' + spaces.join(" ") + '</font></center></div></div>');
+	}
+	},
+	
+	viewhangman: function(target, room, user) {
+			if(room.id!= 'hangman') {
+		return this.sendReply('|html|Please do this in the room "hangman". You can join it <button name = "joinRoom" value = "hangman">here</button>.');
+	}
+		if(!this.canBroadcast()) return;
+		if(hangman === false) {
+			return this.sendReply('There is no game of hangman going on right now.');
+		}
+	this.sendReply('|html|<font size = 2>' + spaces.join(" ") + '<br>Guesses left: ' + givenguesses + '<br>Category: ' + hangmantopic[0] + '</font>');
+	},
+	
+	 topic: 'category',
+	 category: function(target, room, user) {
+		if(room.id != 'hangman') {
+			return this.sendReply('|html|Please do this in the room "hangman". You can join it <button name = "joinRoom" value = "hangman">here</button>.');
+		}
+		if(hangman === false) {
+			return this.sendReply('There is no game of hangman going on right now.');
+		}
+		if(user.userid != hangmaner[0]) {
+			return this.sendReply('You cannot change the category because you are not running hangman.');
+		}
+		hangmantopic[0] = target;
+		return this.sendReply('You set the category of hangman to \'' + target + '\'.');
+		},
+		
+	
+	word: function(target, room, user) {
+		if(hangman === false) {
+		return this.sendReply('There is no game of hangman going on.');
+	}
+	if(user.userid === hangmaner[0]) {
+		return this.sendReply('Your word is \'' + guessword[0] + '\'.');
+	}
+	else {
+		return this.sendReply('You are not the person who started hangman.');
+	}
+	},
+	
+	guess: function(target, room, user) {
+			if(room.id!= 'hangman') {
+		return this.sendReply('|html|Please do this in the room "hangman". You can join it <button name = "joinRoom" value = "hangman">here</button>.');
+	}
+	if(hangman === false) {
+		return this.sendReply('There is no game of hangman going on.');
+	}
+			if(user.userid === hangmaner[0]) {
+			return this.sendReply('You cannot guess the word because you are running hangman!');
+		}
+	if(!target) {
+		return this.sendReply('Please specify a letter to guess.');
+	}
+	if(target.length > 1) {
+		return this.sendReply('Please specify a single letter to guess. To guess the word, use /guessword.');
+	}
+	lettertarget = target.toLowerCase();
+	for(var y = 0; y < 27; y++) {
+		if(lettertarget === guessedletters[y]) {
+			return this.sendReply('Someone has already guessed the letter \'' + lettertarget + '\'.');
+		}
+	}
+	var letterright = new Array();
+	for(var a = 0; a < guessword[0].length; a++) {
+		if(lettertarget === guessletters[a]) {
+			var c = a + 1;
+			letterright.push(c);
+			correctletters.push(c);
+			spaces[a] = lettertarget;
+		}
+	}
+	if(letterright[0] === undefined) {
+		givenguesses = givenguesses - 1;
+			if(givenguesses === 0) {
+
+				hangman = false;
+				guessword = [];
+				hangmaner = [];
+				guessletters = [];
+				guessedletters = [];
+				correctletters = [];
+				spaces = [];
+				hangmantopic = [];
+				givenguesses = 8;
+				return this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + lettertarget + '\', but it was not in the word. You have failed to guess the word, so the man has been...uh...he went to sleep.');
+		}
+		this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + lettertarget + '\', but it was not in the word.');
+	}
+	else {
+	this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + lettertarget + '\', which was letter(s) ' + letterright.toString() + ' of the word.');
+	}
+	guessedletters.push(lettertarget);
+	if(correctletters.length === guessword[0].length) {
+				this.add('|html|Congratulations! <b>' + user.name + '</b> has guessed the word, which was: \'' + guessword[0] + '\'.');
+				hangman = false;
+				guessword = [];
+				hangmaner = [];
+				guessletters = [];
+				guessedletters = [];
+				correctlyguessedletters = [];
+				spaces = [];
+				hangmantopic = [];
+				givenguesses = 8;
+
+		}
+	},
+	
+	guessword: function(target, room, user) {
+			if(room.id!= 'hangman') {
+		return this.sendReply('|html|Please do this in the room "hangman". You can join it <button name = "joinRoom" value = "hangman">here</button>.');
+	}
+		if(hangman === false) {
+		return this.sendReply('There is no game of hangman going on.');
+	}
+		if(!target) {
+			return this.sendReply('Please specify the word you are trying to guess.');
+		}
+		if(user.userid === hangmaner[0]) {
+			return this.sendReply('You cannot guess the word because you are running hangman!');
+		}
+		var targetword = target.toLowerCase();
+		if(targetword === guessword[0]) {
+			this.add('|html|Congratulations! <b>' + user.name + '</b> has guessed the word, which was: \'' + guessword[0] + '\'.');
+							hangman = false;
+				guessword = [];
+				hangmaner = [];
+				guessletters = [];
+				guessedletters = [];
+				correctletters = [];
+				spaces = [];
+				hangmantopic = [];
+				givenguesses = 8;	
+		}
+		else {
+			givenguesses = givenguesses - 1;
+			if(givenguesses === 0) {
+		
+				hangman = false;
+				guessword = [];
+				hangmaner = [];
+				guessletters = [];
+				guessedletters = [];
+				correctletters = [];
+				spaces = [];
+				hangmantopoic = [];
+				givenguesses = 8;
+					return this.add('|html|<b>' + user.name + '</b> guessed the word \'' + targetword + '\', but it was not the word. You have failed to guess the word, so the man has been...uh...he went to sleep.');
+			}
+			this.add('|html|<b>' + user.name + '</b> guessed the word \'' + targetword + '\', but it was not the word.');
+		}
+		},
+	
+	endhangman: function(target, room, user) {
+			if(room.id!= 'hangman') {
+		return this.sendReply('|html|Please do this in the room "hangman". You can join it <button name = "joinRoom" value = "hangman">here</button>.');
+	}
+		if(!user.can('broadcast')) {
+			return this.sendReply('You do not have enough authority to do this.');
+		}
+		if(hangman === false) {
+			return this.sendReply('There is no game going on.');
+		}
+		if(hangman === true) {
+			this.add('|html|<b>' + user.name + '</b> ended the game of hangman.');
+				hangman = false;
+				guessword = [];
+				hangmaner = [];
+				guessletters = [];
+				guessedletters = [];
+				correctletters = [];
+				givenguesses = 8;	
+			}
+		},
+		
+	/*********************************************************
+	 * everything else
+	 *********************************************************/
+	 
 	version: function(target, room, user) {
 		if (!this.canBroadcast()) return;
 		this.sendReplyBox('Server version: <b>'+CommandParser.package.version+'</b> <small>(<a href="http://pokemonshowdown.com/versions#' + CommandParser.serverVersion + '">' + CommandParser.serverVersion.substr(0,10) + '</a>)</small>');
@@ -777,7 +1172,10 @@ forums: function(target, room, user) {
         qseasons: 'seasons',   
         seasons: function(target, rom, user) {
                 if (!this.canBroadcast()) return;
-                this.sendReplyBox('hurhurhur i dun have code for it anymore qq');
+                this.sendReplyBox('Leader qSeasons!<br>' +
+                		'Type: Everything o3o<br>' +
+                		'He even gets his own shiny badge: <img src = "http://i1305.photobucket.com/albums/s542/TheBattleTowerPS/153_zpsa3af73f7.png"><br>' +
+                		':D');
                 },
                
         aaron: function(target, rom, user) {
@@ -1164,6 +1562,18 @@ forums: function(target, room, user) {
 							'Badge: Snow Badge<br />');
 		},
 		
+		uumiloticnob: 'uunob',
+		uunob: function(target, room, user) {
+			if(!this.canBroadcast()) return;
+		this.sendReplyBox('<b>Information on UU Le@der Nob:</b><br />' +
+							'Type: Steel<br />' +
+							'Tier: Under Used (UU)<br />' + 
+							'<a href="gymleadermustang.wix.com%2F-amethystleague%23!gym-leaders%2FaboutPage" target="_blank">Thread</a><br />' +
+                          	'Signature Pokemon: Empoleon<br />' +
+							'<img src="http://www.poke-amph.com/black-white/sprites/small/395.png"><br />' +
+							'Badge: Iron Badge<br />');
+		},
+		
 	league: 'leagueintro',
 	leagueintro: function(target, room, user) {
 		if (!this.canBroadcast()) return;
@@ -1289,7 +1699,7 @@ forums: function(target, room, user) {
 	uuleaders: function(target, room, user) {
 		if(!this.canBroadcast()) return;
 		this.sendReplyBox('<b>List of Active Gym Leaders:</b>' +
-				'<ul><li>Gym Le@der ZacT94: Ghost</li><li>Gym Le@der Nord: Ice</li><li>Gym Le@der Boss: Fire</li><li>Gym Le@der CC: Psychic</li><li>Gym Le@der AOrtega: Fighting</li><li>Gym Le@der Ross: Grass</li><li>Gym Le@der Delibird: Rock</li><li>Gym Le@der Talon: Dark</li></ul>');
+				'<ul><li>Gym Le@der ZacT94: Ghost</li><li>Gym Le@der Nord: Ice</li><li>Gym Le@der Boss: Fire</li><li>Gym Le@der CC: Psychic</li><li>Gym Le@der AOrtega: Fighting</li><li>Gym Le@der Ross: Poison</li><li>Gym Le@der Delibird: Rock</li><li>Gym Le@der Talon: Dark</li></ul>');
 		},
  
         pika: 'chuuu',
@@ -1324,11 +1734,6 @@ forums: function(target, room, user) {
 		return this.sendReply('/tourroom- Access denied.');
 		}
 		else {
-				if(Rooms.rooms['tournaments'] == undefined){
-			Rooms.rooms['tournaments'] = new Rooms.ChatRoom('tournaments', 'tournaments');
-			tour.reset('tournaments');
-			this.sendReply('The room for tournaments was created.');
-		}
 		room.addRaw('<div class="infobox"><div class= "broadcast-green"><font size = 3>Here for the tournament? <button name="joinRoom" value="tournaments">Click here!</button> to join the room where tournaments are hosted!</font></div></div>');
 		this.logModCommand(user.name + ' reminded people to join the tournament room.');
 		}
@@ -1344,15 +1749,11 @@ forums: function(target, room, user) {
 			this.sendReply('Someone has already done this.');
 		}else {
 			if(Rooms.rooms['tournaments'] == undefined){
-			Rooms.rooms['tournaments'] = new Rooms.ChatRoom('tournaments', 'tournaments');
+			Rooms.global.addChatRoom('tournaments');
 			tour.reset('tournaments');
 		}
-					if(Rooms.rooms['staff'] == undefined){
-			Rooms.rooms['staff'] = new Rooms.ChatRoom('staff', 'staff');
-			tour.reset('staff');
-		}
 					if(Rooms.rooms['trivia'] == undefined){
-			Rooms.rooms['trivia'] = new Rooms.ChatRoom('trivia', 'trivia');
+			Rooms.global.addChatRoom('trivia');
 			tour.reset('trivia');
 		}
 		return this.sendReply('The rooms \'staff\', \'trivia\', and \'tournaments\' were created.');
@@ -1484,6 +1885,7 @@ return this.sendReply('Poof is currently disabled.');
 		return this.parse('/msg '+(user.lastPM||'')+', '+target);
 	},
 
+	w: 'msg',
 	pm: 'msg',
 	whisper: 'msg',
 	msg: function(target, room, user) {
@@ -1527,6 +1929,7 @@ return this.sendReply('Poof is currently disabled.');
 			return this.sendReply("The room '"+target+"' already exists.");
 		}
 		if (Rooms.global.addChatRoom(target)) {
+			tour.reset(target);
 			return this.sendReply("The room '"+target+"' was created.");
 		}
 		return this.sendReply("An error occurred while trying to create the room '"+target+"'.");
@@ -1741,7 +2144,7 @@ if (!targetUser) return this.sendReply('User '+this.targetUsername+' not found.'
 if (!this.can('mute')) return false;
 return this.privateModCommand('' + targetUser.name + ' has had a note added by ' + user.name + '. (' + target + ')');
 },
-	w: 'warn',
+
 	warn: function(target, room, user) {
 		if (!target) return this.parse('/help warn');
 

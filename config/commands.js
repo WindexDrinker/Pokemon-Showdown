@@ -786,11 +786,35 @@ var commands = exports.commands = {
 	h: 'help',
 	'?': 'help',
 	help: function(target, room, user) {
+		if(!this.canBroadcast()) return;
 		target = target.toLowerCase();
 		var matched = false;
 		if (target === 'all' || target === 'msg' || target === 'pm' || target === 'whisper' || target === 'w') {
 			matched = true;
 			this.sendReply('/msg OR /whisper OR /w [username], [message] - Send a private message.');
+		}
+		if (target === 'rps' || target === 'rockpaperscissors') {
+			matched = true;
+			this.sendReplyBox('<b><font size = 3>Rock-Paper-Scissors</font></b><br>This is the classic game of rock-paper-scissors. The commands are as follows:<br>' +
+					'- /rps - starts the game<br>' +
+					'- /jrps OR /joinrps - join the game<br>' +
+					'- /respond [choice] OR /shoot [choice] - chooses either rock, paper, or scissors<br>' +
+					'- /compare - compares the two responses and determines a winner<br>' +
+					'- /endrps - ends the game (only necessary for stopping mid-game; it will end on its own after using /compare). Requires: +%@&~<br>' +
+					'<br>PM me any glitches you find. Thanks! - piiiikachuuu');
+		}
+		if (target === 'hangman') {
+			matched = true;
+			this.sendReplyBox('<font size = 3>Hangman</font><br>This is the game of hangman. The host player will pick a word, and other players will be allowed 8 guesses to figure out the word by guessing letters.<br>' +
+				'The commands to run hangman are as follows:<br>' + 
+				'- /hangman [word] - starts the game. Requires: +%@&~<br>' +
+				'- /topic OR /category - allows the host to specify a category<br>' +
+				'- /guess [letter] - allows users to guess letters<br>' +
+				'- /guessword [word] - allows users to guess words<br>' +
+				'- /viewhangman - shows the progress and how many guesses are left<br>' +
+				'- /word - displays the word to the host<br>' +
+				'- /endhangman - ends the game if something goes wrong. Requires: +%@&~<br><br>' +
+				'PM me if you find any bugs. Have fun! - piiiikachuuu');
 		}
 		if (target === 'all' || target === 'complaint' || target === 'complain') {
 			matched = true;

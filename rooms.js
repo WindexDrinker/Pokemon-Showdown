@@ -1568,8 +1568,6 @@ var newRoom = function(roomid, format, p1, p2, parent, rated) {
 var rooms = {};
 console.log("NEW GLOBAL: global");
 rooms.global = new GlobalRoom('global');
-console.log("NEW CHATROOM: lobby");
-rooms.lobby = new ChatRoom('lobby');
 
 exports.GlobalRoom = GlobalRoom;
 exports.BattleRoom = BattleRoom;
