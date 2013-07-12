@@ -808,9 +808,8 @@ viewround: 'vr',
 		var targetword = target.toLowerCase();
 		guessword.push(targetword);
 		hangmaner.push(user.userid);
-		var word = target;
 		for(var i = 0; i < target.length; i++) {
-			guessletters.push(word[i]);
+			guessletters.push(targetword[i]);
 			spaces.push('_');
 		}
 		return this.add('|html|<div class = "infobox"><div class = "broadcast-green"><center><font size = 2><b>' + user.name + '</b> started a game of hangman! The word has ' + target.length + ' letters.<br>' + spaces.join(" ") + '</font></center></div></div>');
