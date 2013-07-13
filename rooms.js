@@ -512,17 +512,18 @@ var GlobalRoom = (function() {
 			var c = tour[i];
 			if (c.status == 2) {
 				for (var x in c.round) {
-					if (p1.userid == c.round[x][0] || p1.userid == c.round[x][1] && p2.userid == c.round[x][0] || p2.userid == c.round[x][1]) {
+					if ((p1.userid == c.round[x][0] && p2.userid == c.round[x][1]) || (p2.userid == c.round[x][0] && p1.userid == c.round[x][1])) {
 						if (!c.round[x][2] && c.round[x][2] != -1) {
 							if (format == c.tier.toLowerCase()) {
 								c.round[x][2] = -1;
-								Rooms.rooms[i].addRaw("<a href=\"/battle-" + formaturlid + "-" + battleid + "\" class=\"ilink\"><b>Tournament battle between " + p1.name + " and " + p2.name + " started.</b></a>");
+									Rooms.rooms[i].addRaw("<a href=\"/battle-" + formaturlid + "-" + battleid + "\" class=\"ilink\"><b>Tournament battle between " + p1.name + " and " + p2.name + " started.</b></a>");
 							}
 						}
 					}
 				}
 			}
 		}
+
 	};
 	GlobalRoom.prototype.addRoom = function(room, format, p1, p2, parent, rated) {
 		room = newRoom(room, format, p1, p2, parent, rated);

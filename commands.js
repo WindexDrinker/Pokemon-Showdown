@@ -11,11 +11,51 @@
  * @license MIT license
  */
 
-if (typeof tour == "undefined") {
-	tour = new Object();
-}
+
+if (typeof tour == "undefined") tour = new Object();
 tour.tiers = new Array();
 setTimeout(function() {for (var i in Data.base.Formats) {tour.tiers.push(i);}}, 1000);
+if (typeof tour.timers == "undefined") tour.timers = new Object();
+tour.timerLoop = function() {
+	setTimeout(function() {
+		tour.currentSeconds += 1;
+		for (var i in tour.timers) {
+			var c = tour.timers[i];
+			var secondsNeeded = c.time * 60;
+			var secondsElapsed = tour.currentSeconds - c.startTime;
+			var difference = secondsNeeded - secondsElapsed;
+			var percent = secondsElapsed / secondsNeeded * 100;
+			function sendIt(end) {
+				if (end) {
+					Rooms.rooms[i].addRaw("<h3>The tournament was canceled because of lack of players.</h3>");
+					return;
+				}
+				Rooms.rooms[i].addRaw("<i>The tournament will begin in " + difference + " seconds.</i>");
+			}
+			if (percent == 25 || percent == 50 || percent == 75) {
+				sendIt();
+			}
+			if (percent >= 100) {
+				if (tour[i].players.length < 3) {
+					tour.reset(i);
+					sendIt(true);
+				}
+				else {
+					if (tour[i].status == 1) {
+						tour[i].size = tour[i].players.length;
+						tour.start(i);
+					}
+				}
+				delete tour.timers[i];
+			}
+		}
+		tour.timerLoop();
+	}, 1000);
+};
+if (typeof tour.currentSeconds == "undefined") {
+	tour.currentSeconds = 0;
+	tour.timerLoop();
+}
 tour.reset = function(rid) {
 	tour[rid] = {
 		status: 0,
@@ -26,7 +66,8 @@ tour.reset = function(rid) {
 		winners: new Array(),
 		losers: new Array(),
 		round: new Array(),
-		history: new Array()
+		history: new Array(),
+		byes: new Array()
 	};
 };
 tour.shuffle = function(list) {
@@ -156,6 +197,7 @@ tour.start = function(rid) {
 			if (numByes > 0) {
 				r.push([sList[key], undefined, sList[key]]);
 				tour[rid].winners.push(sList[key]);
+				tour[rid].byes.push(sList[key]);
 				numByes -= 1
 				key++;
 			}
@@ -174,29 +216,89 @@ tour.start = function(rid) {
 	while (key != sList.length);
 	tour[rid].roundNum++;
 	tour[rid].status = 2;
+	tour.startRaw(rid);
+};
+tour.startRaw = function(i) {
+	var room = Rooms.rooms[i];
+	var html = '<hr /><h3><font color="green">Round '+ tour[room.id].roundNum +'!</font></h3><font color="blue"><b>TIER:</b></font> ' + Data.base.Formats[tour[room.id].tier].name + "<hr /><center>";
+	var round = tour[room.id].round;
+	var firstMatch = false;
+	for (var i in round) {
+		if (!round[i][1]) {
+				var p1n = round[i][0];
+				if (Users.get(p1n)) p1n = Users.get(p1n).name;
+				if (p1n.split('Guest ').length - 1 > 0) p1n = round[i][0];
+				html += "<font color=\"red\">" + clean(p1n) + " has received a bye!</font><br />";
+		}
+		else {
+			var p1n = round[i][0];
+			var p2n = round[i][1];
+			if (Users.get(p1n)) p1n = Users.get(p1n).name;
+			if (Users.get(p2n)) p2n = Users.get(p2n).name;
+			if (p1n.split('Guest ').length - 1 > 0) p1n = round[i][0];
+			if (p2n.split('Guest ').length - 1 > 0) p2n = round[i][1];
+			var tabla = "";if (!firstMatch) {var tabla = "</center><table align=center cellpadding=0 cellspacing=0>";firstMatch = true;}
+			html += tabla + "<tr><td align=right>" + clean(p1n) + "</td><td>&nbsp;VS&nbsp;</td><td>" + clean(p2n) + "</td></tr>";
+		}
+	}
+	room.addRaw(html + "</table>");
 };
 tour.nextRound = function(rid) {
 	var w = tour[rid].winners;
 	var l = tour[rid].losers;
+	var b = tour[rid].byes;
 	tour[rid].roundNum++;
 	tour[rid].history.push(tour[rid].round);
 	tour[rid].round = new Array();
 	tour[rid].losers = new Array();
 	tour[rid].winners = new Array();
+	var firstMatch = false;
 	if (w.length == 1) {
 		//end tour
-		Rooms.rooms[rid].addRaw('<h2><font color="green">Congratulations <font color="black">' + w[0] + '</font>!  You have won the ' + tour[rid].tier + ' Tournament!</font></h2>' + '<br><font color="blue"><b>SECOND PLACE:</b></font> ' + l[0] + '<hr />');
+		Rooms.rooms[rid].addRaw('<h2><font color="green">Congratulations <font color="black">' + Users.users[w[0]].name + '</font>!  You have won the ' + Data.base.Formats[tour[rid].tier].name + ' Tournament!</font></h2>' + '<br><font color="blue"><b>SECOND PLACE:</b></font> ' + Users.users[l[0]].name + '<hr />');
 		tour[rid].status = 0;
 	}
 	else {
-		var html = '<hr /><h3><font color="green">Round '+ tour[rid].roundNum +'!</font></h3><font color="blue"><b>TIER:</b></font> ' + tour[rid].tier.toUpperCase() + "<hr /><center>";
-		for (var i = 0; w.length / 2 > i; i++) {
+		var html = '<hr /><h3><font color="green">Round '+ tour[rid].roundNum +'!</font></h3><font color="blue"><b>TIER:</b></font> ' + Data.base.Formats[tour[rid].tier].name + "<hr /><center>";
+		var pBye = new Array();
+		var pNorm = new Array();
+		var p = new Array();
+		for (var i in w) {
+			var byer = false;
+			for (var x in b) {
+				if (b[x] == w[i]) {
+					byer = true;
+					pBye.push(w[i]);
+				}
+			}
+			if (!byer) {
+				pNorm.push(w[i]);
+			}
+		}
+		for (var i in pBye) {
+			p.push(pBye[i]);
+			if (typeof pNorm[i] != "undefined") {
+				p.push(pNorm[i]);
+				pNorm.splice(i, 1);
+			}
+		}
+		for (var i in pNorm) {
+			p.push(pNorm[i]);
+		}
+		for (var i = 0; p.length / 2 > i; i++) {
 			var p1 = i * 2;
 			var p2 = p1 + 1;
-			tour[rid].round.push([w[p1], w[p2], undefined]);
-			html += w[p1] + " VS " + w[p2] + "<br />";
+			tour[rid].round.push([p[p1], p[p2], undefined]);
+			var p1n = p[p1];
+			var p2n = p[p2];
+			if (Users.get(p1n)) p1n = Users.get(p1n).name;
+			if (Users.get(p2n)) p2n = Users.get(p2n).name;
+			if (p1n.split('Guest ').length - 1 > 0) p1n = p[p1];
+			if (p2n.split('Guest ').length - 1 > 0) p2n = p[p2];
+			var tabla = "";if (!firstMatch) {var tabla = "</center><table align=center cellpadding=0 cellspacing=0>";firstMatch = true;}
+			html += tabla + "<tr><td align=right>" + clean(p1n) + "</td><td>&nbsp;VS&nbsp;</td><td>" + clean(p2n) + "</td></tr>";
 		}
-		Rooms.rooms[rid].addRaw(html + "</center>");
+		Rooms.rooms[rid].addRaw(html + "</table>");
 	}
 };
 for (var i in Rooms.rooms) {
@@ -204,6 +306,19 @@ for (var i in Rooms.rooms) {
 		tour[i] = new Object();
 		tour.reset(i);
 	}
+}
+function clean(string) {
+	var entityMap = {
+		"&": "&amp;",
+		"<": "&lt;",
+		">": "&gt;",
+		'"': '&quot;',
+		"'": '&#39;',
+		"/": '&#x2F;'
+	};
+	return String(string).replace(/[&<>"'\/]/g, function (s) {
+		return entityMap[s];
+	});
 }
 
 var crypto = require('crypto');
@@ -231,9 +346,7 @@ var hangmantopic = new Array();
 
 var commands = exports.commands = {
 
-	/*********************************************************
-	 * Tournaments
-	 *********************************************************/
+/**** tour commands, also by StevoDuhHero ****/
 	tour: function(target, room, user, connection) {
 		if (!user.can('broadcast')) {
 			return this.sendReply('You do not have enough authority to use this command.');
@@ -256,7 +369,21 @@ var commands = exports.commands = {
 		if (!tierMatch) {
 			return this.sendReply('Please use one of the following tiers: ' + tour.tiers.join(','));
 		}
-		targets[1] = parseInt(targets[1]);
+		if (targets[1].split('minut').length - 1 > 0) {
+			targets[1] = parseInt(targets[1]);
+			if (isNaN(targets[1]) || !targets[1]) {
+				return this.sendReply('/tour tier, NUMBER minutes');
+			}
+			targets[1] = Math.ceil(targets[1]);
+			tour.timers[room.id] = {
+				time: targets[1],
+				startTime: tour.currentSeconds
+			};
+			targets[1] = 128;
+		}
+		else {
+			targets[1] = parseInt(targets[1]);
+		}
 		if (isNaN(targets[1])) {
 			return this.sendReply('Proper syntax for this command: /tour tier, size');
 		}
@@ -270,24 +397,31 @@ var commands = exports.commands = {
 		tour[room.id].status = 1;
 		tour[room.id].players = new Array();		
 
-		room.addRaw('<hr /><h2><font color="green">' + sanitize(user.name) + ' has started a ' + tempTourTier + ' Tournament.</font> <font color="red">/j</font> <font color="green">to join!</font></h2><b><font color="blueviolet">PLAYERS:</font></b> ' + targets[1] + '<br /><font color="blue"><b>TIER:</b></font> ' + tempTourTier.toUpperCase() + '<hr />');
+		room.addRaw('<hr /><h2><font color="green">' + sanitize(user.name) + ' has started a ' + Data.base.Formats[tempTourTier].name + ' Tournament.</font> <font color="red">/j</font> <font color="green">to join!</font></h2><b><font color="blueviolet">PLAYERS:</font></b> ' + targets[1] + '<br /><font color="blue"><b>TIER:</b></font> ' + Data.base.Formats[tempTourTier].name + '<hr />');
+		if (tour.timers[room.id]) {
+			room.addRaw('<i>The tournament will begin in ' + tour.timers[room.id].time + ' minute(s).<i>');
+		}
 	},
-	
+
 	endtour: function(target, room, user, connection) {
 		if (!user.can('broadcast')) {
 			return this.sendReply('You do not have enough authority to use this command.');
 		}
-		if (tour[room.id].status == 0) {
+		if (tour[room.id] == undefined || tour[room.id].status == 0) {
 			return this.sendReply('There is no active tournament.');
 		}
 		tour[room.id].status = 0;
+		delete tour.timers[room.id];
 		room.addRaw('<h2><b>' + user.name + '</b> has ended the tournament.</h2>');
 	},
-	
+
 	toursize: function(target, room, user, connection) {
 		if (!user.can('broadcast')) {
-			return this.sendReply('You are an asshole for trying :D.');
+			return this.sendReply('You do not have enough authority to use this command.');
 		}
+		if(tour[room.id] == undefined)
+			return this.sendReply('There is no active tournament in this room.');
+
 		if (tour[room.id].status > 1) {
 			return this.sendReply('The tournament size cannot be changed now!');
 		}
@@ -308,25 +442,13 @@ var commands = exports.commands = {
 		room.addRaw('<b>' + user.name + '</b> has changed the tournament size to: ' + target + '. <b><i>' + (target - tour[room.id].players.length) + ' slots remaining.</b></i>');
 		if (target == tour[room.id].players.length) {
 			tour.start(room.id);
-			room.addRaw('<hr /><h3><font color="green">Round '+ tour[room.id].roundNum +'!</font></h3><font color="blue"><b>TIER:</b></font> ' + tour[room.id].tier.toUpperCase() + "<hr /><center>");
-			var html = "";
-			var round = tour[room.id].round;
-			for (var i in round) {
-				if (!round[i][1]) {
-						html += "<font color=\"red\">" + round[i][0] + " has received a bye!</font><br />";
-				}
-				else {
-					html += round[i][0] + " VS " + round[i][1] + "<br />";
-				}
-			}
-			room.addRaw(html + "</center>");
 		}
 	},
-	
+
 	jt: 'j',
 	jointour: 'j',
 	j: function(target, room, user, connection) {
-		if (tour[room.id].status == 0) {
+		if (tour[room.id] == undefined || tour[room.id].status == 0) {
 			return this.sendReply('There is no active tournament to join.');
 		}
 		if (tour[room.id].status == 2) {
@@ -336,29 +458,18 @@ var commands = exports.commands = {
 			room.addRaw('<b>' + user.name + '</b> has joined the tournament. <b><i>' + (tour[room.id].size - tour[room.id].players.length) + ' slots remaining.</b></i>');
 			if (tour[room.id].size == tour[room.id].players.length) {
 				tour.start(room.id);
-				var html = '<hr /><h3><font color="green">Round '+ tour[room.id].roundNum +'!</font></h3><font color="blue"><b>TIER:</b></font> ' + tour[room.id].tier.toUpperCase() + "<hr /><center>";
-				var round = tour[room.id].round;
-				for (var i in round) {
-					if (!round[i][1]) {
-						html += "<font color=\"red\">" + round[i][0] + " has received a bye!</font><br />";
-					}
-					else {
-						html += round[i][0] + " VS " + round[i][1] + "<br />";
-					}
-				}
-				room.addRaw(html + "</center>");
 			}
 		} else {
 			return this.sendReply('You could not enter the tournament. You may already be in the tournament. Type /l if you want to leave the tournament.');
 		}
 	},
-	
-	/*forcejoin: 'fj',
+
+	forcejoin: 'fj',
 	fj: function(target, room, user, connection) {
 		if (!user.can('broadcast')) {
 			return this.sendReply('You do not have enough authority to use this command.');
 		}
-		if (tour[room.id].status == 0 || tour[room.id].status == 2) {
+		if (tour[room.id] == undefined || tour[room.id].status == 0 || tour[room.id].status == 2) {
 			return this.sendReply('There is no tournament in a sign-up phase.');
 		}
 		if (!target) {
@@ -375,28 +486,17 @@ var commands = exports.commands = {
 			room.addRaw(user.name + ' has forced <b>' + target + '</b> to join the tournament. <b><i>' + (tour[room.id].size - tour[room.id].players.length) + ' slots remaining.</b></i>');
 			if (tour[room.id].size == tour[room.id].players.length) {
 				tour.start(room.id);
-				var html = '<hr /><h3><font color="green">Round '+ tour[room.id].roundNum +'!</font></h3><font color="blue"><b>TIER:</b></font> ' + tour[room.id].tier.toUpperCase() + "<hr /><center>";
-				var round = tour[room.id].round;
-				for (var i in round) {
-					if (!round[i][1]) {
-						html += "<font color=\"red\">" + round[i][0] + " has received a bye!</font><br />";
-					}
-					else {
-						html += round[i][0] + " VS " + round[i][1] + "<br />";
-					}
-				}
-				room.addRaw(html + "</center>");
 			}
 		}
 		else {
 			return this.sendReply('The user that you specified is already in the tournament.');
 		}
-	},*/
-	
+	},
+
 	lt: 'l',
 	leavetour: 'l',
 	l: function(target, room, user, connection) {
-		if (tour[room.id].status == 0) {
+		if (tour[room.id] == undefined || tour[room.id].status == 0) {
 			return this.sendReply('There is no active tournament to leave.');
 		}
 		var spotRemover = false;
@@ -410,7 +510,7 @@ var commands = exports.commands = {
 		}
 		else {
 			var dqopp = tour.lose(user.userid, room.id);
-			if (dqopp) {
+			if (dqopp && dqopp != -1 && dqopp != 1) {
 				room.addRaw('<b>' + user.userid + '</b> has left the tournament. <b>' + dqopp + '</b> will advance.');
 				var r = tour[room.id].round;
 				var c = 0;
@@ -424,17 +524,22 @@ var commands = exports.commands = {
 				}
 			}
 			else {
-				return this.sendReply("You're not in the tournament or your opponent is unavailable.");
+				if (dqopp == 1) {
+					return this.sendReply("You've already done your match. Wait till next round to leave.");
+				}
+				if (dqopp == 0 || dqopp == -1) {
+					return this.sendReply("You're not in the tournament or your opponent is unavailable.");
+				}
 			}
 		}
 	},
-	
+
 	forceleave: 'fl',
 	fl: function(target, room, user, connection) {
 		if (!user.can('broadcast')) {
 			return this.sendReply('You do not have enough authority to use this command.');
 		}
-		if (tour[room.id].status == 0 || tour[room.id].status == 2) {
+		if (tour[room.id] == undefined || tour[room.id].status == 0 || tour[room.id].status == 2) {
 			return this.sendReply('There is no tournament in a sign-up phase.  Use /dq username if you wish to remove someone in an active tournament.');
 		}
 		if (!target) {
@@ -454,39 +559,63 @@ var commands = exports.commands = {
 			return this.sendReply('The user that you specified is not in the tournament.');
 		}
 	},
-	
+
 	remind: function(target, room, user, connection) {
 		if (!user.can('broadcast')) {
 			return this.sendReply('You do not have enough authority to use this command.');
 		}
+		if(tour[room.id] == undefined)
+			return this.sendReply('There is no active tournament in this room.');
+
 		if (tour[room.id].status != 1) {
 			return this.sendReply('There is no tournament in its sign up phase.');
 		}
-		room.addRaw('<hr /><h2><font color="green">Please sign up for the ' + tour[room.id].tier + ' Tournament.</font> <font color="red">/j</font> <font color="green">to join!</font></h2><b><font color="blueviolet">PLAYERS:</font></b> ' + tour[room.id].size + '<br /><font color="blue"><b>TIER:</b></font> ' + tour[room.id].tier.toUpperCase() + '<hr />');
-		this.logModCommand(user.name + ' just used /remind.');
+		room.addRaw('<hr /><h2><font color="green">Please sign up for the ' + Data.base.Formats[tour[room.id].tier].name + ' Tournament.</font> <font color="red">/j</font> <font color="green">to join!</font></h2><b><font color="blueviolet">PLAYERS:</font></b> ' + tour[room.id].size + '<br /><font color="blue"><b>TIER:</b></font> ' + Data.base.Formats[tour[room.id].tier].name + '<hr />');
 	},
 
-viewround: 'vr',
+	viewround: 'vr',
 	vr: function(target, room, user, connection) {
 		if (!this.canBroadcast()) return;
+		if(tour[room.id] == undefined)
+			return this.sendReply('There is no active tournament in this room.');
+
 		if (tour[room.id].status < 2) {
 				return this.sendReply('There is no tournament out of its signup phase.');
 		}
-		var html = '<hr /><h3><font color="green">Round '+ tour[room.id].roundNum + '!</font></h3><font color="blue"><b>TIER:</b></font> ' + tour[room.id].tier.toUpperCase() + "<hr /><center><small>Red = lost, Green = won, Bold = battling</small><center>";
+		var html = '<hr /><h3><font color="green">Round '+ tour[room.id].roundNum + '!</font></h3><font color="blue"><b>TIER:</b></font> ' + Data.base.Formats[tour[room.id].tier].name + "<hr /><center><small><font color=red>Red</font> = lost, <font color=green>Green</font> = won, <b>Bold</b> = battling</small><center>";
 		var r = tour[room.id].round;
+		var firstMatch = false;
 		for (var i in r) {
 			if (!r[i][1]) {
 				//bye
-				html += "<font color=\"red\">" + r[i][0] + " has received a bye.</font><br />";
+				var byer = r[i][0];
+				if (Users.get(r[i][0])) {
+					byer = Users.get(r[i][0]).name;
+				}
+				html += "<font color=\"red\">" + clean(byer) + " has received a bye.</font><br />";
 			}
 			else {
 				if (r[i][2] == undefined) {
 					//haven't started
-					html += r[i][0] + " VS " + r[i][1] + "<br />";
+					var p1n = r[i][0];
+					var p2n = r[i][1];
+					if (Users.get(p1n)) p1n = Users.get(p1n).name;
+					if (Users.get(p2n)) p2n = Users.get(p2n).name;
+					if (p1n.split('Guest ').length - 1 > 0) p1n = r[i][0];
+					if (p2n.split('Guest ').length - 1 > 0) p2n = r[i][1];
+					var tabla = "";if (!firstMatch) {var tabla = "</center><table align=center cellpadding=0 cellspacing=0>";firstMatch = true;}
+					html += tabla + "<tr><td align=right>" + clean(p1n) + "</td><td>&nbsp;VS&nbsp;</td><td>" + clean(p2n) + "</td></tr>";
 				}
 				else if (r[i][2] == -1) {
 					//currently battling
-					html += "<b>" + r[i][0] + " VS " + r[i][1] + "</b><br />";
+					var p1n = r[i][0];
+					var p2n = r[i][1];
+					if (Users.get(p1n)) p1n = Users.get(p1n).name;
+					if (Users.get(p2n)) p2n = Users.get(p2n).name;
+					if (p1n.split('Guest ').length - 1 > 0) p1n = r[i][0];
+					if (p2n.split('Guest ').length - 1 > 0) p2n = r[i][1];
+					var tabla = "";if (!firstMatch) {var tabla = "</center><table align=center cellpadding=0 cellspacing=0>";firstMatch = true;}
+					html += tabla + "<tr><td align=right><b>" + clean(p1n) + "</b></td><td><b>&nbsp;VS&nbsp;</b></td><td><b>" + clean(p2n) + "</b></td></tr>";
 				}
 				else {
 					//match completed
@@ -496,13 +625,20 @@ viewround: 'vr',
 						p1 = "green";
 						p2 = "red";
 					}
-					html += "<b><font color=\"" + p1 + "\">" + r[i][0] + "</font> VS <font color=\"" + p2 + "\">" + r[i][1] + "</font></b><br />";
+					var p1n = r[i][0];
+					var p2n = r[i][1];
+					if (Users.get(p1n)) p1n = Users.get(p1n).name;
+					if (Users.get(p2n)) p2n = Users.get(p2n).name;
+					if (p1n.split('Guest ').length - 1 > 0) p1n = r[i][0];
+					if (p2n.split('Guest ').length - 1 > 0) p2n = r[i][1];
+					var tabla = "";if (!firstMatch) {var tabla = "</center><table align=center cellpadding=0 cellspacing=0>";firstMatch = true;}
+					html += tabla + "<tr><td align=right><b><font color=\"" + p1 + "\">" + clean(p1n) + "</font></b></td><td><b>&nbsp;VS&nbsp;</b></td><td><font color=\"" + p2 + "\"><b>" + clean(p2n) + "</b></font></td></tr>";
 				}
 			}
 		}
-		this.sendReplyNobox(html + "</center>");
+		this.sendReply("|raw|" + html + "</table>");
 	},
-	
+
 	disqualify: 'dq',
 	dq: function(target, room, user, connection) {
 		if (!user.can('broadcast')) {
@@ -511,6 +647,9 @@ viewround: 'vr',
 		if (!target) {
 			return this.sendReply('Proper syntax for this command is: /dq username');
 		}
+		if(tour[room.id] == undefined){
+			return this.sendReply('There is no active tournament in this room.');
+		}
 		if (tour[room.id].status < 2) {
 			return this.sendReply('There is no tournament out of its sign up phase.');
 		}
@@ -518,7 +657,7 @@ viewround: 'vr',
 		if (!targetUser) {
 			var dqGuy = sanitize(target.toLowerCase());
 		} else {
-			var dqGuy = targetUser.userid;
+			var dqGuy = toId(target);
 		}
 		var error = tour.lose(dqGuy, room.id);
 		if (error == -1) {
@@ -544,12 +683,12 @@ viewround: 'vr',
 			}
 		}
 	},
-	
+
 	replace: function(target, room, user, connection) {
 		if (!user.can('broadcast')) {
 			return this.sendReply('You do not have enough authority to use this command.');
 		}
-		if (tour[room.id].status != 2) {
+		if (tour[room.id] == undefined || tour[room.id].status != 2) {
 			return this.sendReply('The tournament is currently in a sign-up phase or is not active, and replacing users only works mid-tournament.');
 		}
 		if (!target) {
@@ -564,10 +703,10 @@ viewround: 'vr',
 		if (!userTwo) {
 			return this.sendReply('Proper syntax for this command is: /replace user1, user2.  The user you specified to be placed in the tournament is not present!');
 		} else {
-			t[1] = userTwo.userid;
+			t[1] = toId(t[1]);
 		}
 		if (userOne) {
-			t[0] = userOne.userid;
+			t[0] = toId(t[0]);
 		}
 		var rt = tour[room.id];
 		var init1 = false;
@@ -608,13 +747,13 @@ viewround: 'vr',
 				}
 				else {
 					if (c == t[0]) {
-						c = t[1];
+						rt[outof[x]][y] = t[1];
 					}
 				}
 			}
 		}
 		rt.history.push(t[0] + "->" + t[1]);
-		room.addRaw('<b>' + user.name + '</b> has replaced <b>' + t[0] +'</b> with <b>' + t[1] + '</b>.');
+		room.addRaw('<b>' + t[0] +'</b> has left the tournament and is replaced by <b>' + t[1] + '</b>.');
 	},
 	/*********************************************************
 	 * Rock-Paper-Scissors
